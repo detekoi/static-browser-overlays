@@ -1,19 +1,30 @@
 # Screenshots
 
-This directory will contain screenshots of the overlays in action for documentation and preview purposes.
+This directory contains screenshots of the overlays for documentation and preview purposes.
+
+## Current Screenshots
+
+- **cozy-10-9-gameboy.png**: The GameBoy-inspired overlay with 10:9 aspect ratio and leaf decorations
+- **cozy-16-9-widescreen.png**: The widescreen overlay with 16:9 aspect ratio and minimal design elements
 
 ## Guidelines for Screenshots
 
 When adding screenshots of overlays:
 
-1. Capture at 1920x1080 resolution when possible
-2. Show the overlay with game content to demonstrate how it looks in use
-3. Include variations with different customization options
-4. Use descriptive filenames (e.g., `cozy-10-9-dark-theme.png`)
+1. Capture at 1920x1080 resolution
+2. Show the overlay with empty spaces to highlight the frame design
+3. Include variations with different customization options if available
+4. Use descriptive kebab-case filenames (e.g., `cozy-10-9-dark-theme.png`)
 
-## Placeholder Images
+## Creating Screenshots
 
-Until real screenshots are added, this directory serves as a placeholder.
+Screenshots can be automatically generated using:
+
+```
+node scripts/take-screenshots.js
+```
+
+This script uses Puppeteer to capture the overlays at exactly 1920x1080 resolution.
 
 ## Adding Your Own
 

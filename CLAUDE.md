@@ -7,46 +7,42 @@ Collection of browser-based overlays for Twitch streaming, featuring different t
 - **Serve locally**: `python -m http.server` or `npx serve`
 - **Validate HTML**: `npx html-validate "**/*.html" "**/*.htm"`
 - **Check CSS**: `npx stylelint "**/*.css"` (for extracted CSS files)
-- **Live preview**: Use browser with OBS preview or `npx browser-sync start --server --files "."`
+- **Live preview**: `npx browser-sync start --server --files "."`
+- **Take screenshots**: `node scripts/take-screenshots.js` (requires Puppeteer)
+- **Install dependencies**: `npm install` (installs Puppeteer for screenshots)
 
 ## Style Guidelines
 - **HTML**: 
   - Use semantic HTML5 elements with consistent indentation (4 spaces)
   - Include proper meta tags and descriptive title
-  - Keep overlay elements in logical container divs
+  - Validate with html-validate before committing changes
 
 - **CSS**:
-  - Currently using inline styles in `<style>` tags for easy embedding
-  - Future plan: Move to dedicated CSS files for improved maintainability
-  - Organize properties by type (positioning, display, box model, aesthetics)
+  - Use inline styles in `<style>` tags for easy embedding
+  - Organize properties: positioning → display → box model → aesthetics
   - Use hex/rgba colors with consistent opacity patterns
-  - Employ SVG data URIs for decorative elements (may move to separate asset files)
+  - Use SVG data URIs for simple decorative elements
 
 - **JavaScript**:
-  - Future plan: Implement in dedicated .js files
-  - Use for animations, interactive elements, and stream integrations
-  - Follow standard JS style with clear comments
-
-- **Assets**:
-  - Currently using inline SVG data URIs for simple graphics
-  - Future plan: Move to dedicated asset files for complex graphics
-  - Use optimized image formats appropriate for web (SVG, WebP, PNG)
+  - Keep scripts minimal - focus on layout rather than interaction
+  - Include in dedicated .js files when needed
+  - Use descriptive function and variable names
 
 - **Naming**:
-  - Use descriptive, kebab-case class names (e.g., `gameboy-frame`, `webcam-container`)
-  - Maintain consistent naming patterns across overlay variations
+  - Use kebab-case for class names (e.g., `gameboy-frame`, `webcam-container`)
+  - Use descriptive names that indicate component purpose
+  - Follow consistent naming patterns across overlay variations
 
-- **Structure**: 
-  - Group related elements inside semantic container divs
-  - Comment major sections of both HTML and CSS
+- **Error Handling**:
+  - Provide fallbacks for SVG and background elements
+  - Test overlays in both OBS and browser environments
+
+## Responsive Design
+- Current designs use fixed dimensions (1920x1080)
+- Use absolute positioning with px units for precise placement
+- Consider adding media queries for responsive behavior if needed
 
 ## File Organization
-Future planned structure:
-```
-/overlays/
-  /{theme}-{aspect-ratio}/
-    index.html
-    /css/
-    /js/
-    /assets/
-```
+- Group overlays by theme and aspect ratio
+- Keep source files in `/overlays/{theme}-{aspect-ratio}/`
+- Releases are automatically zipped in `/releases/` directory
