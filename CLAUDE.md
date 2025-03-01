@@ -20,7 +20,7 @@ Collection of browser-based overlays for Twitch streaming, featuring different t
 - **CSS**:
   - Use inline styles in `<style>` tags for easy embedding
   - Organize properties: positioning → display → box model → aesthetics
-  - Use hex/rgba colors with consistent opacity patterns
+  - Use consistent color schemes within an overlay
   - Use SVG data URIs for simple decorative elements
 
 - **JavaScript**:
@@ -37,9 +37,19 @@ Collection of browser-based overlays for Twitch streaming, featuring different t
   - Provide fallbacks for SVG and background elements
   - Test overlays in both OBS and browser environments
 
-## Responsive Design
+## Content Guidelines
+- **Aesthetic Freedom**: Any aesthetic style is welcome - not restricted to a specific theme
+- **Inclusive Design**: Create overlays that are accessible to streamers from all backgrounds
+- **Community Values**: LGBTQIA+-supportive and anti-racist content is encouraged
+- **Content Standards**:
+  - Avoid content that promotes discrimination or harmful stereotypes
+  - Create overlays that are welcoming to diverse streaming communities
+  - Design with consideration for different cultural contexts
+- **Community-Focused**: Prioritize usability and accessibility in your designs
+
+## Design Approach
+- Current repository has a "cozy" or "cozy gaming" aesthetic focus
 - Current designs use fixed dimensions (1920x1080)
-- Use absolute positioning with px units for precise placement
 - Consider adding media queries for responsive behavior if needed
 
 ## File Organization

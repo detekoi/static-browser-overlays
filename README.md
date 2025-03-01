@@ -1,6 +1,6 @@
 # Browser Overlays for Streaming
 
-A collection of free browser-based overlays for your streaming needs, inspired by Polar Bear Cafe's minimalist, charming style with clean lines, soft colors, and a nature-inspired palette.
+A collection of free browser-based overlays for your streaming needs. The current overlays feature a cozy, minimalist gaming aesthetic with clean lines, soft colors, and nature-inspired elements.
 
 ## Overview
 
@@ -47,7 +47,12 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Community Guidelines
+
+This project welcomes contributions from everyone and is committed to creating a friendly and inclusive environment. We encourage designs that are accessible to streamers from diverse backgrounds and that support LGBTQIA+ and anti-racist values.
+
+For more information on our design approach and content standards, see the [CLAUDE.md](CLAUDE.md) file.
+
 ## Acknowledgements
 
-- Inspired by the aesthetic of Polar Bear Cafe
 - Thanks to all contributors and the streaming community
