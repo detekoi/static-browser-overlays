@@ -22,7 +22,7 @@ This repository contains a variety of browser overlays that you can use with OBS
     <div style="background-color: #B89F7A; height: 100px; border-radius: 8px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white;">Preview Image</div>
     <div style="display: flex; justify-content: space-around; margin-top: 15px;">
       <a href="overlays/cozy 10-9 aspect ratio/overlay.html" style="background-color: #B89F7A; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Preview</a>
-      <a href="releases/cozy-10-9-aspect-ratio.zip" style="background-color: #5B4636; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Download</a>
+      <a href="releases/cozy-10-9-aspect-ratio.zip?raw=true" style="background-color: #5B4636; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Download</a>
     </div>
   </div>
   
@@ -32,15 +32,15 @@ This repository contains a variety of browser overlays that you can use with OBS
     <div style="background-color: #5f9ea0; height: 100px; border-radius: 8px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white;">Preview Image</div>
     <div style="display: flex; justify-content: space-around; margin-top: 15px;">
       <a href="overlays/cozy 16-9 aspect ratio/overlay.htm" style="background-color: #5f9ea0; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Preview</a>
-      <a href="releases/cozy-16-9-aspect-ratio.zip" style="background-color: #3d6f73; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Download</a>
+      <a href="releases/cozy-16-9-aspect-ratio.zip?raw=true" style="background-color: #3d6f73; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px;">Download</a>
     </div>
   </div>
 </div>
 
 ## Quick Downloads
 
-- **Cozy 10:9 GameBoy Overlay**: [Preview](overlays/cozy%2010-9%20aspect%20ratio/overlay.html) | [Download ZIP](releases/cozy-10-9-aspect-ratio.zip)
-- **Cozy 16:9 Widescreen Overlay**: [Preview](overlays/cozy%2016-9%20aspect%20ratio/overlay.htm) | [Download ZIP](releases/cozy-16-9-aspect-ratio.zip)
+- **Cozy 10:9 GameBoy Overlay**: [Preview](overlays/cozy%2010-9%20aspect%20ratio/overlay.html) | [Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
+- **Cozy 16:9 Widescreen Overlay**: [Preview](overlays/cozy%2016-9%20aspect%20ratio/overlay.htm) | [Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
 
 ## Getting Started
 
