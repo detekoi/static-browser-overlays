@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Bear Cafe OBS Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background-color: transparent;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-window {
+            position: absolute;
+            top: 50%;
+            left: 45%; /* Shifted left from 50% */
+            width: 90%;
+            height: 90%;
+            background-color: rgba(0, 0, 0, 0); /* Transparent background */
+            border: 8px solid #5f9ea0; /* Teal border similar to Polar Bear Cafe */
+            box-sizing: border-box;
+            border-radius: 12px;
+            transform: translate(-50%, -50%); /* This now creates left alignment */
+        }
+
+        .webcam-container {
+            position: absolute;
+            bottom: 350px;
+            right: 20px; /* Moved further right (smaller value) */
+            width: 300px;
+            height: 300px;
+        }
+
+        .webcam-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #a5e6a5, #5f9ea0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .webcam-inner {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: transparent;
+            border: 4px solid #ffffff;
+        /*  background-image: url(./Placeholder-Avatar.png);*/ /* Placeholder cam circle image */
+            background-repeat: no-repeat;
+        }
+
+        .decoration {
+            position: absolute;
+            z-index: 5;
+        }
+
+        .paw-print {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .paw-print::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            top: -15px;
+            left: 10px;
+        }
+
+        .paw-print::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            top: -5px;
+            left: -10px;
+        }
+
+        .leaf {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 30px;
+            background-color: #a5e6a5;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+        }
+
+        .leaf::before {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: #5f9ea0;
+            bottom: 10px;
+            left: 20px;
+        }
+
+        /* Display area for webcam (for visual reference only) */
+        .webcam-placeholder {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background-color: rgba(100, 100, 100, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Cute animal decorations */
+        .polar-bear {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 80px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            z-index: 5;
+        }
+
+        .polar-bear::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: -10px;
+            left: 10px;
+        }
+
+        .polar-bear::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: -10px;
+            right: 10px;
+        }
+
+        .eyes {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            top: 25px;
+            left: 22px;
+            box-shadow: 30px 0 0 black;
+        }
+
+        .nose {
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            top: 35px;
+            left: 34px;
+        }
+
+        /* Coffee cup decoration */
+        .coffee-cup {
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            width: 50px;
+            height: 40px;
+            background-color: #f5f5dc;
+            border-radius: 0 0 20px 20px;
+            border: 3px solid #8b4513;
+            border-top: none;
+            z-index: 5;
+        }
+
+        .coffee-cup::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            border: 3px solid #8b4513;
+            border-radius: 0 10px 10px 0;
+            right: -26px;
+            top: 10px;
+        }
+
+        .coffee-cup::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 10px;
+            background-color: #8b4513;
+            top: 4px;
+            left: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Game window container (transparent for OBS capture) -->
+        <div class="game-window"></div>
+        
+        <!-- Polar Bear Cafe decorative elements -->
+        <div class="leaf"></div>
+<!--        <div class="paw-print" style="top: 80px; left: 40px;"></div>
+        <div class="paw-print" style="top: 120px; left: 70px;"></div>-->
+        <div class="coffee-cup"></div>
+        
+        <!-- Polar Bear decoration -->
+        <div class="polar-bear">
+            <div class="eyes"></div>
+            <div class="nose"></div>
+        </div>
+        
+        <!-- Webcam circle that overlaps game window -->
+        <div class="webcam-container">
+            <div class="webcam-border">
+                <div class="webcam-inner">
+                    <div class="webcam-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
