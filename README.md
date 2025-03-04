@@ -1,6 +1,6 @@
 # Browser Overlays for Streaming
 
-A collection of free browser-based overlays for your streaming needs. The current overlays feature a cozy, minimalist gaming aesthetic with clean lines, soft colors, and nature-inspired elements.
+A collection of free browser-based overlays for your streaming needs. The current overlays feature a cozy, minimalist gaming aesthetic with clean lines, soft colors, nature-inspired elements, and seasonal themes like our new arctic winter design.
 
 ## Overview
 
@@ -8,7 +8,8 @@ This repository contains a variety of browser overlays that you can use with OBS
 
 ## Features
 
-- **Static Overlays**: Simple HTML/CSS overlays with minimal JavaScript
+- **Beautiful Overlays**: HTML/CSS overlays with elegant animations and minimal JavaScript
+- **Animated Elements**: Snowfall, aurora effects, and subtle animations for a dynamic look
 - **Easy to Customize**: Clear documentation on how to modify colors, text, and other elements
 - **Responsive Design**: Works across different stream sizes and resolutions
 - **Open Source**: Free to use and modify under the MIT License
@@ -23,9 +24,9 @@ A charming GameBoy-inspired frame with leaf decorations, perfect for retro games
 
 [⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
 
-### Cozy 16:9 Widescreen
+### Cozy 16:9 Arctic Widescreen
 
-A clean, minimalist overlay with polar bear motifs for modern widescreen content.
+An enchanting arctic-themed overlay with animated snowfall, shimmering icicles, and aurora borealis effects for modern widescreen content. Features cute polar bear motifs and a cozy winter atmosphere.
 
 ![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-widescreen.png)
 
