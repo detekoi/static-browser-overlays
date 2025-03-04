@@ -32,6 +32,14 @@ An enchanting arctic-themed overlay with animated snowfall, shimmering icicles, 
 
 [⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
 
+
+### Cozy 4:3 Classic
+
+A classic overlay designed for retro games and consoles that use the standard 4:3 aspect ratio. Features clean, transparent backgrounds with a vintage coffee cup decoration.
+
+![Cozy 4:3 Classic Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
+
+[⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
 ## Getting Started
 
 Check out the [installation guide](docs/installation.md) for instructions on how to add these overlays to your streaming setup.

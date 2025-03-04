@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720">
+  <!-- Pattern definition for chat window -->
+  <pattern id="subtle-pattern" width="50" height="50" patternUnits="userSpaceOnUse">
+    <path d="M0 0h50v50H0z" fill="#F6F2E9"/>
+    <path d="M25 12.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5z" fill="#E8DFD2" opacity="0.4"/>
+  </pattern>
+  
+  <!-- Game area with rounded corners and soft border - maximized 4:3 ratio -->
+  <rect x="40" y="40" width="853" height="640" rx="12" ry="12" fill="none" stroke="#D8CCBD" stroke-width="6"/>
+  
+  <!-- Chat area with rounded corners and soft border - positioned on right -->
+  <rect x="920" y="250" width="320" height="430" rx="12" ry="12" fill="url(#subtle-pattern)" stroke="#D8CCBD" stroke-width="6"/>
+  
+  <!-- Webcam circle with soft border - bigger and moved left to make room for character sprite -->
+  <circle cx="1030" cy="120" r="110" fill="#FFFFFF" stroke="#D8CCBD" stroke-width="6"/>
+  <circle cx="1030" cy="120" r="105" fill="#FFFAF0" stroke="#E8DFD2" stroke-width="1"/>
+  
+  <!-- Decorative elements moved outside frames -->
+  <!-- Coffee cup - moved below chat frame -->
+  <path d="M905 690c0 0 10 -8 10 -25c0 -17 -20 -15 -20 -35c0 -20 25 -20 25 -40" fill="none" stroke="#8C7A6B" stroke-width="3" stroke-linecap="round"/>
+  <!-- Cup body -->
+  <path d="M890 690h30v12c0 8 -6 12 -15 12c-9 0 -15 -4 -15 -12z" fill="#8C7A6B"/>
+  <ellipse cx="905" cy="690" rx="18" ry="8" fill="#B5A090"/>
+  <!-- Coffee liquid -->
+  <ellipse cx="905" cy="693" rx="13" ry="5" fill="#6F4E37"/>
+  <!-- Cup handle -->
+  <path d="M920 707c5 0 10 -3 10 -8s-3 -8 -8 -8c-2 0 -2 11 -2 16" fill="none" stroke="#8C7A6B" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Small plant - moved to bottom right corner -->
+  <path d="M1250 690c0 0 -8 -25 8 -33c16 -8 25 16 25 16" fill="none" stroke="#7A9E7E" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M1267 690c0 0 8 -33 -8 -37c-16 -4 -20 20 -20 20" fill="none" stroke="#7A9E7E" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M1258 690c0 0 0 -25 12 -29c12 -4 16 16 16 16" fill="none" stroke="#7A9E7E" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="1245" y="690" width="25" height="20" rx="4" ry="4" fill="#D8CCBD"/>
+  
+  <!-- Additional small decorative elements -->
+  <circle cx="905" cy="80" r="8" fill="#D8CCBD"/>
+  <circle cx="905" cy="105" r="6" fill="#D8CCBD"/>
+  <circle cx="905" cy="125" r="4" fill="#D8CCBD"/>
+</svg>

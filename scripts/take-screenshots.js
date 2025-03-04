@@ -22,19 +22,40 @@ if (!fs.existsSync(screenshotsDir)) {
   fs.mkdirSync(screenshotsDir, { recursive: true });
 }
 
-// Overlays to screenshot
-const overlays = [
-  {
-    name: 'cozy-10-9-gameboy',
-    path: path.join(__dirname, '..', 'overlays', 'cozy 10-9 aspect ratio', 'overlay.html'),
-    outputFile: path.join(screenshotsDir, 'cozy-10-9-gameboy.png')
-  },
-  {
-    name: 'cozy-16-9-widescreen',
-    path: path.join(__dirname, '..', 'overlays', 'cozy 16-9 aspect ratio', 'overlay.htm'),
-    outputFile: path.join(screenshotsDir, 'cozy-16-9-widescreen.png')
+// Function to dynamically discover all overlays
+function discoverOverlays() {
+  const overlaysDir = path.join(__dirname, '..', 'overlays');
+  const overlayFolders = fs.readdirSync(overlaysDir, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+  
+  const discoveredOverlays = [];
+  
+  for (const folder of overlayFolders) {
+    const folderPath = path.join(overlaysDir, folder);
+    const files = fs.readdirSync(folderPath);
+    
+    // Look for overlay.html or overlay.htm files
+    const overlayFile = files.find(file => file === 'overlay.html' || file === 'overlay.htm');
+    
+    if (overlayFile) {
+      // Format the name from folder for output filename
+      // Convert spaces to dashes and keep lowercase
+      const folderNameClean = folder.toLowerCase().replace(/\s+/g, '-');
+      
+      discoveredOverlays.push({
+        name: folderNameClean,
+        path: path.join(folderPath, overlayFile),
+        outputFile: path.join(screenshotsDir, `${folderNameClean}.png`)
+      });
+    }
   }
-];
+  
+  return discoveredOverlays;
+}
+
+// Discover all overlays
+const overlays = discoverOverlays();
 
 async function takeScreenshots() {
   console.log('Launching browser...');
