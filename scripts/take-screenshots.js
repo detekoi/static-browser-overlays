@@ -35,8 +35,11 @@ function discoverOverlays() {
     const folderPath = path.join(overlaysDir, folder);
     const files = fs.readdirSync(folderPath);
     
-    // Look for overlay.html or overlay.htm files
-    const overlayFile = files.find(file => file === 'overlay.html' || file === 'overlay.htm');
+    // Look for overlay.html, overlay.htm, or specific named HTML files
+    const overlayFile = files.find(file => 
+      file === 'overlay.html' || 
+      file === 'overlay.htm' || 
+      file === 'arctic-background.html');
     
     if (overlayFile) {
       // Format the name from folder for output filename

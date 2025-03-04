@@ -24,11 +24,11 @@ A charming GameBoy-inspired frame with leaf decorations, perfect for retro games
 
 [⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
 
-### Cozy 16:9 Arctic Widescreen
+### Cozy 16:9 Widescreen
 
-An enchanting arctic-themed overlay with animated snowfall, shimmering icicles, and aurora borealis effects for modern widescreen content. Features cute polar bear motifs and a cozy winter atmosphere.
+A modern 16:9 transparent overlay with minimalist borders, perfect for contemporary games and content.
 
-![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-widescreen.png)
+![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
 
 [⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
 
@@ -40,6 +40,15 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 ![Cozy 4:3 Classic Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
 
 [⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
+
+### Arctic Background Layer
+
+A winter-themed background with animated aurora borealis effects, falling snowflakes, and a snowy landscape. Designed to be used as a background layer beneath other transparent overlays.
+
+![Arctic Background Overlay](docs/screenshots/arctic-background.png)
+
+[⬇️ Download ZIP](releases/arctic-background.zip?raw=true)
+
 ## Getting Started
 
 Check out the [installation guide](docs/installation.md) for instructions on how to add these overlays to your streaming setup.
