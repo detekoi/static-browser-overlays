@@ -6,7 +6,7 @@ This guide explains how to customize the browser overlays to match your stream's
 
 Each overlay has its own detailed customization instructions. Please refer to the specific documentation:
 
-### Minimal Overlays (CSS Variables)
+### Minimal Overlays
 - [Minimal 16:9 Documentation](../sources/overlays/minimal-16-9/overlay-readme.md#customization)
 - [Minimal 10:9 Documentation](../sources/overlays/minimal-10-9/overlay-readme.md#customization)
 - [Minimal 4:3 Documentation](../sources/overlays/minimal-4-3/overlay-readme.md#customization)
