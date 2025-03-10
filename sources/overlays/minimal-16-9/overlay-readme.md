@@ -1,16 +1,16 @@
 # Minimal 16:9 Overlay
 
-A clean, minimal overlay for 16:9 aspect ratio gameplay with transparent background and simple black borders.
+A clean, minimal overlay for 16:9 aspect ratio gameplay with transparent background and **completely customizable** styling to match your unique stream aesthetic.
 
 ## Features
 
 - Clean design with minimal elements
 - Transparent background for use with any background images
-- Black borders for game and webcam frames
+- **Fully customizable borders** - change colors, transparency, thickness, and corner roundness
 - Optimized 16:9 game window (1760×990 pixels) for 1920×1080 displays
-- Circular webcam container with black background (customizable)
+- **Flexible webcam container** - adjust size, position, background color, and shape
 - Ability to hide webcam container entirely via CSS variable
-- Fully customizable layout via CSS variables
+- **Simple customization system** using CSS variables - perfect for streamers of all technical skill levels
 
 ## Customization
 
@@ -36,9 +36,15 @@ All customization options are available through CSS variables in the `:root` sec
 }
 ```
 
-### Border Colors
+### Border Customization
 
-Change the `--border-color` and `--shadow-color` values to your preferred colors using hex codes, RGB, or RGBA values.
+The overlay borders can be fully personalized to match your stream's branding:
+
+- **Color**: Change `--border-color` to any color using hex codes (#RRGGBB), RGB, or RGBA values
+- **Transparency**: Adjust the alpha channel in `--border-color` (e.g., `rgba(0, 0, 0, 0.8)` for 80% opacity black)
+- **Shadow Effects**: Modify `--shadow-color` to create subtle depth or glow effects
+- **Border Thickness**: Edit the border width in the CSS (default is 5px) for thinner or thicker borders
+- **Corner Styling**: Adjust the border-radius value in the CSS to create more rounded or squared corners
 
 ### Game Window Positioning
 
@@ -50,17 +56,32 @@ The game window is positioned slightly to the left (at 49% by default) to leave 
 
 If you want to center the game window exactly, set `--game-left-position` to 50%.
 
-### Webcam Position and Size
+### Webcam Customization
 
-The webcam is positioned vertically centered on the right side by default to minimize overlap with the game window:
+The webcam container is highly flexible and offers multiple customization options:
 
-- `--webcam-size`: The diameter of the circular webcam container
-- `--webcam-bottom`: Distance from the bottom of the screen (default 40% centers it vertically)
-- `--webcam-right`: Distance from the right edge of the screen
-- `--webcam-visibility`: Controls whether the webcam container is visible (set to `none` to hide)
-- `--webcam-bg-color`: Background color behind the webcam (default is solid black)
+- **Size**: 
+  - Adjust `--webcam-size` to create a larger or smaller webcam display
+  - Default is 250px which works well for most setups
 
-You can move the webcam to another corner by changing these values or adding new ones like `--webcam-top` and `--webcam-left` instead. To make the webcam background transparent, set `--webcam-bg-color: transparent`.
+- **Position**: 
+  - Precisely place your webcam anywhere on screen using:
+    - `--webcam-bottom` and `--webcam-right` (default setup)
+    - Or use `--webcam-top` and `--webcam-left` to position in other corners
+  - Experiment with different values to find the perfect position for your specific game
+
+- **Visibility**: 
+  - Set `--webcam-visibility: none` to completely hide the webcam container
+  - Useful for gameplay-only segments or screenshots
+
+- **Background Appearance**: 
+  - Change `--webcam-bg-color` to any color that matches your stream's theme
+  - Create a custom look with transparency (e.g., `rgba(255, 0, 0, 0.5)` for semi-transparent red)
+  - Use `transparent` for no background at all
+
+- **Shape Customization**:
+  - Modify the border-radius value in the CSS to transform the circular container
+  - Create a square (0px), rounded square (10-20px), or oval shape instead of the default circle
 
 ## Usage in OBS
 

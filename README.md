@@ -44,7 +44,7 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 
 ### Minimal 10:9
 
-A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with black borders and customizable webcam positioning.
+A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with **highly customizable** features - adjust border colors, thickness, radius, webcam position, size, and visibility using simple CSS variables.
 
 ![Minimal 10:9 Overlay](docs/screenshots/minimal-10-9.png)
 
@@ -54,7 +54,7 @@ A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Adv
 
 ### Minimal 16:9
 
-A clean, minimal overlay for 16:9 aspect ratio gameplay with black borders and fully customizable layout via CSS variables.
+A clean, minimal overlay for 16:9 aspect ratio gameplay with **fully customizable** styling - easily change border colors, thickness, radius, webcam position, and background transparency to match your stream's theme using simple CSS variables.
 
 ![Minimal 16:9 Overlay](docs/screenshots/minimal-16-9.png)
 
@@ -64,7 +64,7 @@ A clean, minimal overlay for 16:9 aspect ratio gameplay with black borders and f
 
 ### Minimal 4:3
 
-A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with black borders and optimized dimensions.
+A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with **extensive customization options** - modify border colors, thickness, corner roundness, webcam container styling, and layout positioning through easy-to-use CSS variables.
 
 ![Minimal 4:3 Overlay](docs/screenshots/minimal-4-3.png)
 

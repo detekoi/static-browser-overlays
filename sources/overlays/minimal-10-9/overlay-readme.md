@@ -1,16 +1,16 @@
 # Minimal 10:9 Overlay
 
-A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with transparent background and simple black borders.
+A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with transparent background and **highly customizable** styling options.
 
 ## Features
 
 - Clean design with minimal elements
 - Transparent background for use with any background images
-- Black borders for game and webcam frames
+- **Customizable borders** - change color, transparency, thickness, and corner roundness
 - Optimized 10:9 game window (1180×1062 pixels) for 1920×1080 displays
-- Circular webcam container with black background (customizable)
+- **Adjustable webcam container** - modify size, position, shape, and background color
 - Ability to hide webcam container entirely via CSS variable
-- Fully customizable layout via CSS variables
+- **Easy customization** through simple CSS variables - no coding knowledge required
 
 ## Customization
 
@@ -36,9 +36,15 @@ All customization options are available through CSS variables in the `:root` sec
 }
 ```
 
-### Border Colors
+### Border Customization
 
-Change the `--border-color` and `--shadow-color` values to your preferred colors using hex codes, RGB, or RGBA values.
+The overlay borders are fully customizable:
+
+- **Color**: Change `--border-color` to any color using hex codes, RGB, or RGBA values
+- **Transparency**: Adjust the alpha channel in `--border-color` (the last number in rgba)
+- **Shadow**: Modify `--shadow-color` for a subtle depth effect
+- **Thickness**: Edit the border width in the CSS to create thinner or thicker borders
+- **Corner Roundness**: Adjust the border-radius in the CSS for more squared or rounded corners
 
 ### Game Window Positioning
 
@@ -50,17 +56,20 @@ The game window is positioned to the left (at 45% by default) to leave more room
 
 If you want to center the game window exactly, set `--game-left-position` to 50%.
 
-### Webcam Position and Size
+### Webcam Customization
 
-The webcam is positioned vertically centered on the right side by default to minimize overlap with the game window:
+The webcam container offers extensive customization options:
 
-- `--webcam-size`: The diameter of the circular webcam container
-- `--webcam-bottom`: Distance from the bottom of the screen (default 35% centers it vertically)
-- `--webcam-right`: Distance from the right edge of the screen
-- `--webcam-visibility`: Controls whether the webcam container is visible (set to `none` to hide)
-- `--webcam-bg-color`: Background color behind the webcam (default is solid black)
-
-You can move the webcam to another corner by changing these values or adding new ones like `--webcam-top` and `--webcam-left` instead. To make the webcam background transparent, set `--webcam-bg-color: transparent`.
+- **Size**: Adjust `--webcam-size` for larger or smaller webcam display
+- **Position**: Change position using:
+  - `--webcam-bottom` and `--webcam-right` (default setup)
+  - Or use `--webcam-top` and `--webcam-left` to position in other corners
+- **Visibility**: Set `--webcam-visibility: none` to completely hide the webcam container
+- **Background Color**: 
+  - Change `--webcam-bg-color` to any color (hex, RGB, or RGBA)
+  - Use transparency by adjusting the alpha channel (e.g., `rgba(0, 0, 0, 0.5)` for semi-transparent black)
+  - Set to `transparent` for no background
+- **Shape**: Modify the border-radius in the CSS for a square, rounded square, or oval webcam container instead of circular
 
 ## Usage in OBS
 

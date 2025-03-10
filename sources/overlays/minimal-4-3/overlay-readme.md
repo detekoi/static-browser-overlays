@@ -1,16 +1,16 @@
 # Minimal 4:3 Overlay
 
-A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with transparent background and simple black borders.
+A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with transparent background and **extensive customization options** to create your perfect retro streaming setup.
 
 ## Features
 
 - Clean design with minimal elements
-- Transparent background for use with any background images
-- Black borders for game and webcam frames
+- Transparent background compatible with any background theme
+- **Completely customizable borders** - adjust colors, opacity, thickness, and corner roundness
 - Optimized 4:3 game window (1420×1065 pixels) for 1920×1080 displays
-- Circular webcam container with black background (customizable)
+- **Highly configurable webcam container** - customize size, position, background, and shape
 - Ability to hide webcam container entirely via CSS variable
-- Fully customizable layout via CSS variables
+- **Easy styling system** using simple CSS variables - make the overlay your own without coding knowledge
 
 ## Customization
 
@@ -36,9 +36,26 @@ All customization options are available through CSS variables in the `:root` sec
 }
 ```
 
-### Border Colors
+### Border Customization
 
-Change the `--border-color` and `--shadow-color` values to your preferred colors using hex codes, RGB, or RGBA values.
+Make the borders truly your own with these customization options:
+
+- **Colors**: 
+  - Change `--border-color` to any color that fits your stream theme
+  - Use hex codes (#RRGGBB), RGB values, or RGBA for custom transparency
+  - Try branded colors, team colors, or colors that match your other stream elements
+
+- **Transparency Effects**:
+  - Adjust the alpha channel in `--border-color` (e.g., `rgba(0, 0, 0, 0.8)` for 80% opacity)
+  - Create subtle semi-transparent borders that let background elements show through
+
+- **Visual Depth**:
+  - Modify `--shadow-color` to create subtle shadows, glows, or highlight effects
+  - Experiment with colored shadows for unique visual styles
+
+- **Size and Shape**:
+  - Edit the border width in the CSS (default is 5px) to create thinner or thicker borders
+  - Adjust the border-radius values to create more squared or rounded corners
 
 ### Game Window Positioning
 
@@ -50,17 +67,39 @@ The game window is positioned to the left (at 45% by default) to leave more room
 
 If you want to center the game window exactly, set `--game-left-position` to 50%.
 
-### Webcam Position and Size
+### Webcam Customization
 
-The webcam is positioned vertically centered on the right side by default to minimize overlap with the game window:
+Create the perfect webcam container to complement your retro gameplay:
 
-- `--webcam-size`: The diameter of the circular webcam container
-- `--webcam-bottom`: Distance from the bottom of the screen (default 40% centers it vertically)
-- `--webcam-right`: Distance from the right edge of the screen
-- `--webcam-visibility`: Controls whether the webcam container is visible (set to `none` to hide)
-- `--webcam-bg-color`: Background color behind the webcam (default is solid black)
+- **Size and Scale**: 
+  - Adjust `--webcam-size` to perfectly size your webcam display
+  - Find the ideal balance between gameplay visibility and webcam presence
+  - Default 300px works well for most setups but can be increased for facecam-focused streams
 
-You can move the webcam to another corner by changing these values or adding new ones like `--webcam-top` and `--webcam-left` instead. To make the webcam background transparent, set `--webcam-bg-color: transparent`.
+- **Positioning**:
+  - Place your webcam exactly where you want it:
+    - Use `--webcam-bottom` and `--webcam-right` (default configuration)
+    - Or switch to `--webcam-top` and `--webcam-left` for other screen positions
+  - Find the perfect spot that doesn't obscure important game elements
+  - Create corner, side, or even centered webcam placement
+
+- **Visibility Options**:
+  - Toggle `--webcam-visibility` between `block` and `none` to show/hide webcam
+  - Perfect for gameplay-focused segments or when taking screenshots
+
+- **Background Styling**:
+  - Default solid black background (`--webcam-bg-color: rgba(0, 0, 0, 1)`)
+  - Change to any color that matches your stream aesthetic
+  - Add partial transparency for a softer look (e.g., `rgba(0, 0, 0, 0.7)`)
+  - Set to `transparent` for a borderless webcam effect
+
+- **Container Shape**:
+  - Default circular shape is created using border-radius
+  - Modify the border-radius value to create:
+    - Perfect circle (default)
+    - Rounded square (try 20px for subtle rounding)
+    - Square (0px for sharp corners)
+    - Oval shape (different radius values for width/height)
 
 ## Usage in OBS
 
