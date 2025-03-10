@@ -47,6 +47,23 @@ A Node.js script that creates ZIP files for each overlay and background and plac
 node scripts/create-release-zips.js
 ```
 
+### `validate-html.sh`
+A shell script that validates all HTML files in the sources directory using the W3C Nu HTML Checker via a curl request.
+
+#### Requirements:
+- curl installed (pre-installed on most macOS and Linux systems)
+- Internet connection (to access the W3C validator service)
+
+#### Usage:
+```
+# Make sure the script is executable
+chmod +x scripts/validate-html.sh
+
+# Run the script from the scripts directory
+cd scripts
+./validate-html.sh
+```
+
 ## Adding New Scripts
 
 When adding new scripts to this directory:

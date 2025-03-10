@@ -1,9 +1,5 @@
 # Browser Overlays for Streaming
 
-A collection of free browser-based overlays for your streaming needs. The current overlays feature a cozy, minimalist gaming aesthetic with clean lines, soft colors, nature-inspired elements, and seasonal themes like our new arctic winter design.
-
-## Overview
-
 This repository contains a variety of browser overlays that you can use with OBS, Streamlabs, or any other streaming software that supports browser sources. The overlays are designed to be easy to use, customize, and integrate into your stream.
 
 ## Features
@@ -42,6 +38,33 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 
 [📄 Documentation](sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | 
 [⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
+
+### Minimal 10:9
+
+A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with black borders and customizable webcam positioning.
+
+![Minimal 10:9 Overlay](docs/screenshots/minimal-10-9.png)
+
+[📄 Documentation](sources/overlays/minimal-10-9/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/minimal-10-9.zip?raw=true)
+
+### Minimal 16:9
+
+A clean, minimal overlay for 16:9 aspect ratio gameplay with black borders and fully customizable layout via CSS variables.
+
+![Minimal 16:9 Overlay](docs/screenshots/minimal-16-9.png)
+
+[📄 Documentation](sources/overlays/minimal-16-9/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/minimal-16-9.zip?raw=true)
+
+### Minimal 4:3
+
+A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with black borders and optimized dimensions.
+
+![Minimal 4:3 Overlay](docs/screenshots/minimal-4-3.png)
+
+[📄 Documentation](sources/overlays/minimal-4-3/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true)
 
 ## Available Backgrounds
 

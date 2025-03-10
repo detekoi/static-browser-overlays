@@ -50,27 +50,115 @@ const overlayScreenshots = screenshotFiles.map(file => {
   };
 });
 
+// Before processing, clean up any duplicate sections that might exist
+const gettingStartedPosition = readmeContent.indexOf('## Getting Started');
+if (gettingStartedPosition !== -1) {
+  // Remove any duplicate entries that might exist between existing sections
+  // This helps clean up any messed up sections from previous runs
+  const availableOverlaysPosition = readmeContent.indexOf('## Available Overlays');
+  const availableBackgroundsPosition = readmeContent.indexOf('## Available Backgrounds');
+  
+  if (availableOverlaysPosition !== -1 && availableBackgroundsPosition !== -1) {
+    // Extract the clean sections
+    const beforeOverlays = readmeContent.substring(0, availableOverlaysPosition);
+    const overlaysSection = readmeContent.substring(availableOverlaysPosition, availableBackgroundsPosition);
+    const backgroundsSection = readmeContent.substring(availableBackgroundsPosition, gettingStartedPosition);
+    const afterBackgrounds = readmeContent.substring(gettingStartedPosition);
+    
+    // Reconstruct the README with clean sections
+    readmeContent = beforeOverlays + overlaysSection + backgroundsSection + afterBackgrounds;
+  }
+}
+
 // Check for missing screenshots in README
 for (const screenshot of overlayScreenshots) {
   const screenshotPath = `docs/screenshots/${screenshot.file}`;
-  if (!readmeContent.includes(screenshotPath)) {
+  // Also check for section header to avoid duplicates
+  const sectionHeader = `### ${screenshot.readableName}`;
+  if (!readmeContent.includes(screenshotPath) && !readmeContent.includes(sectionHeader)) {
     console.log(`Adding ${screenshot.readableName} to README...`);
+    
+    // Determine if this is a background or overlay
+    const isBackground = screenshot.overlayId.includes('background');
+    
+    // Find overlay directory path
+    let overlayDirPath;
+    if (isBackground) {
+      overlayDirPath = path.join(__dirname, '..', 'sources', 'backgrounds', screenshot.overlayId);
+    } else {
+      // For overlays, find the closest matching directory name
+      const overlaysDir = path.join(__dirname, '..', 'sources', 'overlays');
+      const overlayDirs = fs.readdirSync(overlaysDir);
+      const matchingDir = overlayDirs.find(dir => 
+        dir.toLowerCase().replace(/[^a-z0-9]/g, '-').includes(screenshot.overlayId.toLowerCase())
+      );
+      
+      overlayDirPath = matchingDir ? path.join(overlaysDir, matchingDir) : null;
+    }
+    
+    // Try to find a readme file in the overlay directory
+    let readmePath = null;
+    if (overlayDirPath && fs.existsSync(overlayDirPath)) {
+      const files = fs.readdirSync(overlayDirPath);
+      readmePath = files.find(file => file.toLowerCase().includes('readme') && file.endsWith('.md'));
+      if (readmePath) {
+        // Create a relative path from project root to the readme file
+        readmePath = path.join(overlayDirPath.substring(overlayDirPath.indexOf('sources')), readmePath);
+      }
+    }
+    
+    // Create description (placeholder if no readme found)
+    let description = `A stylish overlay for ${screenshot.readableName} streams.`;
+    
+    // Create documentation link if readme exists
+    const docLink = readmePath ? `[📄 Documentation](${readmePath}) | ` : '';
     
     // Create a new section template for the missing overlay
     const newSection = `
 ### ${screenshot.readableName}
 
+${description}
+
 ![${screenshot.readableName} Overlay](docs/screenshots/${screenshot.file})
 
-[⬇️ Download ZIP](releases/${screenshot.overlayId}.zip?raw=true)
+${docLink}[⬇️ Download ZIP](releases/${screenshot.overlayId}.zip?raw=true)
 `;
     
-    // Add the new section before the "Getting Started" section
-    const gettingStartedPosition = readmeContent.indexOf('## Getting Started');
-    readmeContent = 
-      readmeContent.slice(0, gettingStartedPosition) + 
-      newSection + 
-      readmeContent.slice(gettingStartedPosition);
+    if (isBackground) {
+      // Add the new background to the Available Backgrounds section
+      const availableBackgroundsPosition = readmeContent.indexOf('## Available Backgrounds');
+      const nextSectionPosition = readmeContent.indexOf('##', availableBackgroundsPosition + 1);
+      if (availableBackgroundsPosition !== -1 && nextSectionPosition !== -1) {
+        readmeContent = 
+          readmeContent.slice(0, nextSectionPosition) + 
+          newSection + 
+          readmeContent.slice(nextSectionPosition);
+      } else {
+        // Fallback if section markers not found - add before Getting Started
+        const gettingStartedPosition = readmeContent.indexOf('## Getting Started');
+        readmeContent = 
+          readmeContent.slice(0, gettingStartedPosition) + 
+          newSection + 
+          readmeContent.slice(gettingStartedPosition);
+      }
+    } else {
+      // Add the new overlay to the Available Overlays section
+      const availableOverlaysPosition = readmeContent.indexOf('## Available Overlays');
+      const nextSectionPosition = readmeContent.indexOf('## Available Backgrounds');
+      if (availableOverlaysPosition !== -1 && nextSectionPosition !== -1) {
+        readmeContent = 
+          readmeContent.slice(0, nextSectionPosition) + 
+          newSection + 
+          readmeContent.slice(nextSectionPosition);
+      } else {
+        // Fallback if section markers not found - add before Getting Started
+        const gettingStartedPosition = readmeContent.indexOf('## Getting Started');
+        readmeContent = 
+          readmeContent.slice(0, gettingStartedPosition) + 
+          newSection + 
+          readmeContent.slice(gettingStartedPosition);
+      }
+    }
   }
 }
 
