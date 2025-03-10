@@ -10,13 +10,41 @@ Thank you for considering contributing to the Browser Overlays project! This doc
 2. Create a new branch for your overlay: `git checkout -b new-overlay-name`
 3. Follow the structure:
    ```
-   overlays/overlay-name/
+   sources/overlays/overlay-name/
    ├── overlay.html (or index.html)
+   ├── styles.css (if separate from HTML)
+   └── assets/ (for images, fonts, etc.)
+   ```
+   
+   Or for backgrounds:
+   ```
+   sources/backgrounds/background-name/
+   ├── background.html
    ├── styles.css (if separate from HTML)
    └── assets/ (for images, fonts, etc.)
    ```
 4. Include a README.md in your overlay folder explaining its features and customization options
 5. Submit a pull request with a description of your overlay
+
+### File Naming Conventions for Automatic Screenshots
+
+Our project automatically generates screenshots of overlays and backgrounds for the documentation. For your overlay to be properly discovered and captured, please follow these naming conventions:
+
+#### File Naming Priority (Hierarchical Approach)
+
+1. **First Priority** - Use one of these specific filenames:
+   - `overlay.html` or `overlay.htm` (for overlays)
+   - `background.html` or `background.htm` (for backgrounds)
+   - `index.html` or `index.htm`
+   - `default.html` or `default.htm`
+
+2. **Second Priority** - If you need a custom name, use filenames ending with:
+   - `*overlay.html` or `*overlay.htm` (e.g., `my-custom-overlay.html`)
+   - `*background.html` or `*background.htm` (e.g., `winter-background.html`)
+
+3. **Final Fallback** - Any HTML file (`.html` or `.htm` extension) will be used if no files match the above patterns.
+
+The screenshot system will search for files in this order and use the first match it finds. To ensure your overlay is captured correctly, we recommend using one of the standard filenames from the first priority list.
 
 ### Improving Existing Overlays
 

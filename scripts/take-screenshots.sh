@@ -28,12 +28,12 @@ echo "Using Chrome at: $CHROME"
 echo "Taking screenshot of Cozy 10:9 GameBoy overlay..."
 "$CHROME" --headless=new --screenshot="docs/screenshots/cozy-10-9-gameboy.png" \
   --window-size=1920,1080 --default-background-color="#FFFFFF" \
-  "file://$PWD/overlays/cozy 10-9 aspect ratio/overlay.html"
+  "file://$PWD/sources/overlays/cozy 10-9 aspect ratio/overlay.html"
 
 echo "Taking screenshot of Cozy 16:9 Widescreen overlay..."
 "$CHROME" --headless=new --screenshot="docs/screenshots/cozy-16-9-widescreen.png" \
   --window-size=1920,1080 --default-background-color="#FFFFFF" \
-  "file://$PWD/overlays/cozy 16-9 aspect ratio/overlay.htm"
+  "file://$PWD/sources/overlays/cozy 16-9 aspect ratio/overlay.htm"
 
 echo "Screenshots captured successfully in docs/screenshots/ directory"
 echo "You can now update the README.md to reference these images"

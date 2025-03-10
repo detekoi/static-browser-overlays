@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twinkling Stars Background</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            /* CUSTOMIZE: Background color - currently a dark blue gradient */
+            background: linear-gradient(to bottom, #0f0f29, #000011);
+        }
+
+        /* Stars container */
+        .stars-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Star styles */
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #ffffff;
+            filter: blur(1px);
+            opacity: 0;
+            animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+            animation-delay: var(--twinkle-delay);
+        }
+
+        /* Large star occasional glow */
+        .star.large {
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Twinkling animation */
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: var(--star-brightness);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="starsContainer"></div>
+
+    <script>
+        // CUSTOMIZE: Star settings
+        const config = {
+            totalStars: 200,       // Total number of stars
+            smallStarSize: 2,      // Size of small stars in pixels
+            mediumStarSize: 3,     // Size of medium stars in pixels
+            largeStarSize: 4,      // Size of large stars in pixels
+            minTwinkleDuration: 3, // Minimum twinkling animation duration in seconds
+            maxTwinkleDuration: 8, // Maximum twinkling animation duration in seconds
+            minBrightness: 0.5,    // Minimum star brightness (0-1)
+            maxBrightness: 0.9,    // Maximum star brightness (0-1)
+            
+            // CUSTOMIZE: Color variations for stars (hex codes)
+            // Default is white, you can add blue, yellow, etc.
+            colors: [
+                '#ffffff', // White
+                '#fffacd', // Light yellow
+                '#e6e6fa', // Lavender
+                '#b0e0e6'  // Light blue
+            ]
+        };
+
+        // Container reference
+        const starsContainer = document.getElementById('starsContainer');
+
+        // Create stars
+        function createStars() {
+            for (let i = 0; i < config.totalStars; i++) {
+                createStar();
+            }
+        }
+
+        // Create individual star
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Randomize star properties
+            const size = getRandomSize();
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const twinkleDuration = (Math.random() * (config.maxTwinkleDuration - config.minTwinkleDuration) + config.minTwinkleDuration).toFixed(2);
+            const twinkleDelay = (Math.random() * 5).toFixed(2);
+            const brightness = Math.random() * (config.maxBrightness - config.minBrightness) + config.minBrightness;
+            const colorIndex = Math.floor(Math.random() * config.colors.length);
+            
+            // Apply star properties
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.backgroundColor = config.colors[colorIndex];
+            star.style.setProperty('--twinkle-duration', `${twinkleDuration}s`);
+            star.style.setProperty('--twinkle-delay', `${twinkleDelay}s`);
+            star.style.setProperty('--star-brightness', brightness);
+            
+            // Add large class for bigger stars to add glow
+            if (size === config.largeStarSize) {
+                star.classList.add('large');
+            }
+            
+            starsContainer.appendChild(star);
+        }
+
+        // Get random star size based on distribution
+        function getRandomSize() {
+            const rand = Math.random();
+            
+            // 70% small, 20% medium, 10% large
+            if (rand < 0.7) {
+                return config.smallStarSize;
+            } else if (rand < 0.9) {
+                return config.mediumStarSize;
+            } else {
+                return config.largeStarSize;
+            }
+        }
+
+        // Initialize stars
+        window.addEventListener('load', createStars);
+    </script>
+</body>
+</html>

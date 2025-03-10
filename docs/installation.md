@@ -5,7 +5,7 @@ This guide will help you add browser overlays to your streaming setup.
 ## Quick Start
 
 1. Download the repository or clone it using git
-2. Choose the overlay you want to use from the `overlays` folder
+2. Choose the overlay you want to use from the `sources/overlays` folder or a background from the `sources/backgrounds` folder
 3. Follow the platform-specific instructions below
 
 ## For OBS Studio

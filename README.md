@@ -22,16 +22,17 @@ A charming GameBoy-inspired frame with leaf decorations, perfect for retro games
 
 ![Cozy 10:9 GameBoy Overlay](docs/screenshots/cozy-10-9-gameboy.png)
 
+[📄 Documentation](sources/overlays/cozy%2010-9%20aspect%20ratio/overlay-readme.md) | 
 [⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
 
 ### Cozy 16:9 Widescreen
 
 A modern 16:9 transparent overlay with minimalist borders, perfect for contemporary games and content.
 
-![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
+![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-widescreen.png)
 
+[📄 Documentation](sources/overlays/cozy%2016-9%20aspect%20ratio/overlay-readme.md) | 
 [⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
-
 
 ### Cozy 4:3 Classic
 
@@ -39,15 +40,28 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 
 ![Cozy 4:3 Classic Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
 
+[📄 Documentation](sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | 
 [⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
 
-### Arctic Background Layer
+## Available Backgrounds
+
+### Arctic Background
 
 A winter-themed background with animated aurora borealis effects, falling snowflakes, and a snowy landscape. Designed to be used as a background layer beneath other transparent overlays.
 
-![Arctic Background Overlay](docs/screenshots/arctic-background.png)
+![Arctic Background](docs/screenshots/arctic-background.png)
 
+[📄 Documentation](sources/backgrounds/arctic-background/arctic-background-readme.md) | 
 [⬇️ Download ZIP](releases/arctic-background.zip?raw=true)
+
+### Twinkling Stars Background
+
+A beautiful animated background with twinkling stars of various sizes, colors, and brightness levels, perfect as a base layer for space-themed streams.
+
+![Stars Background](docs/screenshots/stars-background.png)
+
+[📄 Documentation](sources/backgrounds/stars-background/stars-background-readme.md) | 
+[⬇️ Download ZIP](releases/stars-background.zip?raw=true)
 
 ## Getting Started
 

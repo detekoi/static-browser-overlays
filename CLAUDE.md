@@ -53,6 +53,6 @@ Collection of browser-based overlays for Twitch streaming, featuring different t
 - Consider adding media queries for responsive behavior if needed
 
 ## File Organization
-- Group overlays by theme and aspect ratio
-- Keep source files in `/overlays/{theme}-{aspect-ratio}/`
+- Group files by type (overlays, backgrounds) and then by theme and aspect ratio
+- Keep source files in `/sources/overlays/{theme}-{aspect-ratio}/` or `/sources/backgrounds/{theme}/`
 - Releases are automatically zipped in `/releases/` directory

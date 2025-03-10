@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Bear Cafe Twitch Stream Overlay</title>
+    <style>
+        /* Base styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+            background-color: rgba(245, 235, 220, 0.15);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%235b4636' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        /* GameBoy Display Frame Container - 10:9 aspect ratio */
+        .gameboy-frame-container {
+            position: absolute;
+            left: 200px;
+            top: 40px;
+            width: 1120px; /* Slightly larger while maintaining ~10:9 aspect ratio */
+            height: 1000px;
+            z-index: 10;
+        }
+        
+        /* GameBoy Display Frame */
+        .gameboy-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #B89F7A;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(91, 70, 54, 0.2);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .gameboy-frame::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='%23a9885f' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+            border-radius: 10px;
+        }
+        
+        .gameboy-inner {
+            position: relative;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+            z-index: 1;
+        }
+        
+        /* Corner decorations for GameBoy frame */
+        .leaf {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 20; /* Higher z-index to ensure they appear on top */
+        }
+        
+        .leaf.top-left {
+            top: -20px;
+            left: -20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M5 25C5 15 15 5 25 5C25 15 35 25 25 25C35 25 45 35 45 45C35 45 25 35 25 45C25 35 15 25 5 25Z' fill='%23CFDAC8'/%3E%3C/svg%3E");
+            transform: rotate(-45deg);
+        }
+        
+        .leaf.top-right {
+            top: -20px;
+            right: -20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M5 25C5 15 15 5 25 5C25 15 35 25 25 25C35 25 45 35 45 45C35 45 25 35 25 45C25 35 15 25 5 25Z' fill='%23CFDAC8'/%3E%3C/svg%3E");
+            transform: rotate(45deg);
+        }
+        
+        .leaf.bottom-left {
+            bottom: -20px;
+            left: -20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M5 25C5 15 15 5 25 5C25 15 35 25 25 25C35 25 45 35 45 45C35 45 25 35 25 45C25 35 15 25 5 25Z' fill='%23CFDAC8'/%3E%3C/svg%3E");
+            transform: rotate(-135deg);
+        }
+        
+        .leaf.bottom-right {
+            bottom: -20px;
+            right: -20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Cpath d='M5 25C5 15 15 5 25 5C25 15 35 25 25 25C35 25 45 35 45 45C35 45 25 35 25 45C25 35 15 25 5 25Z' fill='%23CFDAC8'/%3E%3C/svg%3E");
+            transform: rotate(135deg);
+        }
+        
+        /* Webcam Frame */
+        .webcam-container {
+            position: absolute;
+            right: 150px; /* Centered in right space: (1920 - (200 + 1120)) / 2 - 300/2 + 150 */
+            top: 80px;
+            width: 300px;
+            height: 300px;
+            z-index: 100;
+        }
+        
+        .webcam-saucer {
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            left: -15px;
+            top: -15px;
+            background-color: #B89F7A;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(91, 70, 54, 0.2);
+        }
+        
+        .webcam-cup {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 0;
+            top: 0;
+            background-color: #F5EBDC;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+        }
+        
+        .webcam-rim {
+            position: absolute;
+            width: 290px;
+            height: 290px;
+            left: 5px;
+            top: 5px;
+            border: 4px solid #B89F7A;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(91, 70, 54, 0.1);
+        }
+        
+        /* Chat Widget Area */
+        .chat-container {
+            position: absolute;
+            right: 125px; /* Centered in right space: (1920 - (200 + 1120)) / 2 - 350/2 + 150 */
+            top: 420px;
+            width: 350px;
+            height: 565px;
+            background-color: #F5EBDC;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(91, 70, 54, 0.2);
+        }
+        
+        .chat-inner {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            width: calc(100% - 30px);
+            height: calc(100% - 30px);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+        }
+        
+        /* Chat decorative elements */
+        .chat-decoration {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .coffee-cup {
+            right: 20px;
+            top: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M15 15h30v25c0 8.284-6.716 15-15 15h0c-8.284 0-15-6.716-15-15V15z' fill='%235B4636' opacity='0.2'/%3E%3Cpath d='M15 10h30v5H15z' fill='%235B4636' opacity='0.1'/%3E%3Cpath d='M50 20c2.761 0 5 2.239 5 5v5c0 2.761-2.239 5-5 5h-5V20h5z' fill='%235B4636' opacity='0.1'/%3E%3C/svg%3E");
+        }
+        
+        .cake-slice {
+            left: 20px;
+            bottom: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M5 45L30 5L55 45z' fill='%23E8B4B8' opacity='0.2'/%3E%3Cpath d='M10 45L30 10L50 45z' fill='%23CFDAC8' opacity='0.3'/%3E%3Cpath d='M15 45L30 15L45 45z' fill='%23F5EBDC' opacity='0.4'/%3E%3C/svg%3E");
+        }
+        
+        /* Decorative paw prints */
+        .paw-print {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='8' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='8' cy='9' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='22' cy='9' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='8' cy='21' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='22' cy='21' r='4' fill='%235B4636' opacity='0.07'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+        
+        .paw-1 { right: 250px; top: 550px; }
+        .paw-2 { right: 300px; top: 600px; transform: rotate(30deg); }
+        .paw-3 { right: 200px; top: 670px; transform: rotate(-15deg); }
+        .paw-4 { right: 280px; top: 750px; transform: rotate(45deg); }
+    </style>
+</head>
+<body>
+    <!-- GameBoy Display Frame with corner leaves -->
+    <div class="gameboy-frame-container">
+        <!-- Leaves positioned outside the frame -->
+        <div class="leaf top-left"></div>
+        <div class="leaf top-right"></div>
+        <div class="leaf bottom-left"></div>
+        <div class="leaf bottom-right"></div>
+        
+        <div class="gameboy-frame">
+            <div class="gameboy-inner">
+                <!-- Game content would appear here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Webcam Frame -->
+    <div class="webcam-container">
+        <div class="webcam-saucer"></div>
+        <div class="webcam-cup">
+            <!-- Webcam content would appear here -->
+            <div class="webcam-rim"></div>
+        </div>
+    </div>
+    
+    <!-- Chat Widget Area -->
+    <div class="chat-container">
+        <div class="chat-decoration coffee-cup"></div>
+        <div class="chat-decoration cake-slice"></div>
+        <div class="chat-inner">
+            <!-- Chat widget would be embedded here -->
+        </div>
+    </div>
+    
+    <!-- Decorative Elements -->
+    <div class="paw-print paw-1"></div>
+    <div class="paw-print paw-2"></div>
+    <div class="paw-print paw-3"></div>
+    <div class="paw-print paw-4"></div>
+</body>
+</html>

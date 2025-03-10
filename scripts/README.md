@@ -35,6 +35,18 @@ chmod +x scripts/take-screenshots.sh
 ./scripts/take-screenshots.sh
 ```
 
+### `create-release-zips.js`
+A Node.js script that creates ZIP files for each overlay and background and places them in the releases directory. The script only creates new ZIP files if they don't already exist or if source files have been modified.
+
+#### Requirements:
+- Node.js installed
+- zip command-line utility (pre-installed on most macOS and Linux systems)
+
+#### Usage:
+```
+node scripts/create-release-zips.js
+```
+
 ## Adding New Scripts
 
 When adding new scripts to this directory:
