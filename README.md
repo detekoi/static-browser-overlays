@@ -123,13 +123,3 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Community Guidelines
-
-This project welcomes contributions from everyone and is committed to creating a friendly and inclusive environment. We encourage designs that are accessible to streamers from diverse backgrounds and that support LGBTQIA+ and anti-racist values.
-
-For more information on our design approach and content standards, see the [CLAUDE.md](CLAUDE.md) file.
-
-## Acknowledgements
-
-- Thanks to all contributors and the streaming community

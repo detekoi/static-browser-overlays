@@ -94,10 +94,12 @@ The screenshot system will search for files in this order and use the first matc
 3. Include screenshots of your overlay in action
 4. Submissions will be reviewed by maintainers before merging
 
-## Code of Conduct
+## Community Guidelines
 
-- Be respectful and inclusive in your language and contributions
-- Provide constructive feedback
-- Focus on the improvement of the project
+This project welcomes contributions from everyone and is committed to creating a friendly and inclusive environment. We encourage designs that are accessible to streamers from diverse backgrounds and that support self-actualization of all LGBTQIA+ people and anti-racist values.
+
+Please provide constructive feedback, focusing on improvement of the project.
+
+For more information on our design approach and content standards, see the [CLAUDE.md](CLAUDE.md) file.
 
 Thank you for contributing to make streaming overlays more accessible and beautiful for everyone!
