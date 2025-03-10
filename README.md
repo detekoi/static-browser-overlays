@@ -19,7 +19,8 @@ A charming GameBoy-inspired frame with leaf decorations, perfect for retro games
 ![Cozy 10:9 GameBoy Overlay](docs/screenshots/cozy-10-9-gameboy.png)
 
 [📄 Documentation](sources/overlays/cozy%2010-9%20aspect%20ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
+[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2010-9%20aspect%20ratio/overlay.html)
 
 ### Cozy 16:9 Widescreen
 
@@ -28,7 +29,8 @@ A modern 16:9 transparent overlay with minimalist borders, perfect for contempor
 ![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-widescreen.png)
 
 [📄 Documentation](sources/overlays/cozy%2016-9%20aspect%20ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
+[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2016-9%20aspect%20ratio/overlay.htm)
 
 ### Cozy 4:3 Classic
 
@@ -37,7 +39,8 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 ![Cozy 4:3 Classic Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
 
 [📄 Documentation](sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
+[⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy-4-3-aspect-ratio/overlay.html)
 
 ### Minimal 10:9
 
@@ -46,7 +49,8 @@ A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Adv
 ![Minimal 10:9 Overlay](docs/screenshots/minimal-10-9.png)
 
 [📄 Documentation](sources/overlays/minimal-10-9/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/minimal-10-9.zip?raw=true)
+[⬇️ Download ZIP](releases/minimal-10-9.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-10-9/overlay.html)
 
 ### Minimal 16:9
 
@@ -55,7 +59,8 @@ A clean, minimal overlay for 16:9 aspect ratio gameplay with black borders and f
 ![Minimal 16:9 Overlay](docs/screenshots/minimal-16-9.png)
 
 [📄 Documentation](sources/overlays/minimal-16-9/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/minimal-16-9.zip?raw=true)
+[⬇️ Download ZIP](releases/minimal-16-9.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-16-9/overlay.html)
 
 ### Minimal 4:3
 
@@ -64,7 +69,8 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade
 ![Minimal 4:3 Overlay](docs/screenshots/minimal-4-3.png)
 
 [📄 Documentation](sources/overlays/minimal-4-3/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true)
+[⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-4-3/overlay.html)
 
 ## Available Backgrounds
 
@@ -75,7 +81,8 @@ A winter-themed background with animated aurora borealis effects, falling snowfl
 ![Arctic Background](docs/screenshots/arctic-background.png)
 
 [📄 Documentation](sources/backgrounds/arctic-background/arctic-background-readme.md) | 
-[⬇️ Download ZIP](releases/arctic-background.zip?raw=true)
+[⬇️ Download ZIP](releases/arctic-background.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/backgrounds/arctic-background/arctic-background.html)
 
 ### Twinkling Stars Background
 
@@ -84,7 +91,8 @@ A beautiful animated background with twinkling stars of various sizes, colors, a
 ![Stars Background](docs/screenshots/stars-background.png)
 
 [📄 Documentation](sources/backgrounds/stars-background/stars-background-readme.md) | 
-[⬇️ Download ZIP](releases/stars-background.zip?raw=true)
+[⬇️ Download ZIP](releases/stars-background.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/backgrounds/stars-background/stars-background.html)
 
 ## Getting Started
 
