@@ -4,11 +4,10 @@ This repository contains a variety of browser overlays that you can use with OBS
 
 ## Features
 
-- **Beautiful Overlays**: HTML/CSS overlays with elegant animations and minimal JavaScript
-- **Animated Elements**: Snowfall, aurora effects, and subtle animations for a dynamic look
-- **Easy to Customize**: Clear documentation on how to modify colors, text, and other elements
-- **Responsive Design**: Works across different stream sizes and resolutions
-- **Open Source**: Free to use and modify under the MIT License
+- **Beautiful Overlays**: HTML/CSS overlays with elegant animations and minimal JavaScript.
+- **Animated Elements**: Snowfall, aurora effects, and subtle animations for a dynamic look.
+- **Easy to Customize**: Clear documentation on how to modify colors, text, and other elements.
+- **Open Source**: Free to use and modify under the MIT License.
 
 ## Available Overlays
 
@@ -99,15 +98,15 @@ A beautiful animated background with twinkling stars of various sizes, colors, a
 ### Quick Start Options
 
 **Option 1: Download and Use Locally (Recommended)**
-- Download the ZIP file for your chosen overlay or background
-- Extract and use locally for full customization capabilities
-- Stable version that won't change unexpectedly
+- Download the ZIP file for your chosen overlay or background.
+- Extract and use locally for full customization capabilities.
+- Stable version that won't change unexpectedly.
 
 **Option 2: Use Live Demo Links Directly**
-- Copy the Live Demo URL and paste it into OBS as a browser source
-- No download required, but customization isn't possible
-- Requires internet connection while streaming
-- Subject to change if the repository is updated
+- Copy the Live Demo URL and paste it into OBS as a browser source.
+- No download required, but customization isn't possible.
+- Requires internet connection while streaming.
+- Subject to change if the repository is updated.
 
 Check out the [installation guide](docs/installation.md) for complete instructions on both methods.
 
