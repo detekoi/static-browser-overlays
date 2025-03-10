@@ -96,11 +96,25 @@ A beautiful animated background with twinkling stars of various sizes, colors, a
 
 ## Getting Started
 
-Check out the [installation guide](docs/installation.md) for instructions on how to add these overlays to your streaming setup.
+### Quick Start Options
+
+**Option 1: Download and Use Locally (Recommended)**
+- Download the ZIP file for your chosen overlay or background
+- Extract and use locally for full customization capabilities
+- Stable version that won't change unexpectedly
+
+**Option 2: Use Live Demo Links Directly**
+- Copy the Live Demo URL and paste it into OBS as a browser source
+- No download required, but customization isn't possible
+- Requires internet connection while streaming
+- Subject to change if the repository is updated
+
+Check out the [installation guide](docs/installation.md) for complete instructions on both methods.
 
 ## Customization
 
-See the [customization guide](docs/customization.md) for details on how to modify the overlays to match your stream's aesthetic.
+See the [customization guide](docs/customization.md) for details on how to modify the overlays to match your stream's aesthetic. 
+**Note**: Customization is only possible with locally downloaded files, not with the Live Demo links.
 
 ## Contributing
 
