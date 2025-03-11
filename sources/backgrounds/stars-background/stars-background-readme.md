@@ -102,7 +102,52 @@ function getRandomSize() {
 }
 ```
 
-Change the probability values (0.7 and 0.9) to adjust the distribution.
+#### How to Adjust the Distribution:
+
+The function uses probability thresholds to determine star sizes:
+- `rand < 0.7`: Creates small stars (70% probability)
+- `rand < 0.9`: Creates medium stars (20% probability)
+- Otherwise: Creates large stars (10% probability)
+
+To change the distribution, modify the threshold values using this formula:
+- First threshold = percentage of small stars (as decimal)
+- Second threshold = percentage of small + medium stars (as decimal)
+- Large stars automatically get the remaining percentage
+
+#### Examples:
+
+1. **Equal distribution** (33% each):
+   ```javascript
+   if (rand < 0.33) {
+       return config.smallStarSize;
+   } else if (rand < 0.66) {
+       return config.mediumStarSize;
+   } else {
+       return config.largeStarSize;
+   }
+   ```
+
+2. **Mostly medium stars** (10% small, 80% medium, 10% large):
+   ```javascript
+   if (rand < 0.1) {
+       return config.smallStarSize;
+   } else if (rand < 0.9) {
+       return config.mediumStarSize;
+   } else {
+       return config.largeStarSize;
+   }
+   ```
+
+3. **Rare large stars** (50% small, 45% medium, 5% large):
+   ```javascript
+   if (rand < 0.5) {
+       return config.smallStarSize;
+   } else if (rand < 0.95) {
+       return config.mediumStarSize;
+   } else {
+       return config.largeStarSize;
+   }
+   ```
 
 ## Advanced Customizations
 
