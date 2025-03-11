@@ -9,21 +9,21 @@ This HTML/CSS/JavaScript file creates a beautiful animated background with twink
 ## Adding to OBS Studio
 
 1. **Save the HTML file**:
-   - Save the HTML code as a file with the `.html` extension (e.g., `twinkling-stars-background.html`)
-   - Store it in a location you can easily access
+   - Save the HTML code as a file with the `.html` extension (e.g., `twinkling-stars-background.html`).
+   - Store it in a location you can easily access.
 
 2. **Add as Browser Source**:
-   - In OBS Studio, click the "+" button in the Sources panel
-   - Select "Browser" from the menu
-   - Name your source (e.g., "Stars Background")
-   - Check "Local file" and click "Browse"
-   - Locate and select your saved HTML file
-   - Set Width to 1920 and Height to 1080 (or your stream resolution)
-   - Click "OK" to add the source
+   - In OBS Studio, click the "+" button in the Sources panel.
+   - Select "Browser" from the menu.
+   - Name your source (e.g., "Stars Background").
+   - Check "Local file" and click "Browse".
+   - Locate and select your saved HTML file.
+   - Set Width to 1920 and Height to 1080 (or your stream resolution).
+   - Click "OK" to add the source.
 
 3. **Layer Properly**:
-   - Make sure the stars background is at the bottom of your sources list
-   - Position any other overlay elements (webcam, alerts, etc.) above it
+   - Make sure the stars background is at the bottom of your sources list.
+   - Position any other overlay elements (webcam, alerts, etc.) above it.
 
 ## Customization Options
 
@@ -77,11 +77,11 @@ const config = {
 
 Here's what each property does:
 
-- **totalStars**: Increases or decreases the number of stars in the background
-- **Star Sizes**: Controls the pixel size of small, medium, and large stars
-- **Twinkle Duration**: Controls how quickly stars twinkle (higher values = slower twinkling)
-- **Brightness**: Controls how bright the stars appear at their peak
-- **Colors**: Array of hex color codes for stars (add or remove colors as desired)
+- **totalStars**: Increases or decreases the number of stars in the background.
+- **Star Sizes**: Controls the pixel size of small, medium, and large stars.
+- **Twinkle Duration**: Controls how quickly stars twinkle (higher values = slower twinkling).
+- **Brightness**: Controls how bright the stars appear at their peak.
+- **Colors**: Array of hex color codes for stars (add or remove colors as desired).
 
 ### Star Distribution
 
@@ -136,25 +136,25 @@ For a more dynamic background, you could add code for occasional shooting stars.
 
 ## Performance Considerations
 
-- **Star Count**: If you experience performance issues, try reducing the `totalStars` value
-- **Animation Complexity**: Simpler animations (fewer stars, less motion) will use fewer resources
-- **Browser Source Settings**: In OBS, you can set the browser source to refresh when not visible to save resources
+- **Star Count**: If you experience performance issues, try reducing the `totalStars` value.
+- **Animation Complexity**: Simpler animations (fewer stars, less motion) will use fewer resources.
+- **Browser Source Settings**: In OBS, you can set the browser source to refresh when not visible to save resources.
 
 ## Troubleshooting
 
 If the background doesn't appear:
-1. Make sure the HTML file is saved with proper formatting
-2. Check that the browser source is correctly pointed to the file
-3. Verify the browser source is visible and not hidden behind other sources
-4. Try refreshing the browser source in OBS
+1. Make sure the HTML file is saved with proper formatting.
+2. Check that the browser source is correctly pointed to the file.
+3. Verify the browser source is visible and not hidden behind other sources.
+4. Try refreshing the browser source in OBS.
 
 ## Compatibility
 
 This background should work with:
-- OBS Studio (recommended)
-- Streamlabs Desktop
-- XSplit
-- Any other streaming software that supports browser sources
+- OBS Studio (recommended).
+- Streamlabs Desktop.
+- XSplit.
+- Any other streaming software that supports browser sources.
 
 ## License and Attribution
 

@@ -10,12 +10,12 @@ A winter-themed animated background with aurora borealis effects, falling snowfl
 
 ## Features
 
-- Animated aurora borealis effect
-- Falling snowflakes with varied animation patterns
-- Decorative icicles with subtle shimmer effects
-- Snow-covered ground
-- Distant polar bear silhouettes
-- Soft color palette with soothing blue gradients
+- Animated aurora borealis effect.
+- Falling snowflakes with varied animation patterns.
+- Decorative icicles with subtle shimmer effects.
+- Snow-covered ground.
+- Distant polar bear silhouettes.
+- Soft color palette with soothing blue gradients.
 
 ## Customization Guide
 
@@ -99,9 +99,9 @@ To modify the color scheme of the background:
 
 This background is designed to work as a base layer. To use it with other overlays:
 
-1. Add this background as a browser source in your streaming software
-2. Add your game capture or other content source above it
-3. Add transparent foreground overlays on top
+1. Add this background as a browser source in your streaming software.
+2. Add your game capture or other content source above it.
+3. Add transparent foreground overlays on top.
 
 For best results, use with other overlays from this collection that have transparent backgrounds.
 
@@ -109,10 +109,10 @@ For best results, use with other overlays from this collection that have transpa
 
 For more advanced customization, you can:
 
-1. Adjust the opacity values in various elements to make them more or less prominent
-2. Modify the animation keyframes for completely different movement patterns
-3. Add new decorative elements by creating additional CSS classes and HTML elements
+1. Adjust the opacity values in various elements to make them more or less prominent.
+2. Modify the animation keyframes for completely different movement patterns.
+3. Add new decorative elements by creating additional CSS classes and HTML elements.
 
 ## Questions or Issues?
 
-If you have any questions about customizing this overlay or encounter any issues, please open an issue in the GitHub repository. 
+If you have any questions about customizing this overlay or encounter any issues, please open an issue in the GitHub repository.

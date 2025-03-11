@@ -10,33 +10,33 @@ A modern 16:9 transparent overlay with minimalist borders and arctic-themed elem
 
 ## Features
 
-- Clean, minimalist frame design with subtle borders
-- Animated aurora borealis effects in the background
-- Gentle falling snowflakes animation
-- Decorative icicles along the top edge
-- Designated spaces for webcam and chat
-- Fully optimized for 16:9 widescreen games
+- Clean, minimalist frame design with subtle borders.
+- Animated aurora borealis effects in the background.
+- Gentle falling snowflakes animation.
+- Decorative icicles along the top edge.
+- Designated spaces for webcam and chat.
+- Fully optimized for 16:9 widescreen games.
 
 ## Adding to OBS Studio
 
 1. **Add as Browser Source**:
-   - In OBS Studio, click the "+" button in the Sources panel
-   - Select "Browser" from the menu
-   - Name your source (e.g., "Arctic Overlay")
-   - Check "Local file" and click "Browse"
-   - Locate and select the overlay.htm file
-   - Set Width to 1920 and Height to 1080 (or your stream resolution)
-   - Click "OK" to add the source
+   - In OBS Studio, click the "+" button in the Sources panel.
+   - Select "Browser" from the menu.
+   - Name your source (e.g., "Arctic Overlay").
+   - Check "Local file" and click "Browse".
+   - Locate and select the overlay.htm file.
+   - Set Width to 1920 and Height to 1080 (or your stream resolution).
+   - Click "OK" to add the source.
 
 2. **Position Your Game Capture**:
-   - Add your game capture source
-   - Resize and position it to fit within the frame
-   - Make sure the game source is below the overlay in the sources list
+   - Add your game capture source.
+   - Resize and position it to fit within the frame.
+   - Make sure the game source is below the overlay in the sources list.
 
 3. **Position Your Webcam**:
-   - Add your webcam source
-   - Resize and position it to fit within the circular webcam area
-   - Ensure the webcam is below the overlay in the sources list
+   - Add your webcam source.
+   - Resize and position it to fit within the circular webcam area.
+   - Ensure the webcam is below the overlay in the sources list.
 
 ## Customization Options
 
@@ -57,11 +57,11 @@ Find the CSS variables in the style section:
 ```
 
 Modify these variables to change the color scheme:
-- `--aurora-color-*`: The colors of the aurora borealis effect
-- `--background-color`: The main background color
-- `--border-color`: The color of frame borders
-- `--snow-color`: The color of snowflakes
-- `--text-color`: The color of any text elements
+- `--aurora-color-*`: The colors of the aurora borealis effect.
+- `--background-color`: The main background color.
+- `--border-color`: The color of frame borders.
+- `--snow-color`: The color of snowflakes.
+- `--text-color`: The color of any text elements.
 
 ### Adjusting Animations
 
@@ -122,37 +122,37 @@ Modify these percentage values to resize or reposition elements.
 This overlay is designed with an arctic theme, but can be adapted to other aesthetics:
 
 ### For a Cozy Autumn Theme:
-- Change aurora colors to warm oranges and yellows
-- Replace snowflakes with falling leaves
-- Adjust the background to a warmer tone
+- Change aurora colors to warm oranges and yellows.
+- Replace snowflakes with falling leaves.
+- Adjust the background to a warmer tone.
 
 ### For a Space Theme:
-- Change aurora colors to purples and blues
-- Replace snowflakes with twinkling stars
-- Adjust the background to a dark color
+- Change aurora colors to purples and blues.
+- Replace snowflakes with twinkling stars.
+- Adjust the background to a dark color.
 
 ## Advanced Customization
 
 For more advanced changes:
 
-1. **Adding Text Elements**: Insert custom text fields for stream info
-2. **Widget Integration**: Leave space for subscriber alerts and other widgets
-3. **Custom Graphics**: Add your own SVG or PNG elements to personalize the overlay
+1. **Adding Text Elements**: Insert custom text fields for stream info.
+2. **Widget Integration**: Leave space for subscriber alerts and other widgets.
+3. **Custom Graphics**: Add your own SVG or PNG elements to personalize the overlay.
 
 ## Compatibility
 
 This overlay is designed for:
-- Modern console games (PS5, Xbox Series, Nintendo Switch)
-- PC games at 16:9 aspect ratio
-- Any content that benefits from a widescreen display
+- Modern console games (PS5, Xbox Series, Nintendo Switch).
+- PC games at 16:9 aspect ratio.
+- Any content that benefits from a widescreen display.
 
 ## Troubleshooting
 
 If animations appear choppy:
-1. Check that your OBS is not exceeding CPU/GPU limits
-2. Try setting the browser source to 30fps instead of 60fps
-3. Disable hardware acceleration in the browser source settings
-4. Remove some snowflake elements to reduce animation complexity
+1. Check that your OBS is not exceeding CPU/GPU limits.
+2. Try setting the browser source to 30fps instead of 60fps.
+3. Disable hardware acceleration in the browser source settings.
+4. Remove some snowflake elements to reduce animation complexity.
 
 ## Questions or Issues?
 
