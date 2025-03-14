@@ -103,7 +103,11 @@ for (const screenshot of overlayScreenshots) {
       readmePath = files.find(file => file.toLowerCase().includes('readme') && file.endsWith('.md'));
       if (readmePath) {
         // Create a relative path from project root to the readme file
-        readmePath = path.join(overlayDirPath.substring(overlayDirPath.indexOf('sources')), readmePath);
+        // Make sure we're using the correct sources path
+        const sourcesPath = overlayDirPath.substring(overlayDirPath.indexOf('sources'));
+        // Remove any reference to the repo directory path
+        const cleanPath = sourcesPath.replace(/game-overlays-repo\//, '');
+        readmePath = path.join(cleanPath, readmePath);
       }
     }
     

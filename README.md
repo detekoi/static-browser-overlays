@@ -71,7 +71,18 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade
 [⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-4-3/overlay.html)
 
+
 ## Available Backgrounds
+
+### Cube Pattern Background
+
+A stylish animated isometric cube pattern with dynamic lighting effects, perfect as a background for modern gaming streams.
+
+![Cube Pattern Background](docs/screenshots/cube-pattern-background.png)
+
+[📄 Documentation](sources/backgrounds/cube-pattern-background/cube-pattern-background-readme.md) | 
+[⬇️ Download ZIP](releases/cube-pattern-background.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/backgrounds/cube-pattern-background/cube-pattern-background.html)
 
 ### Arctic Background
 
