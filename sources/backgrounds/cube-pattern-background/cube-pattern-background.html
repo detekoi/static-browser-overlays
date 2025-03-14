@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Configuration
+    const config = {
+      cubeSize: 40, // Slightly larger cubes for better coverage
+      gridSize: 24, // Will be calculated dynamically
+      numLights: 8, // More lights for smoother transitions
+      animationSpeed: 0.0006, // Much slower animation for smoother transitions
+      lightOrbitSpeed: 0.001, // Even slower orbit speed
+      lightPulseSpeed: 0.003, // Much slower pulse for ultra-smooth lighting
+      lightPulseAmount: 3, // Minimal pulse amount for very subtle effects
+      rotationAmount: 0.01, // Very small rotation
+      interpolationFactor: 0.015, // Ultra-slow interpolation
+      historyLength: 12 // Longer history for smoother averaging
+    };
+    
+    // State
+    let lights = [];
+    let ambiguityPhase = 0;
+    let lightingCache = new Map(); // Cache for smooth lighting
+    
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      
+      // Ensure coverage for the larger of current window or 1920x1080
+      const minWidth = max(windowWidth, 1920);
+      const minHeight = max(windowHeight, 1080);
+      
+      // We need to calculate the grid size more precisely for isometric projection
+      // In isometric view, each cube's width contribution is 1x cubeSize (not 1.5x)
+      // Each cube's height contribution is 0.866x cubeSize
+      
+      // Calculate with generous padding to ensure no gaps at all
+      const horizontalCubes = Math.ceil(minWidth / (config.cubeSize * 0.75)) + 8;  
+      const verticalCubes = Math.ceil(minHeight / (config.cubeSize * 0.866)) + 8;
+      
+      config.gridSize = Math.max(horizontalCubes, verticalCubes);
+      
+      // Initialize light sources more evenly distributed
+      for (let i = 0; i < config.numLights; i++) {
+        lights.push({
+          angle: TWO_PI / config.numLights * i,
+          radius: max(minWidth, minHeight), // Even larger radius
+          color: color(
+            random(180, 255),
+            random(180, 255),
+            random(180, 255),
+            180
+          ),
+          speed: config.lightOrbitSpeed * (1 + random(-0.1, 0.1)) // Slight variation
+        });
+      }
+      
+      // Pre-initialize lighting cache for smooth transitions
+      lightingCache = new Map();
+    }
+    
+    function draw() {
+      background(10, 10, 30);
+      
+      // Update animation state
+      ambiguityPhase += config.animationSpeed;
+      
+      // Update light positions
+      updateLights();
+      
+      // Draw the cube wall (expanded to fill screen)
+      drawCubeWall();
+      
+      // We no longer draw visible lights as requested
+      // drawLights();
+    }
+    
+    function updateLights() {
+      for (let light of lights) {
+        light.angle += light.speed;
+      }
+    }
+    
+    function drawCubeWall() {
+      push();
+      // Center and apply very subtle rotation
+      translate(width/2, height/2);
+      let rotAmount = sin(ambiguityPhase * 0.3) * config.rotationAmount;
+      rotate(rotAmount);
+      
+      // Calculate the dimensions - critically important for proper coverage
+      // Note: For isometric projection, the effective width of each cube is 0.75 * cubeSize
+      let gridWidth = config.gridSize * config.cubeSize * 0.75;
+      let gridHeight = config.gridSize * config.cubeSize * 0.866;
+      
+      // Offset to ensure proper centering and coverage
+      translate(-gridWidth/2, -gridHeight/2);
+      
+      // Draw cubes
+      for (let y = -4; y < config.gridSize + 4; y++) {  // Extra rows/columns to ensure coverage
+        for (let x = -4; x < config.gridSize + 4; x++) {  // Extra rows/columns to ensure coverage
+          // Create a smoother shifting pattern using cosine waves with different frequencies
+          // Using much lower frequencies for smoother transitions
+          let wave1 = cos((x * 0.12 + y * 0.1) + ambiguityPhase * 0.4);
+          let wave2 = sin((x * 0.09 - y * 0.11) + ambiguityPhase * 0.3);
+          let wave3 = cos((x * 0.06 + y * 0.13) - ambiguityPhase * 0.35);
+          
+          // Combine multiple waves with weighted averaging for even smoother transitions
+          let combinedWave = (wave1 * 0.4 + wave2 * 0.3 + wave3 * 0.3);
+          let stickOut = combinedWave > 0;
+          
+          drawCube(
+            x * config.cubeSize * 0.75, 
+            y * config.cubeSize * 0.866, 
+            config.cubeSize, 
+            stickOut,
+            `${x},${y}` // Pass coordinate key for lighting cache
+          );
+        }
+      }
+      pop();
+    }
+    
+    function drawCube(x, y, size, stickOut, cacheKey) {
+      push();
+      translate(x, y);
+      
+      // Calculate lighting for this cube using the cache for smoothness
+      let lightValues = calculateLighting(x, y, size, cacheKey);
+      
+      // Define color palettes for "out" and "in" cubes
+      let baseColors = {
+        topOut: color(120, 140, 170),
+        leftOut: color(80, 100, 130),
+        rightOut: color(100, 120, 150),
+        
+        topIn: color(100, 120, 150),
+        leftIn: color(120, 140, 170),
+        rightIn: color(80, 100, 130)
+      };
+      
+      noStroke();
+      
+      // Apply lighting to the base colors
+      if (stickOut) {
+        // Draw top face
+        fill(
+          red(baseColors.topOut) + lightValues.top,
+          green(baseColors.topOut) + lightValues.top,
+          blue(baseColors.topOut) + lightValues.top
+        );
+        drawTopFace(size);
+        
+        // Draw left face
+        fill(
+          red(baseColors.leftOut) + lightValues.left,
+          green(baseColors.leftOut) + lightValues.left,
+          blue(baseColors.leftOut) + lightValues.left
+        );
+        drawLeftFace(size);
+        
+        // Draw right face
+        fill(
+          red(baseColors.rightOut) + lightValues.right,
+          green(baseColors.rightOut) + lightValues.right,
+          blue(baseColors.rightOut) + lightValues.right
+        );
+        drawRightFace(size);
+      } else {
+        // For cubes that "stick in"
+        // Draw top face (now bottom of the hole)
+        fill(
+          red(baseColors.topIn) + lightValues.top,
+          green(baseColors.topIn) + lightValues.top,
+          blue(baseColors.topIn) + lightValues.top
+        );
+        drawTopFace(size);
+        
+        // Draw left face
+        fill(
+          red(baseColors.leftIn) + lightValues.left,
+          green(baseColors.leftIn) + lightValues.left,
+          blue(baseColors.leftIn) + lightValues.left
+        );
+        drawLeftFace(size);
+        
+        // Draw right face
+        fill(
+          red(baseColors.rightIn) + lightValues.right,
+          green(baseColors.rightIn) + lightValues.right,
+          blue(baseColors.rightIn) + lightValues.right
+        );
+        drawRightFace(size);
+      }
+      
+      pop();
+    }
+    
+    // Draw the three faces of an isometric cube
+    function drawTopFace(size) {
+      beginShape();
+      vertex(0, 0);
+      vertex(size, 0);
+      vertex(size * 1.5, size * 0.5);
+      vertex(size * 0.5, size * 0.5);
+      endShape(CLOSE);
+    }
+    
+    function drawLeftFace(size) {
+      beginShape();
+      vertex(0, 0);
+      vertex(size * 0.5, size * 0.5);
+      vertex(size * 0.5, size * 1.5);
+      vertex(0, size);
+      endShape(CLOSE);
+    }
+    
+    function drawRightFace(size) {
+      beginShape();
+      vertex(size, 0);
+      vertex(size * 1.5, size * 0.5);
+      vertex(size * 1.5, size * 1.5);
+      vertex(size, size);
+      endShape(CLOSE);
+    }
+    
+    function calculateLighting(x, y, size, cacheKey) {
+      // Convert to global coordinates - updated for proper positioning
+      let globalX = width/2 - (config.gridSize * config.cubeSize * 0.75)/2 + x;
+      let globalY = height/2 - (config.gridSize * config.cubeSize * 0.866)/2 + y;
+      
+      // Define center points for each face
+      let topCenter = createVector(globalX + size * 0.75, globalY + size * 0.25);
+      let leftCenter = createVector(globalX + size * 0.25, globalY + size * 0.75);
+      let rightCenter = createVector(globalX + size * 1.25, globalY + size * 0.75);
+      
+      // Get cached lighting if available or initialize with longer history
+      const key = cacheKey || `${x},${y}`;
+      let prevLighting = lightingCache.get(key);
+      if (!prevLighting) {
+        prevLighting = {
+          top: 0, 
+          left: 0, 
+          right: 0,
+          // Create longer history arrays for smoother transitions
+          leftHistory: Array(config.historyLength).fill(0),
+          topHistory: Array(config.historyLength).fill(0),
+          rightHistory: Array(config.historyLength).fill(0)
+        };
+      }
+      
+      let currentLighting = {top: 0, left: 0, right: 0};
+      
+      // Face normals for lighting calculation
+      let topFaceNormal = createVector(0, -1);
+      let leftFaceNormal = createVector(-0.866, 0.5);
+      let rightFaceNormal = createVector(0.866, 0.5);
+      
+      for (let light of lights) {
+        // Light position
+        let lightPos = createVector(
+          width/2 + cos(light.angle) * light.radius,
+          height/2 + sin(light.angle) * light.radius
+        );
+        
+        // Multiple overlapping pulses with very slow frequencies
+        let pulseA = sin(frameCount * config.lightPulseSpeed * 0.7 + light.angle * 1.5) * (config.lightPulseAmount * 0.5);
+        let pulseB = sin(frameCount * config.lightPulseSpeed * 0.4 + light.angle * 0.8) * (config.lightPulseAmount * 0.3);
+        let pulseC = sin(frameCount * config.lightPulseSpeed * 0.2 + light.angle * 0.3) * (config.lightPulseAmount * 0.2);
+        let pulse = pulseA + pulseB + pulseC;
+        
+        // Calculate lighting with higher minimum values to reduce contrast
+        let lightDir = p5.Vector.sub(lightPos, topCenter).normalize();
+        let topDot = max(0.3, p5.Vector.dot(topFaceNormal, lightDir));
+        
+        lightDir = p5.Vector.sub(lightPos, leftCenter).normalize();
+        let leftDot = max(0.3, p5.Vector.dot(leftFaceNormal, lightDir));
+        
+        lightDir = p5.Vector.sub(lightPos, rightCenter).normalize();
+        let rightDot = max(0.3, p5.Vector.dot(rightFaceNormal, lightDir));
+        
+        // Calculate base lighting with very gentle distance falloff
+        let baseLighting = {
+          top: calculateFaceLighting(topCenter, lightPos, 300) * topDot + pulse,
+          left: calculateFaceLighting(leftCenter, lightPos, 300) * leftDot + pulse,
+          right: calculateFaceLighting(rightCenter, lightPos, 300) * rightDot + pulse
+        };
+        
+        // Reduce intensity variations for all faces
+        baseLighting.top *= 0.7;
+        baseLighting.left *= 0.6; 
+        baseLighting.right *= 0.7;
+        
+        // Accumulate lighting from all lights
+        currentLighting.top += baseLighting.top;
+        currentLighting.left += baseLighting.left;
+        currentLighting.right += baseLighting.right;
+      }
+      
+      // Cap the current lighting to prevent outliers
+      currentLighting.top = constrain(currentLighting.top, 0, 60);
+      currentLighting.left = constrain(currentLighting.left, 0, 60);
+      currentLighting.right = constrain(currentLighting.right, 0, 60);
+      
+      // Update history arrays for all faces
+      prevLighting.topHistory.shift();
+      prevLighting.topHistory.push(currentLighting.top);
+      
+      prevLighting.leftHistory.shift();
+      prevLighting.leftHistory.push(currentLighting.left);
+      
+      prevLighting.rightHistory.shift();
+      prevLighting.rightHistory.push(currentLighting.right);
+      
+      // Calculate weighted averages from history (more weight to recent values)
+      // This creates more stable but still responsive lighting
+      let getWeightedAverage = (history) => {
+        let sum = 0;
+        let weightSum = 0;
+        
+        for (let i = 0; i < history.length; i++) {
+          // Linear weight: newer values have higher weight
+          let weight = (i + 1) / history.length;
+          sum += history[i] * weight;
+          weightSum += weight;
+        }
+        
+        return sum / weightSum;
+      };
+      
+      // Calculate smooth averages
+      const topAvg = getWeightedAverage(prevLighting.topHistory);
+      const leftAvg = getWeightedAverage(prevLighting.leftHistory);
+      const rightAvg = getWeightedAverage(prevLighting.rightHistory);
+      
+      // Result with ultra-smooth interpolation for ALL faces
+      let result = {
+        top: lerp(prevLighting.top, topAvg, config.interpolationFactor),
+        left: lerp(prevLighting.left, leftAvg, config.interpolationFactor * 0.7), // Even slower for left faces
+        right: lerp(prevLighting.right, rightAvg, config.interpolationFactor)
+      };
+      
+      // Update the cached values for next frame
+      prevLighting.top = result.top;
+      prevLighting.left = result.left;
+      prevLighting.right = result.right;
+      
+      // Store back in cache
+      lightingCache.set(key, prevLighting);
+      
+      // Final constraint with narrow range to reduce contrast
+      result.top = constrain(result.top, 10, 60);
+      result.left = constrain(result.left, 10, 60);
+      result.right = constrain(result.right, 10, 60);
+      
+      return result;
+    }
+    
+    function calculateFaceLighting(faceCenter, lightPos, falloffFactor = 200) {
+      // Distance-based lighting with much gentler falloff
+      let d = dist(faceCenter.x, faceCenter.y, lightPos.x, lightPos.y);
+      return falloffFactor / (d + falloffFactor);
+    }
+    
+    function drawLights() {
+      // Draw the light sources with a glow effect
+      for (let light of lights) {
+        let x = width/2 + cos(light.angle) * light.radius;
+        let y = height/2 + sin(light.angle) * light.radius;
+        
+        // Create a glow effect with multiple layers
+        for (let i = 8; i > 0; i--) {
+          let radius = map(i, 0, 8, 5, 40);
+          let alpha = map(i, 0, 8, 200, 0);
+          fill(red(light.color), green(light.color), blue(light.color), alpha);
+          noStroke();
+          circle(x, y, radius * 2);
+        }
+        
+        // Bright center
+        fill(255);
+        circle(x, y, 8);
+      }
+    }
+    
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+      
+      // Recalculate grid size to ensure full coverage
+      const minWidth = max(windowWidth, 1920);
+      const minHeight = max(windowHeight, 1080);
+      
+      // Use correct math for isometric tiling
+      const horizontalCubes = Math.ceil(minWidth / (config.cubeSize * 0.75)) + 8;  
+      const verticalCubes = Math.ceil(minHeight / (config.cubeSize * 0.866)) + 8;
+      config.gridSize = Math.max(horizontalCubes, verticalCubes);
+      
+      // Reset lighting cache on resize for clean state
+      lightingCache = new Map();
+    }
+  </script>
+</body>
+</html>

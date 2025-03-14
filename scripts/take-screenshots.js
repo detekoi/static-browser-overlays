@@ -128,7 +128,10 @@ async function takeScreenshots() {
     const fileUrl = `file://${overlay.path}`;
     
     // Navigate to the overlay
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
+    await page.goto(fileUrl, { waitUntil: 'load' });
+    
+    // Brief pause to let any animations initialize
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Take screenshot
     await page.screenshot({
