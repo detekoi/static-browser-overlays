@@ -9,12 +9,16 @@
  * - Run 'npm install puppeteer' before running this script
  * 
  * Usage:
- * - node take-screenshots.js
+ * - node take-screenshots.js           // Skip existing screenshots
+ * - node take-screenshots.js --force   // Recreate all screenshots
  */
 
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+
+// Check if --force flag is set to regenerate all screenshots
+const forceRegeneration = process.argv.includes('--force');
 
 // Make sure screenshots directory exists
 const screenshotsDir = path.join(__dirname, '..', 'docs', 'screenshots');
@@ -93,11 +97,20 @@ const overlays = discoverOverlays();
 
 async function takeScreenshots() {
   // Check if we need to take any screenshots
-  const screenshotsNeeded = overlays.filter(overlay => !fs.existsSync(overlay.outputFile));
+  let screenshotsNeeded;
   
-  if (screenshotsNeeded.length === 0) {
-    console.log('All screenshots already exist. No new screenshots needed.');
-    return;
+  if (forceRegeneration) {
+    console.log('Force regeneration flag detected - will regenerate all screenshots');
+    screenshotsNeeded = overlays;
+  } else {
+    screenshotsNeeded = overlays.filter(overlay => !fs.existsSync(overlay.outputFile));
+    console.log(`Found ${overlays.length} overlays/backgrounds, ${screenshotsNeeded.length} need screenshots`);
+    
+    if (screenshotsNeeded.length === 0) {
+      console.log('All screenshots already exist. No new screenshots needed.');
+      console.log('Use --force flag to regenerate all screenshots if needed.');
+      return;
+    }
   }
   
   console.log('Launching browser...');
@@ -106,11 +119,12 @@ async function takeScreenshots() {
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
-  for (const overlay of overlays) {
-    const screenshotExists = fs.existsSync(overlay.outputFile);
+  for (const overlay of screenshotsNeeded) {
+    const screenshotExists = fs.existsSync(overlay.outputFile) && !forceRegeneration;
     
     if (screenshotExists) {
-      // Skip if screenshot already exists
+      // Skip if screenshot already exists and not forcing regeneration
+      console.log(`Skipping ${overlay.name} - screenshot already exists`);
       continue;
     }
     

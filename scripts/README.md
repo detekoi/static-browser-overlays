@@ -34,7 +34,7 @@ cd scripts
 ```
 
 ### `take-screenshots.js`
-A Node.js script that uses Puppeteer (headless Chrome) to capture screenshots of each overlay at exactly 1920x1080 resolution.
+A Node.js script that uses Puppeteer (headless Chrome) to capture screenshots of each overlay at exactly 1920x1080 resolution. By default, it skips generating screenshots that already exist.
 
 #### Requirements:
 - Node.js installed.
@@ -42,8 +42,14 @@ A Node.js script that uses Puppeteer (headless Chrome) to capture screenshots of
 
 #### Usage:
 ```
+# Install dependencies (first time only)
 npm install puppeteer
+
+# Take screenshots (skips existing screenshots)
 node scripts/take-screenshots.js
+
+# Force regeneration of all screenshots
+node scripts/take-screenshots.js --force
 ```
 
 ### `update-readme-with-screenshots.js`
