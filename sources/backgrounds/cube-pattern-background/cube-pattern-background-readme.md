@@ -196,7 +196,7 @@ If the background doesn't appear or has issues:
 ## Compatibility
 
 This background should work with:
-- OBS Studio (recommended).
+- OBS Studio.
 - Streamlabs Desktop.
 - XSplit.
 - Any other streaming software that supports browser sources.
