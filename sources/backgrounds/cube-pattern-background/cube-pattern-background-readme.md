@@ -201,7 +201,3 @@ This background should work with:
 - XSplit.
 - Any other streaming software that supports browser sources.
 - Modern web browsers (Chrome, Firefox, Safari, Edge).
-
-## License and Attribution
-
-This animated geometric cube pattern background is free to use for your personal or commercial streaming or web needs. No attribution is required, though it's appreciated if you share where you got it from with others!
