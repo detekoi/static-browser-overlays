@@ -17,8 +17,9 @@ A stylish overlay for Cozy 10:9 Aspect Ratio streams.
 
 ![Cozy 10:9 Aspect Ratio Overlay](docs/screenshots/cozy-10-9-aspect-ratio.png)
 
-[📄 Documentation](sources/overlays/cozy 10-9 aspect ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
+[📄 Documentation](sources/overlays/cozy%2010-9%20aspect%20ratio/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2010-9%20aspect%20ratio/overlay.html)
 
 ### Cozy 16:9 Aspect Ratio
 
@@ -26,8 +27,9 @@ A stylish overlay for Cozy 16:9 Aspect Ratio streams.
 
 ![Cozy 16:9 Aspect Ratio Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
 
-[📄 Documentation](sources/overlays/cozy 16-9 aspect ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
+[📄 Documentation](sources/overlays/cozy%2016-9%20aspect%20ratio/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2016-9%20aspect%20ratio/overlay.html)
 
 ### Retro Sakura
 
@@ -36,7 +38,8 @@ A stylish overlay for Retro Sakura streams, featuring springtime colors and a no
 ![Retro Sakura Overlay](docs/screenshots/retro-sakura.png)
 
 [📄 Documentation](sources/overlays/retro-sakura/retro-sakura-readme.md) | 
-[⬇️ Download ZIP](releases/retro-sakura.zip?raw=true)
+[⬇️ Download ZIP](releases/retro-sakura.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/retro-sakura/retro-sakura.html)
 
 ### Minimal 10:9
 
@@ -74,10 +77,9 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay with extensive customizat
 
 A stylish background for Sakura-themed streams, adorned with delicate cherry blossoms and soft pastel colors, creating a serene and enchanting atmosphere.
 
-![Sakura Background Overlay](docs/screenshots/sakura-background.png)
-
 [📄 Documentation](sources/backgrounds/sakura-background/sakura-background-readme.md) | 
-[⬇️ Download ZIP](releases/sakura-background.zip?raw=true)
+[⬇️ Download ZIP](releases/sakura-background.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/backgrounds/sakura-background/sakura-background.html)
 
 ### Cube Pattern Background
 
