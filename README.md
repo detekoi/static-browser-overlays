@@ -79,6 +79,8 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay with extensive customizat
 
 A stylish background for Sakura-themed streams, adorned with delicate cherry blossoms and soft pastel colors, creating a serene and enchanting atmosphere.
 
+![Sakura Background Overlay](docs/screenshots/sakura-background.png)
+
 [📄 Documentation](sources/backgrounds/sakura-background/sakura-background-readme.md) | 
 [⬇️ Download ZIP](releases/sakura-background.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/backgrounds/sakura-background/sakura-background.html)
