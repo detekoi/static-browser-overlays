@@ -2,6 +2,8 @@
 
 A clean, minimal overlay for 16:9 aspect ratio gameplay with transparent background and **completely customizable** styling to match your unique stream aesthetic.
 
+![Minimal 16:9 Overlay](../../../docs/screenshots/minimal-16-9.png)
+
 ## Features
 
 - Clean design with minimal elements.

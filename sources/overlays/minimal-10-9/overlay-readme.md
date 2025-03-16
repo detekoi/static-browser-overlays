@@ -2,6 +2,8 @@
 
 A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with transparent background and **highly customizable** styling options.
 
+![Minimal 10:9 Overlay](../../../docs/screenshots/minimal-10-9.png)
+
 ## Features
 
 - Clean design with minimal elements.
@@ -69,7 +71,13 @@ The webcam container offers extensive customization options:
   - Change `--webcam-bg-color` to any color (hex, RGB, or RGBA).
   - Use transparency by adjusting the alpha channel (e.g., `rgba(0, 0, 0, 0.5)` for semi-transparent black).
   - Set to `transparent` for no background.
-- **Shape**: Modify the border-radius in the CSS for a square, rounded square, or oval webcam container instead of circular.
+- **Container Shape**:
+  - Default circular shape is created using border-radius.
+  - Modify the border-radius value to create:
+    - Perfect circle (default).
+    - Rounded square (try 20px for subtle rounding).
+    - Square (0px for sharp corners).
+    - Oval shape (different radius values for width/height).
 
 ## Usage in OBS
 

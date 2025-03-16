@@ -6,7 +6,13 @@ This document explains how to use and customize the animated geometric cube patt
 
 This HTML/CSS/JavaScript file creates a mesmerizing animated background with tessellated cubes that create an optical illusion where it's ambiguous which parts stick "out" and which parts stick "in." The animation includes subtle lighting effects and smooth transitions that continuously change your perception of the cube wall. It's designed for streaming overlays, website backgrounds, or any digital content that needs a dynamic geometric backdrop.
 
+![Cube Pattern Background Preview](../../../docs/screenshots/cube-pattern-background.png)
+
 ## Adding to OBS Studio
+# Animated Geometric Cube Pattern Background - Documentation
+
+This document explains how to use and customize the animated geometric cube pattern background for your streaming overlay or web project.
+
 
 1. **Save the HTML file**:
    - Save the HTML code as a file with the `.html` extension (e.g., `geometric-cube-background.html`).

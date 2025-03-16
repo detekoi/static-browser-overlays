@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Springtime Twitch Overlay</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 
+        =============================
+        CUSTOMIZATION VARIABLES
+        =============================
+        Change these values to customize your overlay
+        */
+        :root {
+            /* Primary accent color */
+            --accent-color: #ff9eb1; /* Cherry blossom pink */
+            
+            /* Secondary accent color */
+            --accent-color-2: #b6e9d1; /* Soft mint green */
+            
+            /* Background colors */
+            --bg-color-1: rgba(255, 243, 230, 0.3); /* Soft cream */
+            --bg-color-2: rgba(209, 231, 240, 0.3); /* Soft sky blue */
+            
+            /* Edge decoration settings */
+            --edge-width: 200px; /* Width of the edge decorations */
+            --center-clear-zone: 1200px; /* Size of the clear zone in the middle */
+        }
+
+        /* 
+        =============================
+        BACKGROUND STYLES 
+        =============================
+        */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2));
+            overflow: hidden;
+        }
+
+        /* Spring themed background elements */
+        .spring-element {
+            position: absolute;
+            opacity: 0.6;
+            filter: blur(1px);
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        /* Cherry blossoms */
+        .cherry-blossom {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 158, 177, 0.5);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .cherry-blossom::before, 
+        .cherry-blossom::after {
+            content: '';
+            position: absolute;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .cherry-blossom::before {
+            width: 40%;
+            height: 40%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .cherry-blossom::after {
+            width: 30%;
+            height: 30%;
+            bottom: 10%;
+            right: 10%;
+        }
+
+        /* Leaf elements */
+        .leaf {
+            width: 60px;
+            height: 30px;
+            background-color: var(--accent-color-2);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px rgba(182, 233, 209, 0.5);
+            animation: float 25s infinite ease-in-out, sway 8s infinite ease-in-out;
+        }
+
+        /* 
+        =============================
+        EDGE DECORATION STYLES 
+        =============================
+        */
+        .edge-decoration {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Corner flourishes */
+        .corner {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            pointer-events: none;
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+            transform: scaleX(-1);
+        }
+
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            transform: scaleY(-1);
+        }
+
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: scale(-1);
+        }
+
+        /* Branch decoration */
+        .branch {
+            position: absolute;
+            background-color: #8d6e63;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(141, 110, 99, 0.5);
+            z-index: 9;
+        }
+
+        /* Flower cluster */
+        .flower-cluster {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            z-index: 10;
+        }
+
+        .flower {
+            position: absolute;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 158, 177, 0.5);
+        }
+
+        .flower-center {
+            position: absolute;
+            background-color: #fff9c4;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 5px rgba(255, 249, 196, 0.5);
+        }
+
+        /* 
+        =============================
+        ANIMATIONS 
+        =============================
+        */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        @keyframes sway {
+            0%, 100% {
+                transform: rotate(45deg);
+            }
+            50% {
+                transform: rotate(60deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background container -->
+    <div class="background">
+        <!-- Spring elements will be dynamically created with JavaScript -->
+    </div>
+
+    <!-- No camera frame, as requested -->
+
+    <script>
+        // Function to create spring elements
+        function createSpringElements() {
+            const background = document.querySelector('.background');
+            
+            // Create cherry blossoms - only around the edges
+            for (let i = 0; i < 25; i++) {
+                const blossom = document.createElement('div');
+                blossom.classList.add('spring-element', 'cherry-blossom');
+                
+                // Position around the edges to keep the middle clear
+                let x, y;
+                
+                // Decide if this element should be on horizontal or vertical edge
+                if (Math.random() > 0.5) {
+                    // Horizontal edge (top or bottom)
+                    x = Math.random() * 1920;
+                    y = Math.random() > 0.5 ? Math.random() * 250 : 1080 - Math.random() * 250;
+                } else {
+                    // Vertical edge (left or right)
+                    x = Math.random() > 0.5 ? Math.random() * 250 : 1920 - Math.random() * 250;
+                    y = Math.random() * 1080;
+                }
+                
+                blossom.style.left = `${x}px`;
+                blossom.style.top = `${y}px`;
+                
+                // Random size
+                const size = 20 + Math.random() * 30;
+                blossom.style.width = `${size}px`;
+                blossom.style.height = `${size}px`;
+                
+                // Random animation delay
+                blossom.style.animationDelay = `${Math.random() * 10}s`;
+                
+                background.appendChild(blossom);
+            }
+            
+            // Create leaves - only around the edges
+            for (let i = 0; i < 15; i++) {
+                const leaf = document.createElement('div');
+                leaf.classList.add('spring-element', 'leaf');
+                
+                // Position around the edges
+                let x, y;
+                
+                // Decide if this element should be on horizontal or vertical edge
+                if (Math.random() > 0.5) {
+                    // Horizontal edge (top or bottom)
+                    x = Math.random() * 1920;
+                    y = Math.random() > 0.5 ? Math.random() * 220 : 1080 - Math.random() * 220;
+                } else {
+                    // Vertical edge (left or right)
+                    x = Math.random() > 0.5 ? Math.random() * 220 : 1920 - Math.random() * 220;
+                    y = Math.random() * 1080;
+                }
+                
+                leaf.style.left = `${x}px`;
+                leaf.style.top = `${y}px`;
+                
+                // Random size
+                const size = 30 + Math.random() * 40;
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size / 2}px`;
+                
+                // Random rotation
+                leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Random animation delay
+                leaf.style.animationDelay = `${Math.random() * 10}s`;
+                
+                background.appendChild(leaf);
+            }
+            
+            // Create corner decorations
+            createCornerDecorations();
+            
+            // Create edge branches
+            createEdgeBranches();
+        }
+        
+        // Function to create corner decorations
+        function createCornerDecorations() {
+            const corners = [
+                { class: 'top-left', x: 0, y: 0 },
+                { class: 'top-right', x: 1920, y: 0 },
+                { class: 'bottom-left', x: 0, y: 1080 },
+                { class: 'bottom-right', x: 1920, y: 1080 }
+            ];
+            
+            corners.forEach(corner => {
+                const cornerDiv = document.createElement('div');
+                cornerDiv.classList.add('corner', corner.class);
+                document.body.appendChild(cornerDiv);
+                
+                // Create a flower cluster for each corner
+                createFlowerCluster(corner.x, corner.y);
+            });
+        }
+        
+        // Function to create edge branches
+        function createEdgeBranches() {
+            // Top edge
+            createBranch('20%', '5%', '30%', '10px', '45deg');
+            createBranch('70%', '2%', '25%', '8px', '15deg');
+            
+            // Bottom edge
+            createBranch('15%', '94%', '35%', '12px', '-30deg');
+            createBranch('65%', '96%', '28%', '10px', '-15deg');
+            
+            // Left edge
+            createBranch('3%', '30%', '25%', '10px', '85deg');
+            createBranch('5%', '70%', '30%', '12px', '100deg');
+            
+            // Right edge
+            createBranch('93%', '25%', '22%', '9px', '-80deg');
+            createBranch('95%', '65%', '28%', '11px', '-100deg');
+        }
+        
+        // Helper function to create a branch
+        function createBranch(x, y, length, width, rotation) {
+            const branch = document.createElement('div');
+            branch.classList.add('branch');
+            branch.style.left = x;
+            branch.style.top = y;
+            branch.style.width = length;
+            branch.style.height = width;
+            branch.style.transform = `rotate(${rotation})`;
+            document.body.appendChild(branch);
+            
+            // Add some flowers to the branch
+            const flowerCount = Math.floor(Math.random() * 3) + 2;
+            for (let i = 0; i < flowerCount; i++) {
+                createFlower(branch);
+            }
+        }
+        
+        // Helper function to create a flower cluster
+        function createFlowerCluster(x, y) {
+            const cluster = document.createElement('div');
+            cluster.classList.add('flower-cluster');
+            
+            // Position the cluster near the corner but with some offset
+            const offsetX = x === 0 ? 50 : -150;
+            const offsetY = y === 0 ? 50 : -150;
+            
+            cluster.style.left = `${x + offsetX}px`;
+            cluster.style.top = `${y + offsetY}px`;
+            
+            // Create 5-8 flowers in the cluster
+            const flowerCount = Math.floor(Math.random() * 4) + 5;
+            for (let i = 0; i < flowerCount; i++) {
+                createFlower(cluster);
+            }
+            
+            document.body.appendChild(cluster);
+        }
+        
+        // Helper function to create a flower
+        function createFlower(parent) {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            
+            // Random position within the parent
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            flower.style.left = `${x}%`;
+            flower.style.top = `${y}%`;
+            
+            // Random size
+            const size = 15 + Math.random() * 20;
+            flower.style.width = `${size}px`;
+            flower.style.height = `${size}px`;
+            
+            // Create flower petals
+            for (let i = 0; i < 5; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('flower');
+                petal.style.width = `${size * 0.7}px`;
+                petal.style.height = `${size * 0.7}px`;
+                petal.style.left = `${Math.cos(i * 72 * Math.PI / 180) * size * 0.5 + size / 2}px`;
+                petal.style.top = `${Math.sin(i * 72 * Math.PI / 180) * size * 0.5 + size / 2}px`;
+                flower.appendChild(petal);
+            }
+            
+            // Add flower center
+            const center = document.createElement('div');
+            center.classList.add('flower-center');
+            center.style.width = `${size * 0.3}px`;
+            center.style.height = `${size * 0.3}px`;
+            flower.appendChild(center);
+            
+            parent.appendChild(flower);
+            return flower;
+        }
+        
+        // Initialize the overlay
+        document.addEventListener('DOMContentLoaded', function() {
+            createSpringElements();
+        });
+    </script>
+</body>
+</html>

@@ -6,7 +6,13 @@ This document explains how to use and customize the animated twinkling stars bac
 
 This HTML/CSS/JavaScript file creates a beautiful animated background with twinkling stars of various sizes, colors, and brightness levels. It's designed specifically for streaming overlays and can be used as a base layer in OBS Studio or similar streaming software.
 
+![Twinkling Stars Background Preview](../../../docs/screenshots/stars-background.png)
+
 ## Adding to OBS Studio
+# Twinkling Stars Background - Documentation
+
+This document explains how to use and customize the animated twinkling stars background for your streaming overlay.
+
 
 1. **Save the HTML file**:
    - Save the HTML code as a file with the `.html` extension (e.g., `twinkling-stars-background.html`).

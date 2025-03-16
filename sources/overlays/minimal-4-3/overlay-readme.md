@@ -2,6 +2,8 @@
 
 A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with transparent background and **extensive customization options** to create your perfect retro streaming setup.
 
+![Minimal 4:3 Overlay](../../../docs/screenshots/minimal-4-3.png)
+
 ## Features
 
 - Clean design with minimal elements.

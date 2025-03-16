@@ -72,8 +72,40 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-4-3/overlay.html)
 
 
+
+### Cozy 10:9 Aspect Ratio
+
+A stylish overlay for Cozy 10:9 Aspect Ratio streams.
+
+![Cozy 10:9 Aspect Ratio Overlay](docs/screenshots/cozy-10-9-aspect-ratio.png)
+
+[📄 Documentation](sources/sources/overlays/cozy 10-9 aspect ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
+
+### Cozy 16:9 Aspect Ratio
+
+A stylish overlay for Cozy 16:9 Aspect Ratio streams.
+
+![Cozy 16:9 Aspect Ratio Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
+
+[📄 Documentation](sources/sources/overlays/cozy 16-9 aspect ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
+
+### Retro Sakura
+
+A stylish overlay for Retro Sakura streams.
+
+![Retro Sakura Overlay](docs/screenshots/retro-sakura.png)
+
+[📄 Documentation](sources/sources/overlays/retro-sakura/rero-sakura-readme.md) | [⬇️ Download ZIP](releases/retro-sakura.zip?raw=true)
 ## Available Backgrounds
 
+
+### Sakura Background
+
+A stylish overlay for Sakura Background streams.
+
+![Sakura Background Overlay](docs/screenshots/sakura-background.png)
+
+[⬇️ Download ZIP](releases/sakura-background.zip?raw=true)
 ### Cube Pattern Background
 
 A stylish animated isometric cube pattern with dynamic lighting effects, perfect as a background for modern gaming streams.
