@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cozy Springtime Twitch Overlay</title>
+    <title>Cozy Springtime Twitch Overlay with Detailed Branches</title>
     <style>
         /* Reset and base styles */
         * {
@@ -40,8 +40,12 @@
             --edge-width: 200px; /* Width of the edge decorations */
             --center-clear-zone: 1200px; /* Size of the clear zone in the middle */
             
+            /* Branch colors */
+            --branch-color-1: #8d6e63; /* Main branch color */
+            --branch-color-2: #6d4c41; /* Secondary branch color */
+            
             /* Sakura animation settings */
-            --petal-count: 30; /* Number of falling petals */
+            --petal-count: 60; /* Number of falling petals */
             --petal-min-size: 15px; /* Minimum petal size */
             --petal-max-size: 30px; /* Maximum petal size */
             --petal-min-duration: 10s; /* Minimum falling duration */
@@ -132,6 +136,17 @@
                 transform: rotate(60deg);
             }
         }
+        
+        @keyframes gentle-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
 
         /* 
         =============================
@@ -178,10 +193,51 @@
         /* Branch decoration */
         .branch {
             position: absolute;
-            background-color: #8d6e63;
+            background-color: var(--branch-color-1);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(141, 110, 99, 0.5);
             z-index: 9;
+        }
+        
+        /* Detailed branch styling */
+        .branch-container {
+            position: absolute;
+            z-index: 8;
+            transform-origin: 0 50%;
+        }
+        
+        .branch-segment {
+            position: absolute;
+            background-color: var(--branch-color-1);
+            border-radius: 10px;
+            transform-origin: 0 50%;
+            box-shadow: 0 0 8px rgba(141, 110, 99, 0.3);
+        }
+        
+        .sub-branch {
+            position: absolute;
+            background-color: var(--branch-color-2);
+            border-radius: 8px;
+            transform-origin: 0 50%;
+            box-shadow: 0 0 5px rgba(109, 76, 65, 0.3);
+        }
+        
+        .twig {
+            position: absolute;
+            background-color: var(--branch-color-2);
+            border-radius: 6px;
+            transform-origin: 0 50%;
+            box-shadow: 0 0 3px rgba(109, 76, 65, 0.2);
+        }
+        
+        .branch-bud {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 158, 177, 0.7);
+            z-index: 10;
         }
 
         /* Flower cluster */
@@ -207,6 +263,46 @@
             top: 50%;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 5px rgba(255, 249, 196, 0.5);
+        }
+        
+        /* 
+        =============================
+        BLOSSOM CLUSTER STYLES
+        =============================
+        */
+        .blossom-cluster {
+            position: absolute;
+            z-index: 11;
+        }
+        
+        .branch-blossom {
+            position: absolute;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 158, 177, 0.6);
+            z-index: 11;
+        }
+        
+        .branch-blossom::before,
+        .branch-blossom::after {
+            content: '';
+            position: absolute;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        
+        .branch-blossom::before {
+            width: 40%;
+            height: 40%;
+            top: 10%;
+            left: 10%;
+        }
+        
+        .branch-blossom::after {
+            width: 30%;
+            height: 30%;
+            bottom: 10%;
+            right: 10%;
         }
 
         /* 
@@ -286,15 +382,62 @@
         <!-- Petals will be dynamically created with JavaScript -->
     </div>
 
-    <!-- No camera frame, as requested -->
-
     <script>
+        // Helper function to create a blossom cluster on a branch
+        function createBlossomCluster(parent, position) {
+            const cluster = document.createElement('div');
+            cluster.classList.add('blossom-cluster');
+            
+            if (position) {
+                cluster.style.left = `${position * 100}%`;
+                cluster.style.top = '50%';
+                cluster.style.transform = 'translateY(-50%)';
+            } else {
+                // Random position if not specified
+                cluster.style.left = `${Math.random() * 100}%`;
+                cluster.style.top = `${Math.random() * 100}%`;
+            }
+            
+            // Create multiple small blossoms in a cluster
+            const blossomCount = 3 + Math.floor(Math.random() * 4); // 3-6 blossoms per cluster
+            for (let i = 0; i < blossomCount; i++) {
+                // Create a blossom
+                const blossom = document.createElement('div');
+                blossom.classList.add('branch-blossom');
+                
+                // Size variation
+                const size = 8 + Math.random() * 14; // 8-22px
+                blossom.style.width = `${size}px`;
+                blossom.style.height = `${size}px`;
+                
+                // Position within cluster
+                const angle = (i / blossomCount) * Math.PI * 2;
+                const distance = 10 + Math.random() * 20;
+                blossom.style.left = `calc(50% + ${Math.cos(angle) * distance}px - ${size/2}px)`;
+                blossom.style.top = `calc(50% + ${Math.sin(angle) * distance}px - ${size/2}px)`;
+                
+                // Color variation
+                const hue = Math.random() * 10 - 5; // +/- 5 degrees from pink
+                const lightness = Math.random() * 10 - 5; // +/- 5% lightness
+                blossom.style.backgroundColor = `hsl(${350 + hue}, 100%, ${85 + lightness}%)`;
+                
+                // Add animation
+                blossom.style.animation = `gentle-pulse ${3 + Math.random() * 2}s infinite ease-in-out`;
+                blossom.style.animationDelay = `${Math.random() * 2}s`;
+                
+                cluster.appendChild(blossom);
+            }
+            
+            parent.appendChild(cluster);
+            return cluster;
+        }
+        
         // Function to create spring elements
         function createSpringElements() {
             const background = document.querySelector('.background');
             
             // Create cherry blossoms - only around the edges
-            for (let i = 0; i < 25; i++) {
+            for (let i = 0; i < 45; i++) {
                 const blossom = document.createElement('div');
                 blossom.classList.add('spring-element', 'cherry-blossom');
                 
@@ -365,8 +508,8 @@
             // Create corner decorations
             createCornerDecorations();
             
-            // Create edge branches
-            createEdgeBranches();
+            // Create detailed branch structures
+            createDetailedBranches();
         }
         
         // Function to create corner decorations
@@ -388,41 +531,156 @@
             });
         }
         
-        // Function to create edge branches
-        function createEdgeBranches() {
-            // Top edge
-            createBranch('20%', '5%', '30%', '10px', '45deg');
-            createBranch('70%', '2%', '25%', '8px', '15deg');
+        // Function to create detailed branch structures
+        function createDetailedBranches() {
+            // Reduced number of branches - only 4 total
+            // One on each edge of the screen
             
-            // Bottom edge
-            createBranch('15%', '94%', '35%', '12px', '-30deg');
-            createBranch('65%', '96%', '28%', '10px', '-15deg');
+            // Top edge branch
+            createBranchStructure('70%', '2%', '15deg', 300);
             
-            // Left edge
-            createBranch('3%', '30%', '25%', '10px', '85deg');
-            createBranch('5%', '70%', '30%', '12px', '100deg');
+            // Bottom edge branch
+            createBranchStructure('15%', '94%', '-30deg', 350);
             
-            // Right edge
-            createBranch('93%', '25%', '22%', '9px', '-80deg');
-            createBranch('95%', '65%', '28%', '11px', '-100deg');
+            // Left edge branch
+            createBranchStructure('3%', '30%', '85deg', 280);
+            
+            // Right edge branch
+            createBranchStructure('93%', '25%', '-80deg', 260);
         }
         
-        // Helper function to create a branch
-        function createBranch(x, y, length, width, rotation) {
-            const branch = document.createElement('div');
-            branch.classList.add('branch');
-            branch.style.left = x;
-            branch.style.top = y;
-            branch.style.width = length;
-            branch.style.height = width;
-            branch.style.transform = `rotate(${rotation})`;
-            document.body.appendChild(branch);
+        // Function to create a detailed branch structure
+        function createBranchStructure(x, y, rotation, length) {
+            const container = document.createElement('div');
+            container.classList.add('branch-container');
+            container.style.left = x;
+            container.style.top = y;
+            container.style.transform = `rotate(${rotation})`;
+            document.body.appendChild(container);
             
-            // Add some flowers to the branch
-            const flowerCount = Math.floor(Math.random() * 3) + 2;
-            for (let i = 0; i < flowerCount; i++) {
-                createFlower(branch);
+            // Create main branch
+            const mainBranch = document.createElement('div');
+            mainBranch.classList.add('branch-segment');
+            mainBranch.style.width = `${length}px`;
+            mainBranch.style.height = `${8 + Math.random() * 4}px`;
+            container.appendChild(mainBranch);
+            
+            // Add sub-branches (reduced number)
+            const subBranchCount = 2 + Math.floor(Math.random() * 3); // Reduced from 3-6 to 2-4
+            for (let i = 0; i < subBranchCount; i++) {
+                // Determine position along the main branch
+                const position = 0.1 + (i * 0.8 / subBranchCount) + (Math.random() * 0.1);
+                const subLength = length * (0.4 + Math.random() * 0.3);
+                const angle = (Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 40);
+                
+                createSubBranch(mainBranch, position, subLength, angle);
             }
+            
+            // Add more flower buds to main branch
+            const budCount = 6 + Math.floor(Math.random() * 5); // Increased from 4-7 to 6-10
+            for (let i = 0; i < budCount; i++) {
+                const budPosition = Math.random();
+                createBranchBud(mainBranch, budPosition);
+            }
+            
+            // Add more flowers to the branch structure
+            const flowerCount = 8 + Math.floor(Math.random() * 7); // Increased from 5-9 to 8-14
+            for (let i = 0; i < flowerCount; i++) {
+                createFlower(container);
+            }
+            
+            // Add cherry blossom clusters directly to the main branch
+            const blossomClusterCount = 3 + Math.floor(Math.random() * 3); // 3-5 clusters
+            for (let i = 0; i < blossomClusterCount; i++) {
+                createBlossomCluster(mainBranch, Math.random());
+            }
+        }
+        
+        // Function to create a sub-branch
+        function createSubBranch(parentBranch, position, length, angle) {
+            const subBranch = document.createElement('div');
+            subBranch.classList.add('sub-branch');
+            subBranch.style.width = `${length}px`;
+            subBranch.style.height = `${4 + Math.random() * 3}px`;
+            subBranch.style.left = `${position * 100}%`;
+            subBranch.style.transform = `rotate(${angle}deg)`;
+            parentBranch.appendChild(subBranch);
+            
+            // Add fewer twigs to this sub-branch
+            const twigCount = 1 + Math.floor(Math.random() * 2); // Reduced from 2-4 to 1-2
+            for (let i = 0; i < twigCount; i++) {
+                const twigPosition = 0.2 + (i * 0.6 / twigCount) + (Math.random() * 0.1);
+                const twigLength = length * (0.3 + Math.random() * 0.2);
+                const twigAngle = (Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 30);
+                
+                createTwig(subBranch, twigPosition, twigLength, twigAngle);
+            }
+            
+            // Add more flower buds
+            const budCount = 3 + Math.floor(Math.random() * 3); // Increased from 2-4 to 3-5
+            for (let i = 0; i < budCount; i++) {
+                const budPosition = Math.random();
+                createBranchBud(subBranch, budPosition);
+            }
+            
+            // Add some flowers directly to the sub-branch
+            if (Math.random() > 0.3) { // Increased chance from 50% to 70%
+                const flowerCount = 2 + Math.floor(Math.random() * 3); // Increased from 1-2 to 2-4
+                for (let i = 0; i < flowerCount; i++) {
+                    createFlower(subBranch);
+                }
+            }
+            
+            // Add cherry blossom clusters to some sub-branches
+            if (Math.random() > 0.4) {
+                const blossomClusterCount = 1 + Math.floor(Math.random() * 2);
+                for (let i = 0; i < blossomClusterCount; i++) {
+                    createBlossomCluster(subBranch, Math.random());
+                }
+            }
+        }
+        
+        // Function to create a twig
+        function createTwig(parentBranch, position, length, angle) {
+            const twig = document.createElement('div');
+            twig.classList.add('twig');
+            twig.style.width = `${length}px`;
+            twig.style.height = `${2 + Math.random() * 2}px`;
+            twig.style.left = `${position * 100}%`;
+            twig.style.transform = `rotate(${angle}deg)`;
+            parentBranch.appendChild(twig);
+            
+            // Add a flower bud to the end of most twigs
+            if (Math.random() > 0.2) { // Increased chance from 60% to 80%
+                const bud = document.createElement('div');
+                bud.classList.add('branch-bud');
+                bud.style.left = `calc(100% - 6px)`;
+                bud.style.top = '50%';
+                bud.style.transform = 'translateY(-50%)';
+                twig.appendChild(bud);
+            }
+            
+            // Sometimes add a full flower at the end instead of just a bud
+            if (Math.random() > 0.5) { // Increased from 30% to 50%
+                const flower = createFlower(twig);
+                flower.style.left = `calc(100% - 15px)`;
+                flower.style.top = '0';
+            }
+            
+            // Sometimes add a blossom cluster at the end
+            if (Math.random() > 0.6) {
+                createBlossomCluster(twig, 0.9); // Position near the end of the twig
+            }
+        }
+        
+        // Function to create a flower bud on a branch
+        function createBranchBud(parentBranch, position) {
+            const bud = document.createElement('div');
+            bud.classList.add('branch-bud');
+            bud.style.left = `${position * 100}%`;
+            bud.style.top = '50%';
+            bud.style.transform = 'translateY(-50%)';
+            parentBranch.appendChild(bud);
         }
         
         // Helper function to create a flower cluster
@@ -437,8 +695,8 @@
             cluster.style.left = `${x + offsetX}px`;
             cluster.style.top = `${y + offsetY}px`;
             
-            // Create 5-8 flowers in the cluster
-            const flowerCount = Math.floor(Math.random() * 4) + 5;
+            // Create 8-12 flowers in the cluster
+            const flowerCount = Math.floor(Math.random() * 5) + 8;
             for (let i = 0; i < flowerCount; i++) {
                 createFlower(cluster);
             }
@@ -484,16 +742,10 @@
             return flower;
         }
         
-        // Initialize the overlay
-        document.addEventListener('DOMContentLoaded', function() {
-            createSpringElements();
-            createFallingSakuraPetals();
-        });
-        
         // Function to create falling sakura petals
         function createFallingSakuraPetals() {
             const petalContainer = document.querySelector('.petal-container');
-            const petalCount = getComputedStyle(document.documentElement).getPropertyValue('--petal-count').trim();
+            const petalCount = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--petal-count').trim());
             const minSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--petal-min-size'));
             const maxSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--petal-max-size'));
             const minDuration = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--petal-min-duration'));
@@ -532,6 +784,12 @@
                 petalContainer.appendChild(petal);
             }
         }
+        
+        // Initialize the overlay
+        document.addEventListener('DOMContentLoaded', function() {
+            createSpringElements();
+            createFallingSakuraPetals();
+        });
     </script>
 </body>
 </html>
