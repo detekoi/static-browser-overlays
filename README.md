@@ -37,8 +37,6 @@ A stylish overlay for Retro Sakura streams, featuring springtime colors and a no
 
 ![Retro Sakura Overlay](docs/screenshots/retro-sakura.png)
 
-![Sakura Background Overlay](docs/screenshots/sakura-background.png)
-
 [📄 Documentation](sources/overlays/retro-sakura/retro-sakura-readme.md) | 
 [⬇️ Download ZIP](releases/retro-sakura.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/retro-sakura/retro-sakura.html)
