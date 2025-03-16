@@ -25,11 +25,19 @@ A gentle animated background featuring falling sakura petals, designed to create
 
 ### Customizable Animation Settings
 
-Added variables to easily control:
+You can adjust the animation by modifying these CSS properties in the `:root` section:
 
-* `--petal-count`: Number of petals (currently 30)
-* `--petal-min-size` and `--petal-max-size`: Size range of petals
-* `--petal-min-duration` and `--petal-max-duration`: Speed variation of falling animation
+**For Falling Sakura Petals Animation:**
+* `--petal-count`: Number of petals (default: 30). Increase for more density, decrease for fewer petals.
+* `--petal-min-size`: Minimum petal size (default: 15px). Adjust the minimum size of the falling petals.
+* `--petal-max-size`: Maximum petal size (default: 30px). Adjust the maximum size of the falling petals.
+* `--petal-min-duration`: Minimum fall duration (default: 10s). Adjust for faster or slower falling petals.
+* `--petal-max-duration`: Maximum fall duration (default: 30s).  Adjust for faster or slower falling petals.
+
+**For Spring Elements Animation (Edge Decorations):**
+* `--edge-animation-duration`:  Animation duration for spring elements (default: 15s for float, 8s for sway). Adjust for faster or slower floating and swaying motion of edge elements.
+* `--edge-element-opacity`: Opacity of edge elements (default: 0.6). Adjust for more or less prominent edge decorations.
+* `--edge-blur-filter`: Blur filter for edge elements (default: 1px). Adjust for softer or sharper edge decorations.
 
 ### Layered Animation Effect
 
@@ -39,12 +47,17 @@ Added variables to easily control:
 
 ### How It Works
 
-The overlay now uses multiple animation techniques:
+This overlay uses several techniques to create a gentle and visually appealing animated background:
 
-* The static spring elements around the edges with subtle floating animations
-* A new layer of continuously falling sakura petals across the screen
-* Each petal has randomized properties (size, speed, rotation, slight color variation)
-* The middle area still remains mostly clear for your game content
+* **Edge Decorations (Spring Elements)**: Around the edges of the screen, static spring-themed elements like cherry blossoms and leaves are placed. These elements have subtle floating animations to add gentle motion.
+
+* **Falling Sakura Petals**: A layer of continuously falling sakura petals is added across the entire screen. Each petal is dynamically created with randomized properties for size, speed, rotation, and slight color variation to create a natural and varied falling effect.
+
+* **Clear Middle Area**: The central area of the overlay is intentionally kept mostly clear. This is to ensure that the background does not obstruct the main content of your stream, such as the game畫面 or camera feed.
+
+* **CSS Animations**:  CSS animations (`@keyframes float` and `@keyframes sway` for edge elements, and `@keyframes falling-petal` for sakura petals) are used to control the movement of the elements, providing smooth and efficient animation performance.
+
+* **JavaScript Initialization**: JavaScript is used to dynamically create and position the spring elements and falling sakura petals when the page loads, ensuring a randomized and unique layout each time the overlay is used. The `createSpringElements()` function handles the edge decorations, and `createFallingSakuraPetals()` handles the full-screen falling petals.
 
 ## Customization Options
 
@@ -52,11 +65,17 @@ You can adjust the animation by modifying these properties in the `:root` sectio
 
 ```css
 /* Sakura animation settings */
---petal-count: 30;         /* Increase for more density, decrease for subtlety */
+/* Falling sakura petals */
+--petal-count: 30;         /* Number of falling petals */
 --petal-min-size: 15px;    /* Minimum petal size */
 --petal-max-size: 30px;    /* Maximum petal size */
---petal-min-duration: 10s; /* Faster falling (shorter duration) */
---petal-max-duration: 30s; /* Slower falling (longer duration) */
+--petal-min-duration: 10s; /* Minimum fall duration */
+--petal-max-duration: 30s; /* Maximum fall duration */
+
+/* Spring elements (edge decorations) animation */
+--edge-animation-duration: 15s; /* Animation duration for edge elements */
+--edge-element-opacity: 0.6;    /* Opacity of edge elements */
+--edge-blur-filter: 1px;       /* Blur filter for edge elements */
 ```
 
 ## Customization Guide
@@ -87,23 +106,29 @@ To modify the color scheme of the background:
 
 ### Adjusting Animations
 
-1. **Petal Fall Speed**:  The falling speed is controlled by the `animation-duration` in the `@keyframes float` animation and applied to `.spring-element`. You can adjust the base speed in the `.spring-element` style, or customize individual elements.
+1. **Falling Petal Animation**:
+   - **Petal Count**: Control the number of falling petals using the `--petal-count` CSS variable.
+   - **Petal Size**: Adjust the size range of falling petals with `--petal-min-size` and `--petal-max-size`.
+   - **Fall Speed**: Modify the falling speed by changing `--petal-min-duration` and `--petal-max-duration`. Shorter durations mean faster falling.
 
-   ```css
-   .spring-element {
-       /* ... other styles ... */
-       animation: float 15s infinite ease-in-out; /* Adjust '15s' for speed */
-   }
-   ```
+2. **Spring Element Animation**:
+   - **Float Animation**: The floating animation of spring elements is controlled by the `animation-duration` in the `@keyframes float` animation applied to `.spring-element`. Adjust the `animation-duration` in the `.spring-element` style to change the speed.
 
-2. **Sway Animation**: The gentle sway of the leaves is controlled by the `@keyframes sway` animation and applied to `.leaf`. Adjust the `animation-duration` in the `.leaf` style to change the sway speed.
+     ```css
+     .spring-element {
+         /* ... other styles ... */
+         animation: float 15s infinite ease-in-out; /* Adjust '15s' for speed */
+     }
+     ```
 
-   ```css
-   .leaf {
-       /* ... other styles ... */
-       animation: float 25s infinite ease-in-out, sway 8s infinite ease-in-out; /* Adjust '8s' for sway speed */
-   }
-   ```
+   - **Sway Animation**: The sway of leaves is controlled by the `@keyframes sway` animation applied to `.leaf`. Adjust the `animation-duration` in the `.leaf` style to change the sway speed.
+
+     ```css
+     .leaf {
+         /* ... other styles ... */
+         animation: float 25s infinite ease-in-out, sway 8s infinite ease-in-out; /* Adjust '8s' for sway speed */
+     }
+     ```
 
 ### Adding or Removing Elements
 

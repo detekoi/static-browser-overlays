@@ -1,6 +1,6 @@
 # Browser Overlays for Streaming
 
-This repository contains a variety of browser overlays that you can use with OBS, Streamlabs, or any other streaming software that supports browser sources. The overlays are designed to be easy to use, customize, and integrate into your stream.
+This repository contains a variety of browser overlays for OBS, Streamlabs, and other streaming software. The overlays are designed to be easy to use, customize, and integrate into your stream.
 
 ## Features
 
@@ -11,39 +11,36 @@ This repository contains a variety of browser overlays that you can use with OBS
 
 ## Available Overlays
 
-### Cozy 10:9 GameBoy
+### Cozy 10:9 Aspect Ratio
 
-A charming GameBoy-inspired frame with leaf decorations, perfect for retro games.
+A stylish overlay for Cozy 10:9 Aspect Ratio streams.
 
-![Cozy 10:9 GameBoy Overlay](docs/screenshots/cozy-10-9-gameboy.png)
+![Cozy 10:9 Aspect Ratio Overlay](docs/screenshots/cozy-10-9-aspect-ratio.png)
 
-[📄 Documentation](sources/overlays/cozy%2010-9%20aspect%20ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true) | 
-[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2010-9%20aspect%20ratio/overlay.html)
+[📄 Documentation](sources/overlays/cozy 10-9 aspect ratio/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
 
-### Cozy 16:9 Widescreen
+### Cozy 16:9 Aspect Ratio
 
-A modern 16:9 transparent overlay with minimalist borders, perfect for contemporary games and content.
+A stylish overlay for Cozy 16:9 Aspect Ratio streams.
 
-![Cozy 16:9 Widescreen Overlay](docs/screenshots/cozy-16-9-widescreen.png)
+![Cozy 16:9 Aspect Ratio Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
 
-[📄 Documentation](sources/overlays/cozy%2016-9%20aspect%20ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true) | 
-[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy%2016-9%20aspect%20ratio/overlay.htm)
+[📄 Documentation](sources/overlays/cozy 16-9 aspect ratio/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
 
-### Cozy 4:3 Classic
+### Retro Sakura
 
-A classic overlay designed for retro games and consoles that use the standard 4:3 aspect ratio. Features clean, transparent backgrounds with a vintage coffee cup decoration.
+A stylish overlay for Retro Sakura streams, featuring springtime colors and a nostalgic aesthetic that brings a touch of elegance to your stream.
 
-![Cozy 4:3 Classic Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
+![Retro Sakura Overlay](docs/screenshots/retro-sakura.png)
 
-[📄 Documentation](sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | 
-[⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true) | 
-[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/cozy-4-3-aspect-ratio/overlay.html)
+[📄 Documentation](sources/overlays/retro-sakura/retro-sakura-readme.md) | 
+[⬇️ Download ZIP](releases/retro-sakura.zip?raw=true)
 
 ### Minimal 10:9
 
-A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Advance and other handhelds) with **highly customizable** features - adjust border colors, thickness, radius, webcam position, size, and visibility using simple CSS variables.
+A clean, minimal overlay for 10:9 aspect ratio gameplay with highly customizable features.
 
 ![Minimal 10:9 Overlay](docs/screenshots/minimal-10-9.png)
 
@@ -53,7 +50,7 @@ A clean, minimal overlay for 10:9 aspect ratio gameplay (common for Game Boy Adv
 
 ### Minimal 16:9
 
-A clean, minimal overlay for 16:9 aspect ratio gameplay with **fully customizable** styling - easily change border colors, thickness, radius, webcam position, and background transparency to match your stream's theme using simple CSS variables.
+A clean, minimal overlay for 16:9 aspect ratio gameplay with fully customizable styling.
 
 ![Minimal 16:9 Overlay](docs/screenshots/minimal-16-9.png)
 
@@ -63,7 +60,7 @@ A clean, minimal overlay for 16:9 aspect ratio gameplay with **fully customizabl
 
 ### Minimal 4:3
 
-A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade games, and retro PCs) with **extensive customization options** - modify border colors, thickness, corner roundness, webcam container styling, and layout positioning through easy-to-use CSS variables.
+A clean, minimal overlay for 4:3 aspect ratio gameplay with extensive customization options.
 
 ![Minimal 4:3 Overlay](docs/screenshots/minimal-4-3.png)
 
@@ -71,44 +68,20 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay (classic consoles, arcade
 [⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-4-3/overlay.html)
 
-
-
-### Cozy 10:9 Aspect Ratio
-
-A stylish overlay for Cozy 10:9 Aspect Ratio streams.
-
-![Cozy 10:9 Aspect Ratio Overlay](docs/screenshots/cozy-10-9-aspect-ratio.png)
-
-[📄 Documentation](sources/sources/overlays/cozy 10-9 aspect ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-10-9-aspect-ratio.zip?raw=true)
-
-### Cozy 16:9 Aspect Ratio
-
-A stylish overlay for Cozy 16:9 Aspect Ratio streams.
-
-![Cozy 16:9 Aspect Ratio Overlay](docs/screenshots/cozy-16-9-aspect-ratio.png)
-
-[📄 Documentation](sources/sources/overlays/cozy 16-9 aspect ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-16-9-aspect-ratio.zip?raw=true)
-
-### Retro Sakura
-
-A stylish overlay for Retro Sakura streams.
-
-![Retro Sakura Overlay](docs/screenshots/retro-sakura.png)
-
-[📄 Documentation](sources/sources/overlays/retro-sakura/rero-sakura-readme.md) | [⬇️ Download ZIP](releases/retro-sakura.zip?raw=true)
 ## Available Backgrounds
-
 
 ### Sakura Background
 
-A stylish overlay for Sakura Background streams.
+A stylish background for Sakura-themed streams, adorned with delicate cherry blossoms and soft pastel colors, creating a serene and enchanting atmosphere.
 
 ![Sakura Background Overlay](docs/screenshots/sakura-background.png)
 
+[📄 Documentation](sources/backgrounds/sakura-background/sakura-background-readme.md) | 
 [⬇️ Download ZIP](releases/sakura-background.zip?raw=true)
+
 ### Cube Pattern Background
 
-A stylish animated isometric cube pattern with dynamic lighting effects, perfect as a background for modern gaming streams.
+An animated isometric cube pattern with dynamic lighting effects, perfect as a background for modern gaming streams.
 
 ![Cube Pattern Background](docs/screenshots/cube-pattern-background.png)
 
@@ -118,7 +91,7 @@ A stylish animated isometric cube pattern with dynamic lighting effects, perfect
 
 ### Arctic Background
 
-A winter-themed background with animated aurora borealis effects, falling snowflakes, and a snowy landscape. Designed to be used as a background layer beneath other transparent overlays.
+A winter-themed background with animated aurora borealis effects, falling snowflakes, and a snowy landscape.
 
 ![Arctic Background](docs/screenshots/arctic-background.png)
 
@@ -128,7 +101,7 @@ A winter-themed background with animated aurora borealis effects, falling snowfl
 
 ### Twinkling Stars Background
 
-A beautiful animated background with twinkling stars of various sizes, colors, and brightness levels, perfect as a base layer for space-themed streams.
+An animated background with twinkling stars, perfect as a base layer for space-themed streams.
 
 ![Stars Background](docs/screenshots/stars-background.png)
 
