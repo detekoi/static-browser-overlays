@@ -1,3 +1,8 @@
+---
+layout: default
+title: Contributing Guide
+---
+
 # Contributing to Browser Overlays
 
 Thank you for considering contributing to the Browser Overlays project! This document provides guidelines and instructions for contributing.
