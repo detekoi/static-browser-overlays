@@ -137,7 +137,7 @@ See the [customization guide](docs/customization.md) for details on how to modif
 
 ## Contributing
 
-Contributions are welcome! See the [Contribution guide](docs/CONTRIBUTING.md) for guidelines on how to contribute to this project.
+Contributions are welcome! See the [contribution guide](docs/CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
 ## License
 

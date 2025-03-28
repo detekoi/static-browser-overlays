@@ -100,6 +100,4 @@ This project welcomes contributions from everyone and is committed to creating a
 
 Please provide constructive feedback, focusing on improvement of the project.
 
-For more information on our design approach and content standards, see the [CLAUDE.md](CLAUDE.md) file.
-
 Thank you for contributing to make streaming overlays more accessible and beautiful for everyone!
