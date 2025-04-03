@@ -27,22 +27,22 @@
         */
         :root {
             /* Primary accent color */
-            --accent-color: #ff9eb1; /* Cherry blossom pink */
+            --accent-color: #FFC0CB; /* Lighter Pink */
             
             /* Secondary accent color */
-            --accent-color-2: #b6e9d1; /* Soft mint green */
+            --accent-color-2: #C1E1C1; /* Pale Green */
             
             /* Background colors */
-            --bg-color-1: #d0e8cf; /* Light, serene green */
-            --bg-color-2: #a3c4bc; /* Soft, muted green */
+            --bg-color-1: #E0F2E9; /* Lighter serene green */
+            --bg-color-2: #B0D8C0; /* Lighter muted green */
             
             /* Edge decoration settings */
             --edge-width: 200px; /* Width of the edge decorations */
             --center-clear-zone: 1200px; /* Size of the clear zone in the middle */
             
             /* Branch colors */
-            --branch-color-1: #8d6e63; /* Main branch color */
-            --branch-color-2: #6d4c41; /* Secondary branch color */
+            --branch-color-1: #AE8B6F; /* Lighter brown */
+            --branch-color-2: #C19A6B; /* Lighter secondary brown */
             
             /* Sakura animation settings */
             --petal-count: 60; /* Number of falling petals */
@@ -257,7 +257,7 @@
 
         .flower-center {
             position: absolute;
-            background-color: #fff9c4;
+            background-color: #FFFACD; /* Lemon Chiffon (lighter yellow) */
             border-radius: 50%;
             left: 50%;
             top: 50%;
@@ -419,7 +419,7 @@
                 // Color variation
                 const hue = Math.random() * 10 - 5; // +/- 5 degrees from pink
                 const lightness = Math.random() * 10 - 5; // +/- 5% lightness
-                blossom.style.backgroundColor = `hsl(${350 + hue}, 100%, ${85 + lightness}%)`;
+                blossom.style.backgroundColor = `hsl(${350 + hue}, 90%, ${85 + lightness}%)`;
                 
                 // Add animation
                 blossom.style.animation = `gentle-pulse ${3 + Math.random() * 2}s infinite ease-in-out`;
@@ -778,7 +778,7 @@
                 // Random color variations (subtle)
                 const hue = Math.random() * 10 - 5; // +/- 5 degrees from pink
                 const lightness = Math.random() * 10 - 5; // +/- 5% lightness
-                petal.style.backgroundColor = `hsl(${350 + hue}, 100%, ${85 + lightness}%)`;
+                petal.style.backgroundColor = `hsl(${350 + hue}, 90%, ${85 + lightness}%)`;
                 
                 // Add to the container
                 petalContainer.appendChild(petal);
