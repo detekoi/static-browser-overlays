@@ -19,6 +19,7 @@
       gridSize: 24, // Will be calculated dynamically
       animationSpeed: 0.0006, // Much slower animation for smoother transitions
       rotationAmount: 0.01, // Very small rotation
+      drawUpdateFrequency: 3, // <<< ADD THIS LINE (e.g., redraw every 3 frames)
     };
     
     // State
@@ -49,16 +50,18 @@
     }
     
     function draw() {
-      background(10, 10, 30);
-      
-      // Update animation state
-      ambiguityPhase += config.animationSpeed;
-      
-      // Update light positions
-      // updateLights();
-      
-      // Draw the cube wall (expanded to fill screen)
-      drawCubeWall();
+      if (frameCount % config.drawUpdateFrequency === 0) {
+        background(10, 10, 30);
+        
+        // Update animation state
+        ambiguityPhase += config.animationSpeed;
+        
+        // Update light positions
+        // updateLights();
+        
+        // Draw the cube wall (expanded to fill screen)
+        drawCubeWall();
+      }
       
       // We no longer draw visible lights as requested
       // drawLights();
