@@ -61,6 +61,16 @@ A clean, minimal overlay for 16:9 aspect ratio gameplay with fully customizable 
 [⬇️ Download ZIP](releases/minimal-16-9.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-16-9/overlay.html)
 
+### Light 16:9
+
+A clean, light-themed overlay for 16:9 aspect ratio gameplay with customizable off-white borders.
+
+![Light 16:9 Overlay](docs/screenshots/light-16-9.png)
+
+[📄 Documentation](sources/overlays/light-16-9/overlay-readme.md) | 
+[⬇️ Download ZIP](releases/light-16-9.zip?raw=true) | 
+[🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/light-16-9/overlay.html)
+
 ### Minimal 4:3
 
 A clean, minimal overlay for 4:3 aspect ratio gameplay with extensive customization options.

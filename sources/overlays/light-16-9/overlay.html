@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light 16:9 Overlay</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: transparent;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Custom variables for easy customization */
+        :root {
+            /* Colors */
+            --border-color: rgba(245, 245, 245, 0.9); /* Off-white border */
+            --shadow-color: rgba(200, 200, 200, 0.4); /* Lighter shadow */
+            
+            /* Game window position and size - for 1920x1080 resolution */
+            --game-width: 1760px;        /* Fixed width for 16:9 game window */
+            --game-height: 990px;        /* Fixed height for 16:9 game window (1760 * 9/16) */
+            --game-left-position: 47%;   /* Left position of game window (shifted left to reduce overlap) */
+            
+            /* Webcam position and size */
+            --webcam-size: 250px;        /* Width and height of webcam container */
+            --webcam-bottom: 40%;        /* Distance from bottom - centers vertically on game side */
+            --webcam-right: 1%;          /* Distance from right (increased to reduce overlap) */
+            --webcam-visibility: block;  /* Set to "none" to hide webcam container */
+            --webcam-bg-color: rgba(245, 245, 245, 1); /* Background color behind webcam - solid off-white */
+        }
+        
+        /* Game window - 16:9 aspect ratio */
+        .game-window {
+            position: absolute;
+            top: 50%;
+            left: var(--game-left-position);
+            transform: translate(-50%, -50%);
+            width: var(--game-width);
+            height: var(--game-height);
+            /* Exact 16:9 aspect ratio (1760 × 990) for 1920×1080 display */
+            background: transparent;
+            border: 7px solid var(--border-color); /* Thicker border (was 5px) */
+            border-radius: 6px;
+            z-index: 1;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        
+        /* Webcam container */
+        .webcam-container {
+            position: absolute;
+            bottom: var(--webcam-bottom);
+            right: var(--webcam-right);
+            width: var(--webcam-size);
+            height: var(--webcam-size);
+            background: var(--webcam-bg-color);
+            border: 7px solid var(--border-color); /* Thicker border (was 5px) */
+            border-radius: 50%;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            display: var(--webcam-visibility);
+        }
+        
+        /* Easily customizable - change these variables in :root above to customize colors */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-window"></div>
+        <div class="webcam-container"></div>
+    </div>
+</body>
+</html>

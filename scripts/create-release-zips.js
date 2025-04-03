@@ -73,24 +73,8 @@ async function createZipFiles() {
   for (const source of sources) {
     const zipFilePath = path.join(releasesDir, `${source.name}.zip`);
     
-    // Check if zip already exists - only create if it doesn't exist or source is newer
+    // Check if zip already exists - only create if it doesn't exist
     let shouldZip = !fs.existsSync(zipFilePath);
-    
-    if (!shouldZip) {
-      // Compare modification time of zip with source directory
-      const zipStats = fs.statSync(zipFilePath);
-      const zipMtime = zipStats.mtime;
-      
-      // Check if any file in the source directory is newer than the zip
-      const sourceFiles = getAllFiles(source.folderPath);
-      for (const file of sourceFiles) {
-        const fileStats = fs.statSync(file);
-        if (fileStats.mtime > zipMtime) {
-          shouldZip = true;
-          break;
-        }
-      }
-    }
     
     if (shouldZip) {
       updatesNeeded = true;
@@ -124,22 +108,6 @@ async function createZipFiles() {
   if (updatesNeeded) {
     console.log(`Updated ${updatedCount} zip file(s).`);
   }
-}
-
-// Helper function to get all files in a directory recursively
-function getAllFiles(dirPath, arrayOfFiles = []) {
-  const files = fs.readdirSync(dirPath);
-  
-  files.forEach(file => {
-    const filePath = path.join(dirPath, file);
-    if (fs.statSync(filePath).isDirectory()) {
-      arrayOfFiles = getAllFiles(filePath, arrayOfFiles);
-    } else {
-      arrayOfFiles.push(filePath);
-    }
-  });
-  
-  return arrayOfFiles;
 }
 
 // Run the script

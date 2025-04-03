@@ -147,6 +147,9 @@ async function takeScreenshots() {
     // Brief pause to let any animations initialize
     await new Promise(resolve => setTimeout(resolve, 1000));
     
+    // Inject CSS to set background color to black
+    await page.evaluate(() => { document.body.style.backgroundColor = 'black'; });
+    
     // Take screenshot
     await page.screenshot({
       path: overlay.outputFile,
