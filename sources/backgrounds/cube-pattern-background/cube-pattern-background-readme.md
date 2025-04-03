@@ -4,7 +4,7 @@ This document explains how to use and customize the animated geometric cube patt
 
 ## Overview
 
-This HTML/CSS/JavaScript file creates a mesmerizing animated background with tessellated cubes that create an optical illusion where it's ambiguous which parts stick "out" and which parts stick "in." The animation includes subtle lighting effects and smooth transitions that continuously change your perception of the cube wall. It's designed for streaming overlays, website backgrounds, or any digital content that needs a dynamic geometric backdrop.
+This HTML/CSS/JavaScript file creates a mesmerizing animated background with tessellated cubes that create an optical illusion where it's ambiguous which parts stick "out" and which parts stick "in." The animation includes smooth transitions that continuously change your perception of the cube wall. It's designed for streaming overlays, website backgrounds, or any digital content that needs a dynamic geometric backdrop.
 
 ![Cube Pattern Background Preview](../../../docs/screenshots/cube-pattern-background.png)
 
@@ -57,14 +57,9 @@ Find the `config` object at the top of the JavaScript section:
 const config = {
     cubeSize: 40,          // Size of each cube
     gridSize: 24,          // Calculated dynamically for coverage
-    numLights: 8,          // Number of light sources
     animationSpeed: 0.0006, // Speed of pattern change
-    lightOrbitSpeed: 0.001, // Speed of lighting movement
-    lightPulseSpeed: 0.003, // Speed of light pulse
-    lightPulseAmount: 3,    // Intensity of pulsing effect
     rotationAmount: 0.01,   // Amount of subtle rotation
-    interpolationFactor: 0.015, // Smoothness of transitions
-    historyLength: 12       // Length of history buffer for transitions
+    drawUpdateFrequency: 30 // Only update the display every 30 frames
 };
 ```
 
@@ -72,13 +67,9 @@ Here's what each property does:
 
 - **cubeSize**: Controls the size of individual cubes. Smaller values create more detailed patterns.
 - **gridSize**: Automatically calculated, but you can manually override for specific density.
-- **numLights**: More lights create smoother lighting transitions but may impact performance.
 - **animationSpeed**: Controls how quickly the cube pattern shifts. Lower values = slower transitions.
-- **lightOrbitSpeed**: Controls how fast light sources move around the pattern.
-- **lightPulseSpeed/Amount**: Controls the intensity and speed of lighting pulses.
 - **rotationAmount**: Controls the amount of subtle rotation in the overall pattern.
-- **interpolationFactor**: Lower values create smoother transitions but less responsive animation.
-- **historyLength**: Higher values create smoother transitions but use more memory.
+- **drawUpdateFrequency**: Controls how often the visual is redrawn. Higher values save CPU but reduce smoothness.
 
 ### Cube Colors
 
@@ -158,7 +149,7 @@ To create different patterns:
 
 ### Creating a "Frozen" Pattern
 
-If you want to stop the animation but keep the lighting effects:
+If you want to stop the animation but maintain the current pattern:
 
 ```javascript
 // Change this line:
@@ -186,8 +177,7 @@ function mousePressed() {
 
 - **Cube Size**: Larger cubes (higher `cubeSize` value) will create fewer cubes and better performance.
 - **Grid Size**: If you manually set `gridSize` lower, you'll have fewer cubes to render.
-- **Light Sources**: Reduce `numLights` to improve performance.
-- **History Length**: Reduce `historyLength` to use less memory.
+- **drawUpdateFrequency**: Higher values (e.g., 30, 60) will dramatically reduce CPU usage by redrawing less often.
 - **Browser Source Settings**: In OBS, you can set the browser source to refresh when not visible to save resources.
 
 ## Troubleshooting
@@ -197,7 +187,7 @@ If the background doesn't appear or has issues:
 2. Check that the browser source is correctly pointed to the file.
 3. Verify the browser source is visible and not hidden behind other sources.
 4. Try refreshing the browser source in OBS.
-5. If animation is too resource-intensive, increase `cubeSize` and reduce `numLights`.
+5. If animation is too resource-intensive, increase `cubeSize` and increase `drawUpdateFrequency`.
 
 ## Compatibility
 
