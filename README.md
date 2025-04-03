@@ -141,4 +141,4 @@ Contributions are welcome! See the [contribution guide](docs/CONTRIBUTING.md) fo
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](docs/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](docs/LICENSE.md) file for details.
