@@ -24,7 +24,8 @@
       lightPulseAmount: 3, // Minimal pulse amount for very subtle effects
       rotationAmount: 0.01, // Very small rotation
       interpolationFactor: 0.015, // Ultra-slow interpolation
-      historyLength: 12 // Longer history for smoother averaging
+      historyLength: 12, // Longer history for smoother averaging
+      lightingUpdateFrequency: 5 // Update lighting every 5 frames
     };
     
     // State
@@ -135,7 +136,8 @@
       translate(x, y);
       
       // Calculate lighting for this cube using the cache for smoothness
-      let lightValues = calculateLighting(x, y, size, cacheKey);
+      // Pass frameCount to determine if a full update is needed
+      let lightValues = calculateLighting(x, y, size, cacheKey, frameCount); 
       
       // Define color palettes for "out" and "in" cubes
       let baseColors = {
@@ -233,7 +235,7 @@
       endShape(CLOSE);
     }
     
-    function calculateLighting(x, y, size, cacheKey) {
+    function calculateLighting(x, y, size, cacheKey, currentFrame) {
       // Convert to global coordinates - updated for proper positioning
       let globalX = width/2 - (config.gridSize * config.cubeSize * 0.75)/2 + x;
       let globalY = height/2 - (config.gridSize * config.cubeSize * 0.866)/2 + y;
@@ -251,6 +253,10 @@
           top: 0, 
           left: 0, 
           right: 0,
+          // Store the target average we are interpolating towards
+          targetTopAvg: 0,
+          targetLeftAvg: 0,
+          targetRightAvg: 0,
           // Create longer history arrays for smoother transitions
           leftHistory: Array(config.historyLength).fill(0),
           topHistory: Array(config.historyLength).fill(0),
@@ -258,98 +264,104 @@
         };
       }
       
-      let currentLighting = {top: 0, left: 0, right: 0};
+      // --- Only perform full update periodically ---
+      if (currentFrame % config.lightingUpdateFrequency === 0) {
       
-      // Face normals for lighting calculation
-      let topFaceNormal = createVector(0, -1);
-      let leftFaceNormal = createVector(-0.866, 0.5);
-      let rightFaceNormal = createVector(0.866, 0.5);
-      
-      for (let light of lights) {
-        // Light position
-        let lightPos = createVector(
-          width/2 + cos(light.angle) * light.radius,
-          height/2 + sin(light.angle) * light.radius
-        );
+        let currentLighting = {top: 0, left: 0, right: 0};
         
-        // Multiple overlapping pulses with very slow frequencies
-        let pulseA = sin(frameCount * config.lightPulseSpeed * 0.7 + light.angle * 1.5) * (config.lightPulseAmount * 0.5);
-        let pulseB = sin(frameCount * config.lightPulseSpeed * 0.4 + light.angle * 0.8) * (config.lightPulseAmount * 0.3);
-        let pulseC = sin(frameCount * config.lightPulseSpeed * 0.2 + light.angle * 0.3) * (config.lightPulseAmount * 0.2);
-        let pulse = pulseA + pulseB + pulseC;
+        // Face normals for lighting calculation
+        let topFaceNormal = createVector(0, -1);
+        let leftFaceNormal = createVector(-0.866, 0.5);
+        let rightFaceNormal = createVector(0.866, 0.5);
         
-        // Calculate lighting with higher minimum values to reduce contrast
-        let lightDir = p5.Vector.sub(lightPos, topCenter).normalize();
-        let topDot = max(0.3, p5.Vector.dot(topFaceNormal, lightDir));
-        
-        lightDir = p5.Vector.sub(lightPos, leftCenter).normalize();
-        let leftDot = max(0.3, p5.Vector.dot(leftFaceNormal, lightDir));
-        
-        lightDir = p5.Vector.sub(lightPos, rightCenter).normalize();
-        let rightDot = max(0.3, p5.Vector.dot(rightFaceNormal, lightDir));
-        
-        // Calculate base lighting with very gentle distance falloff
-        let baseLighting = {
-          top: calculateFaceLighting(topCenter, lightPos, 300) * topDot + pulse,
-          left: calculateFaceLighting(leftCenter, lightPos, 300) * leftDot + pulse,
-          right: calculateFaceLighting(rightCenter, lightPos, 300) * rightDot + pulse
-        };
-        
-        // Reduce intensity variations for all faces
-        baseLighting.top *= 0.7;
-        baseLighting.left *= 0.6; 
-        baseLighting.right *= 0.7;
-        
-        // Accumulate lighting from all lights
-        currentLighting.top += baseLighting.top;
-        currentLighting.left += baseLighting.left;
-        currentLighting.right += baseLighting.right;
-      }
-      
-      // Cap the current lighting to prevent outliers
-      currentLighting.top = constrain(currentLighting.top, 0, 60);
-      currentLighting.left = constrain(currentLighting.left, 0, 60);
-      currentLighting.right = constrain(currentLighting.right, 0, 60);
-      
-      // Update history arrays for all faces
-      prevLighting.topHistory.shift();
-      prevLighting.topHistory.push(currentLighting.top);
-      
-      prevLighting.leftHistory.shift();
-      prevLighting.leftHistory.push(currentLighting.left);
-      
-      prevLighting.rightHistory.shift();
-      prevLighting.rightHistory.push(currentLighting.right);
-      
-      // Calculate weighted averages from history (more weight to recent values)
-      // This creates more stable but still responsive lighting
-      let getWeightedAverage = (history) => {
-        let sum = 0;
-        let weightSum = 0;
-        
-        for (let i = 0; i < history.length; i++) {
-          // Linear weight: newer values have higher weight
-          let weight = (i + 1) / history.length;
-          sum += history[i] * weight;
-          weightSum += weight;
+        for (let light of lights) {
+          // Light position
+          let lightPos = createVector(
+            width/2 + cos(light.angle) * light.radius,
+            height/2 + sin(light.angle) * light.radius
+          );
+          
+          // Multiple overlapping pulses with very slow frequencies
+          let pulseA = sin(frameCount * config.lightPulseSpeed * 0.7 + light.angle * 1.5) * (config.lightPulseAmount * 0.5);
+          let pulseB = sin(frameCount * config.lightPulseSpeed * 0.4 + light.angle * 0.8) * (config.lightPulseAmount * 0.3);
+          let pulseC = sin(frameCount * config.lightPulseSpeed * 0.2 + light.angle * 0.3) * (config.lightPulseAmount * 0.2);
+          let pulse = pulseA + pulseB + pulseC;
+          
+          // Calculate lighting with higher minimum values to reduce contrast
+          let lightDir = p5.Vector.sub(lightPos, topCenter).normalize();
+          let topDot = max(0.3, p5.Vector.dot(topFaceNormal, lightDir));
+          
+          lightDir = p5.Vector.sub(lightPos, leftCenter).normalize();
+          let leftDot = max(0.3, p5.Vector.dot(leftFaceNormal, lightDir));
+          
+          lightDir = p5.Vector.sub(lightPos, rightCenter).normalize();
+          let rightDot = max(0.3, p5.Vector.dot(rightFaceNormal, lightDir));
+          
+          // Calculate base lighting with very gentle distance falloff
+          let baseLighting = {
+            top: calculateFaceLighting(topCenter, lightPos, 300) * topDot + pulse,
+            left: calculateFaceLighting(leftCenter, lightPos, 300) * leftDot + pulse,
+            right: calculateFaceLighting(rightCenter, lightPos, 300) * rightDot + pulse
+          };
+          
+          // Reduce intensity variations for all faces
+          baseLighting.top *= 0.7;
+          baseLighting.left *= 0.6; 
+          baseLighting.right *= 0.7;
+          
+          // Accumulate lighting from all lights
+          currentLighting.top += baseLighting.top;
+          currentLighting.left += baseLighting.left;
+          currentLighting.right += baseLighting.right;
         }
         
-        return sum / weightSum;
-      };
-      
-      // Calculate smooth averages
-      const topAvg = getWeightedAverage(prevLighting.topHistory);
-      const leftAvg = getWeightedAverage(prevLighting.leftHistory);
-      const rightAvg = getWeightedAverage(prevLighting.rightHistory);
+        // Cap the current lighting to prevent outliers
+        currentLighting.top = constrain(currentLighting.top, 0, 60);
+        currentLighting.left = constrain(currentLighting.left, 0, 60);
+        currentLighting.right = constrain(currentLighting.right, 0, 60);
+        
+        // Update history arrays for all faces
+        prevLighting.topHistory.shift();
+        prevLighting.topHistory.push(currentLighting.top);
+        
+        prevLighting.leftHistory.shift();
+        prevLighting.leftHistory.push(currentLighting.left);
+        
+        prevLighting.rightHistory.shift();
+        prevLighting.rightHistory.push(currentLighting.right);
+        
+        // Calculate weighted averages from history (more weight to recent values)
+        // This creates more stable but still responsive lighting
+        let getWeightedAverage = (history) => {
+          let sum = 0;
+          let weightSum = 0;
+          
+          for (let i = 0; i < history.length; i++) {
+            // Linear weight: newer values have higher weight
+            let weight = (i + 1) / history.length;
+            sum += history[i] * weight;
+            weightSum += weight;
+          }
+          
+          return sum / weightSum;
+        };
+        
+        // Calculate smooth averages and store them as the new target
+        prevLighting.targetTopAvg = getWeightedAverage(prevLighting.topHistory);
+        prevLighting.targetLeftAvg = getWeightedAverage(prevLighting.leftHistory);
+        prevLighting.targetRightAvg = getWeightedAverage(prevLighting.rightHistory);
+        
+      } // --- End periodic update ---
       
       // Result with ultra-smooth interpolation for ALL faces
+      // Always interpolate towards the (potentially stale) target average
       let result = {
-        top: lerp(prevLighting.top, topAvg, config.interpolationFactor),
-        left: lerp(prevLighting.left, leftAvg, config.interpolationFactor * 0.7), // Even slower for left faces
-        right: lerp(prevLighting.right, rightAvg, config.interpolationFactor)
+        top: lerp(prevLighting.top, prevLighting.targetTopAvg, config.interpolationFactor),
+        left: lerp(prevLighting.left, prevLighting.targetLeftAvg, config.interpolationFactor * 0.7), // Even slower for left faces
+        right: lerp(prevLighting.right, prevLighting.targetRightAvg, config.interpolationFactor)
       };
       
-      // Update the cached values for next frame
+      // Update the cached current values for the next frame's interpolation
       prevLighting.top = result.top;
       prevLighting.left = result.left;
       prevLighting.right = result.right;
