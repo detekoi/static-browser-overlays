@@ -17,21 +17,12 @@
     const config = {
       cubeSize: 40, // Slightly larger cubes for better coverage
       gridSize: 24, // Will be calculated dynamically
-      numLights: 8, // More lights for smoother transitions
       animationSpeed: 0.0006, // Much slower animation for smoother transitions
-      lightOrbitSpeed: 0.001, // Even slower orbit speed
-      lightPulseSpeed: 0.003, // Much slower pulse for ultra-smooth lighting
-      lightPulseAmount: 3, // Minimal pulse amount for very subtle effects
       rotationAmount: 0.01, // Very small rotation
-      interpolationFactor: 0.015, // Ultra-slow interpolation
-      historyLength: 12, // Longer history for smoother averaging
-      lightingUpdateFrequency: 5 // Update lighting every 5 frames
     };
     
     // State
-    let lights = [];
     let ambiguityPhase = 0;
-    let lightingCache = new Map(); // Cache for smooth lighting
     
     function setup() {
       createCanvas(windowWidth, windowHeight);
@@ -51,22 +42,10 @@
       config.gridSize = Math.max(horizontalCubes, verticalCubes);
       
       // Initialize light sources more evenly distributed
-      for (let i = 0; i < config.numLights; i++) {
-        lights.push({
-          angle: TWO_PI / config.numLights * i,
-          radius: max(minWidth, minHeight), // Even larger radius
-          color: color(
-            random(180, 255),
-            random(180, 255),
-            random(180, 255),
-            180
-          ),
-          speed: config.lightOrbitSpeed * (1 + random(-0.1, 0.1)) // Slight variation
-        });
-      }
+      // for (let i = 0; i < config.numLights; i++) { ... } 
       
       // Pre-initialize lighting cache for smooth transitions
-      lightingCache = new Map();
+      // lightingCache = new Map();
     }
     
     function draw() {
@@ -76,19 +55,13 @@
       ambiguityPhase += config.animationSpeed;
       
       // Update light positions
-      updateLights();
+      // updateLights();
       
       // Draw the cube wall (expanded to fill screen)
       drawCubeWall();
       
       // We no longer draw visible lights as requested
       // drawLights();
-    }
-    
-    function updateLights() {
-      for (let light of lights) {
-        light.angle += light.speed;
-      }
     }
     
     function drawCubeWall() {
@@ -123,21 +96,20 @@
             x * config.cubeSize * 0.75, 
             y * config.cubeSize * 0.866, 
             config.cubeSize, 
-            stickOut,
-            `${x},${y}` // Pass coordinate key for lighting cache
+            stickOut
           );
         }
       }
       pop();
     }
     
-    function drawCube(x, y, size, stickOut, cacheKey) {
+    function drawCube(x, y, size, stickOut) {
       push();
       translate(x, y);
       
       // Calculate lighting for this cube using the cache for smoothness
       // Pass frameCount to determine if a full update is needed
-      let lightValues = calculateLighting(x, y, size, cacheKey, frameCount); 
+      // let lightValues = calculateLighting(x, y, size, cacheKey, frameCount); 
       
       // Define color palettes for "out" and "in" cubes
       let baseColors = {
@@ -156,50 +128,50 @@
       if (stickOut) {
         // Draw top face
         fill(
-          red(baseColors.topOut) + lightValues.top,
-          green(baseColors.topOut) + lightValues.top,
-          blue(baseColors.topOut) + lightValues.top
+          red(baseColors.topOut),
+          green(baseColors.topOut),
+          blue(baseColors.topOut)
         );
         drawTopFace(size);
         
         // Draw left face
         fill(
-          red(baseColors.leftOut) + lightValues.left,
-          green(baseColors.leftOut) + lightValues.left,
-          blue(baseColors.leftOut) + lightValues.left
+          red(baseColors.leftOut),
+          green(baseColors.leftOut),
+          blue(baseColors.leftOut)
         );
         drawLeftFace(size);
         
         // Draw right face
         fill(
-          red(baseColors.rightOut) + lightValues.right,
-          green(baseColors.rightOut) + lightValues.right,
-          blue(baseColors.rightOut) + lightValues.right
+          red(baseColors.rightOut),
+          green(baseColors.rightOut),
+          blue(baseColors.rightOut)
         );
         drawRightFace(size);
       } else {
         // For cubes that "stick in"
         // Draw top face (now bottom of the hole)
         fill(
-          red(baseColors.topIn) + lightValues.top,
-          green(baseColors.topIn) + lightValues.top,
-          blue(baseColors.topIn) + lightValues.top
+          red(baseColors.topIn),
+          green(baseColors.topIn),
+          blue(baseColors.topIn)
         );
         drawTopFace(size);
         
         // Draw left face
         fill(
-          red(baseColors.leftIn) + lightValues.left,
-          green(baseColors.leftIn) + lightValues.left,
-          blue(baseColors.leftIn) + lightValues.left
+          red(baseColors.leftIn),
+          green(baseColors.leftIn),
+          blue(baseColors.leftIn)
         );
         drawLeftFace(size);
         
         // Draw right face
         fill(
-          red(baseColors.rightIn) + lightValues.right,
-          green(baseColors.rightIn) + lightValues.right,
-          blue(baseColors.rightIn) + lightValues.right
+          red(baseColors.rightIn),
+          green(baseColors.rightIn),
+          blue(baseColors.rightIn)
         );
         drawRightFace(size);
       }
@@ -235,175 +207,6 @@
       endShape(CLOSE);
     }
     
-    function calculateLighting(x, y, size, cacheKey, currentFrame) {
-      // Convert to global coordinates - updated for proper positioning
-      let globalX = width/2 - (config.gridSize * config.cubeSize * 0.75)/2 + x;
-      let globalY = height/2 - (config.gridSize * config.cubeSize * 0.866)/2 + y;
-      
-      // Define center points for each face
-      let topCenter = createVector(globalX + size * 0.75, globalY + size * 0.25);
-      let leftCenter = createVector(globalX + size * 0.25, globalY + size * 0.75);
-      let rightCenter = createVector(globalX + size * 1.25, globalY + size * 0.75);
-      
-      // Get cached lighting if available or initialize with longer history
-      const key = cacheKey || `${x},${y}`;
-      let prevLighting = lightingCache.get(key);
-      if (!prevLighting) {
-        prevLighting = {
-          top: 0, 
-          left: 0, 
-          right: 0,
-          // Store the target average we are interpolating towards
-          targetTopAvg: 0,
-          targetLeftAvg: 0,
-          targetRightAvg: 0,
-          // Create longer history arrays for smoother transitions
-          leftHistory: Array(config.historyLength).fill(0),
-          topHistory: Array(config.historyLength).fill(0),
-          rightHistory: Array(config.historyLength).fill(0)
-        };
-      }
-      
-      // --- Only perform full update periodically ---
-      if (currentFrame % config.lightingUpdateFrequency === 0) {
-      
-        let currentLighting = {top: 0, left: 0, right: 0};
-        
-        // Face normals for lighting calculation
-        let topFaceNormal = createVector(0, -1);
-        let leftFaceNormal = createVector(-0.866, 0.5);
-        let rightFaceNormal = createVector(0.866, 0.5);
-        
-        for (let light of lights) {
-          // Light position
-          let lightPos = createVector(
-            width/2 + cos(light.angle) * light.radius,
-            height/2 + sin(light.angle) * light.radius
-          );
-          
-          // Multiple overlapping pulses with very slow frequencies
-          let pulseA = sin(frameCount * config.lightPulseSpeed * 0.7 + light.angle * 1.5) * (config.lightPulseAmount * 0.5);
-          let pulseB = sin(frameCount * config.lightPulseSpeed * 0.4 + light.angle * 0.8) * (config.lightPulseAmount * 0.3);
-          let pulseC = sin(frameCount * config.lightPulseSpeed * 0.2 + light.angle * 0.3) * (config.lightPulseAmount * 0.2);
-          let pulse = pulseA + pulseB + pulseC;
-          
-          // Calculate lighting with higher minimum values to reduce contrast
-          let lightDir = p5.Vector.sub(lightPos, topCenter).normalize();
-          let topDot = max(0.3, p5.Vector.dot(topFaceNormal, lightDir));
-          
-          lightDir = p5.Vector.sub(lightPos, leftCenter).normalize();
-          let leftDot = max(0.3, p5.Vector.dot(leftFaceNormal, lightDir));
-          
-          lightDir = p5.Vector.sub(lightPos, rightCenter).normalize();
-          let rightDot = max(0.3, p5.Vector.dot(rightFaceNormal, lightDir));
-          
-          // Calculate base lighting with very gentle distance falloff
-          let baseLighting = {
-            top: calculateFaceLighting(topCenter, lightPos, 300) * topDot + pulse,
-            left: calculateFaceLighting(leftCenter, lightPos, 300) * leftDot + pulse,
-            right: calculateFaceLighting(rightCenter, lightPos, 300) * rightDot + pulse
-          };
-          
-          // Reduce intensity variations for all faces
-          baseLighting.top *= 0.7;
-          baseLighting.left *= 0.6; 
-          baseLighting.right *= 0.7;
-          
-          // Accumulate lighting from all lights
-          currentLighting.top += baseLighting.top;
-          currentLighting.left += baseLighting.left;
-          currentLighting.right += baseLighting.right;
-        }
-        
-        // Cap the current lighting to prevent outliers
-        currentLighting.top = constrain(currentLighting.top, 0, 60);
-        currentLighting.left = constrain(currentLighting.left, 0, 60);
-        currentLighting.right = constrain(currentLighting.right, 0, 60);
-        
-        // Update history arrays for all faces
-        prevLighting.topHistory.shift();
-        prevLighting.topHistory.push(currentLighting.top);
-        
-        prevLighting.leftHistory.shift();
-        prevLighting.leftHistory.push(currentLighting.left);
-        
-        prevLighting.rightHistory.shift();
-        prevLighting.rightHistory.push(currentLighting.right);
-        
-        // Calculate weighted averages from history (more weight to recent values)
-        // This creates more stable but still responsive lighting
-        let getWeightedAverage = (history) => {
-          let sum = 0;
-          let weightSum = 0;
-          
-          for (let i = 0; i < history.length; i++) {
-            // Linear weight: newer values have higher weight
-            let weight = (i + 1) / history.length;
-            sum += history[i] * weight;
-            weightSum += weight;
-          }
-          
-          return sum / weightSum;
-        };
-        
-        // Calculate smooth averages and store them as the new target
-        prevLighting.targetTopAvg = getWeightedAverage(prevLighting.topHistory);
-        prevLighting.targetLeftAvg = getWeightedAverage(prevLighting.leftHistory);
-        prevLighting.targetRightAvg = getWeightedAverage(prevLighting.rightHistory);
-        
-      } // --- End periodic update ---
-      
-      // Result with ultra-smooth interpolation for ALL faces
-      // Always interpolate towards the (potentially stale) target average
-      let result = {
-        top: lerp(prevLighting.top, prevLighting.targetTopAvg, config.interpolationFactor),
-        left: lerp(prevLighting.left, prevLighting.targetLeftAvg, config.interpolationFactor * 0.7), // Even slower for left faces
-        right: lerp(prevLighting.right, prevLighting.targetRightAvg, config.interpolationFactor)
-      };
-      
-      // Update the cached current values for the next frame's interpolation
-      prevLighting.top = result.top;
-      prevLighting.left = result.left;
-      prevLighting.right = result.right;
-      
-      // Store back in cache
-      lightingCache.set(key, prevLighting);
-      
-      // Final constraint with narrow range to reduce contrast
-      result.top = constrain(result.top, 10, 60);
-      result.left = constrain(result.left, 10, 60);
-      result.right = constrain(result.right, 10, 60);
-      
-      return result;
-    }
-    
-    function calculateFaceLighting(faceCenter, lightPos, falloffFactor = 200) {
-      // Distance-based lighting with much gentler falloff
-      let d = dist(faceCenter.x, faceCenter.y, lightPos.x, lightPos.y);
-      return falloffFactor / (d + falloffFactor);
-    }
-    
-    function drawLights() {
-      // Draw the light sources with a glow effect
-      for (let light of lights) {
-        let x = width/2 + cos(light.angle) * light.radius;
-        let y = height/2 + sin(light.angle) * light.radius;
-        
-        // Create a glow effect with multiple layers
-        for (let i = 8; i > 0; i--) {
-          let radius = map(i, 0, 8, 5, 40);
-          let alpha = map(i, 0, 8, 200, 0);
-          fill(red(light.color), green(light.color), blue(light.color), alpha);
-          noStroke();
-          circle(x, y, radius * 2);
-        }
-        
-        // Bright center
-        fill(255);
-        circle(x, y, 8);
-      }
-    }
-    
     function windowResized() {
       resizeCanvas(windowWidth, windowHeight);
       
@@ -417,7 +220,7 @@
       config.gridSize = Math.max(horizontalCubes, verticalCubes);
       
       // Reset lighting cache on resize for clean state
-      lightingCache = new Map();
+      // lightingCache = new Map();
     }
   </script>
 </body>
