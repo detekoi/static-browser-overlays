@@ -17,8 +17,7 @@
             height: 1080px;
             overflow: hidden;
             font-family: 'Nunito', 'Comic Sans MS', sans-serif;
-            background-color: rgba(245, 235, 220, 0.15);
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%235b4636' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-color: transparent;
         }
         
         /* GameBoy Display Frame Container - 10:9 aspect ratio */
@@ -36,7 +35,8 @@
             position: relative;
             width: 100%;
             height: 100%;
-            background-color: #B89F7A;
+            background-color: transparent;
+            border: 20px solid #B89F7A;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(91, 70, 54, 0.2);
             overflow: hidden;
@@ -46,24 +46,13 @@
             z-index: 10;
         }
         
-        .gameboy-frame::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='%23a9885f' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
-            border-radius: 10px;
-        }
         
         .gameboy-inner {
             position: relative;
             width: calc(100% - 40px);
             height: calc(100% - 40px);
-            background-color: #FFFFFF;
-            border-radius: 8px;
-            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+            background-color: transparent;
+            box-shadow: none;
             z-index: 1;
         }
         
@@ -121,9 +110,10 @@
             height: 330px;
             left: -15px;
             top: -15px;
-            background-color: #B89F7A;
+            background-color: transparent;
+            border: 10px solid #B89F7A;
             border-radius: 50%;
-            box-shadow: 0 8px 16px rgba(91, 70, 54, 0.2);
+            box-shadow: none;
         }
         
         .webcam-cup {
@@ -132,10 +122,11 @@
             height: 300px;
             left: 0;
             top: 0;
-            background-color: #F5EBDC;
+            background-color: transparent;
+            border: 10px solid #F5EBDC;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+            box-shadow: none;
         }
         
         .webcam-rim {
@@ -144,9 +135,6 @@
             height: 290px;
             left: 5px;
             top: 5px;
-            border: 4px solid #B89F7A;
-            border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(91, 70, 54, 0.1);
         }
         
         /* Chat Widget Area */
@@ -156,7 +144,8 @@
             top: 420px;
             width: 350px;
             height: 565px;
-            background-color: #F5EBDC;
+            background-color: transparent;
+            border: 10px solid #F5EBDC;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(91, 70, 54, 0.2);
         }
@@ -167,9 +156,9 @@
             top: 15px;
             width: calc(100% - 30px);
             height: calc(100% - 30px);
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: transparent;
             border-radius: 10px;
-            box-shadow: inset 0 0 15px rgba(91, 70, 54, 0.1);
+            box-shadow: none;
         }
         
         /* Chat decorative elements */
@@ -192,22 +181,6 @@
             bottom: 20px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cpath d='M5 45L30 5L55 45z' fill='%23E8B4B8' opacity='0.2'/%3E%3Cpath d='M10 45L30 10L50 45z' fill='%23CFDAC8' opacity='0.3'/%3E%3Cpath d='M15 45L30 15L45 45z' fill='%23F5EBDC' opacity='0.4'/%3E%3C/svg%3E");
         }
-        
-        /* Decorative paw prints */
-        .paw-print {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Ccircle cx='15' cy='15' r='8' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='8' cy='9' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='22' cy='9' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='8' cy='21' r='4' fill='%235B4636' opacity='0.07'/%3E%3Ccircle cx='22' cy='21' r='4' fill='%235B4636' opacity='0.07'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 0;
-        }
-        
-        .paw-1 { right: 250px; top: 550px; }
-        .paw-2 { right: 300px; top: 600px; transform: rotate(30deg); }
-        .paw-3 { right: 200px; top: 670px; transform: rotate(-15deg); }
-        .paw-4 { right: 280px; top: 750px; transform: rotate(45deg); }
     </style>
 </head>
 <body>
@@ -243,11 +216,5 @@
             <!-- Chat widget would be embedded here -->
         </div>
     </div>
-    
-    <!-- Decorative Elements -->
-    <div class="paw-print paw-1"></div>
-    <div class="paw-print paw-2"></div>
-    <div class="paw-print paw-3"></div>
-    <div class="paw-print paw-4"></div>
 </body>
 </html>
