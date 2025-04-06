@@ -11,73 +11,103 @@ A classic overlay designed for retro games and consoles that use the standard 4:
 ## Features
 
 - Clean frame design optimized for 4:3 aspect ratio games.
-- Vintage coffee cup decoration for a cozy streaming atmosphere.
-- Semi-transparent borders that don't distract from gameplay.
-- Designated areas for game capture, webcam, and chat/information.
+- Vintage coffee cup and plant decorations for a cozy streaming atmosphere.
+- Frame-only design for game, webcam, and chat areas, allowing content underneath to show through.
+- Dedicated areas for game capture, webcam, and chat/information.
 - SVG-based design for crisp visuals at any resolution.
 
 ## Adding to OBS Studio
 
-1. **Add as Browser Source**:
-   - In OBS Studio, click the "+" button in the Sources panel.
-   - Select "Browser" from the menu.
-   - Name your source (e.g., "Cozy 4:3 Overlay").
-   - Check "Local file" and click "Browse".
-   - Locate and select the overlay.html file.
-   - Set Width to 1920 and Height to 1080 (or your stream resolution).
-   - Click "OK" to add the source.
+This overlay now uses two separate HTML files for better layering control in OBS:
+- `overlay-bg.html`: Contains the background pattern and decorative elements.
+- `overlay.html`: Contains the main game frame, webcam frame, and chat area frame, along with SVG decorations.
 
-2. **Position Your Game Capture**:
-   - Add your game capture source.
-   - Resize and position it to fit within the 4:3 frame area.
-   - Make sure the game source is below the overlay in the sources list.
+Follow these steps for the recommended layering:
 
-3. **Position Your Webcam**:
-   - Add your webcam source.
-   - Resize and position it to fit within the designated webcam area.
-   - Ensure the webcam is below the overlay in the sources list.
+1.  **Add Background Source (`overlay-bg.html`)**:
+    *   In OBS Studio, click the "+" button in the Sources panel.
+    *   Select "Browser".
+    *   Name it (e.g., "Overlay Background").
+    *   Check "Local file" and browse to select `overlay-bg.html`.
+    *   Set Width to 1920 and Height to 1080 (or your stream resolution).
+    *   Click "OK". This should be your bottom-most layer.
+
+2.  **Add Game Capture Source**:
+    *   Add your game capture source (e.g., Window Capture, Game Capture).
+    *   Place this source *above* the "Overlay Background" source in the list.
+    *   Resize and position it roughly where the large rectangular frame area will be.
+
+3.  **Add Webcam Source**:
+    *   Add your webcam source.
+    *   Place this source *above* the Game Capture source.
+    *   Resize and position it roughly where the circular webcam frame area will be.
+
+4.  **Add Chat Widget Source (Optional)**:
+    *   If you use a browser-based chat widget (like from StreamElements, Streamlabs, etc.), add it as another Browser source.
+    *   Place this source *above* the Webcam source.
+    *   Resize and position it roughly where the rectangular chat frame area will be.
+
+5.  **Add Main Overlay Source (`overlay.html`)**:
+    *   Add another Browser source.
+    *   Name it (e.g., "Game Overlay Frames").
+    *   Check "Local file" and browse to select `overlay.html` (which includes `stream-overlay.svg`).
+    *   Set Width to 1920 and Height to 1080.
+    *   Click "OK". This source should be placed *at the top* of all the sources mentioned above (Background, Game, Webcam, Chat).
+
+6.  **Fine-tune Positioning**:
+    *   Select your Game Capture source and adjust its size and position precisely so it fits neatly within the main rectangular frame provided by the "Game Overlay Frames" source.
+    *   Select your Webcam source and adjust its size and position to fit within the circular frame.
+    *   Select your Chat Widget source and adjust its size and position to fit within the chat box frame.
+
+*The final layer order in OBS should look like this (bottom to top):*
+1.  `Overlay Background` (overlay-bg.html)
+2.  `Game Capture`
+3.  `Webcam`
+4.  `Chat Widget` (if used)
+5.  `Game Overlay Frames` (overlay.html / stream-overlay.svg)
 
 ## Customization Options
 
 ### Modifying the SVG Elements
 
-The overlay uses an SVG file embedded directly in the HTML. To customize it:
+The main visual components (frames, decorations) are in `stream-overlay.svg`. The background is in `overlay-bg.html`.
 
-1. Open the HTML file in a text editor.
-2. Locate the SVG content between the `<svg>` tags.
-3. Edit the elements as needed:
-   - Colors can be changed by modifying `fill` and `stroke` attributes.
-   - Element positions can be adjusted by changing coordinate values.
-   - Shapes can be modified by editing path data.
+1. Open `stream-overlay.svg` in a text editor or SVG editor.
+2. Edit the elements as needed:
+   - Frame colors can be changed by modifying `stroke` attributes.
+   - Frame thickness by `stroke-width`.
+   - Element positions can be adjusted by changing coordinate values (x, y, cx, cy).
+   - Shapes can be modified by editing path data or rect/circle attributes.
 
-### Changing the Coffee Cup
+### Changing Decorations (Coffee Cup, Plant)
 
-The coffee cup is a key decorative element. To customize it:
+These are defined as `<path>` elements within `stream-overlay.svg`.
 
-1. Find the coffee cup SVG group in the HTML.
-2. Modify colors by changing the fill values.
-3. You can replace it with a different icon by changing the path data.
-4. Adjust its position by modifying the transform attributes.
+1. Find the relevant SVG path groups in `stream-overlay.svg`.
+2. Modify colors by changing the `fill` and `stroke` values.
+3. You can replace them with different icons by changing the path data.
+4. Adjust their position by modifying the coordinate values within the path data or applying a `transform` attribute.
 
 ### Color Scheme
 
-The main colors are defined in the SVG elements. Look for these attributes to change them:
+The main frame colors are defined by `stroke` attributes in `stream-overlay.svg`:
 
 ```xml
-fill="#8B4513" <!-- Brown coffee cup -->
-fill="#D2B48C" <!-- Tan accent color -->
-fill="rgba(255,255,255,0.2)" <!-- Transparent white frames -->
+stroke="#D8CCBD" <!-- Main frame border color -->
+stroke="#E8DFD2" <!-- Webcam inner border color -->
 ```
 
-Change these values to match your stream's color scheme.
+The decorative element colors (`fill` and `stroke`) can also be changed in the SVG.
+The background color and pattern are set in the `body` style of `overlay-bg.html`.
 
 ### Layout Adjustments
 
-The overlay layout is defined in the SVG viewBox and element positions. For major layout changes:
+The layout is defined in `stream-overlay.svg`'s `viewBox` and element positions/sizes.
 
-1. Modify the SVG viewBox attribute to change the overall dimensions.
-2. Adjust rect elements' x, y, width, and height attributes to resize frames.
-3. Update transform attributes to reposition decorative elements.
+1. Modify the SVG `viewBox` attribute (currently `0 0 1280 720`) if you need to change the base coordinate system.
+2. Adjust `rect` elements' `x`, `y`, `width`, and `height` attributes to resize frames.
+3. Adjust `circle` elements' `cx`, `cy`, and `r` attributes.
+4. Update path data or apply `transform` attributes to reposition decorative elements.
 
 ## Special Configuration for Different Systems
 
@@ -111,11 +141,12 @@ This overlay is designed for:
 
 ## Troubleshooting
 
-If the overlay doesn't display correctly:
-1. Verify that the SVG code is intact and properly formatted.
-2. Check that your OBS browser source is set to 1920x1080.
-3. Ensure the overlay is positioned at the top layer in your sources list.
-4. Try refreshing the browser source if elements are missing.
+If elements don't align properly:
+1. Verify your OBS canvas is set to 1920x1080 (or your streaming resolution).
+2. Ensure the browser sources (`overlay-bg.html`, `overlay.html`) Width and Height match your canvas.
+3. Check that your game, webcam, and chat sources are properly sized and positioned *underneath* the `Game Overlay Frames` source.
+4. Ensure the layer order in OBS matches the structure described above.
+5. Try refreshing the browser sources in OBS.
 
 ## Questions or Issues?
 

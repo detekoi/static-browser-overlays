@@ -9,11 +9,10 @@
   <rect x="40" y="40" width="853" height="640" rx="12" ry="12" fill="none" stroke="#D8CCBD" stroke-width="6"/>
   
   <!-- Chat area with rounded corners and soft border - positioned on right -->
-  <rect x="920" y="250" width="320" height="430" rx="12" ry="12" fill="url(#subtle-pattern)" stroke="#D8CCBD" stroke-width="6"/>
+  <rect x="920" y="250" width="320" height="430" rx="12" ry="12" fill="none" stroke="#D8CCBD" stroke-width="6"/>
   
   <!-- Webcam circle with soft border - bigger and moved left to make room for character sprite -->
-  <circle cx="1030" cy="120" r="110" fill="#FFFFFF" stroke="#D8CCBD" stroke-width="6"/>
-  <circle cx="1030" cy="120" r="105" fill="#FFFAF0" stroke="#E8DFD2" stroke-width="1"/>
+  <circle cx="1030" cy="120" r="105" fill="none" stroke="#E8DFD2" stroke-width="6"/>
   
   <!-- Decorative elements moved outside frames -->
   <!-- Coffee cup - moved below chat frame -->
