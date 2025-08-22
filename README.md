@@ -81,8 +81,40 @@ A clean, minimal overlay for 4:3 aspect ratio gameplay with extensive customizat
 [⬇️ Download ZIP](releases/minimal-4-3.zip?raw=true) | 
 [🔍 Live Demo](https://detekoi.github.io/static-browser-overlays/sources/overlays/minimal-4-3/overlay.html)
 
+
+### Ascii
+
+A stylish overlay for Ascii streams.
+
+![Ascii Overlay](docs/screenshots/ascii.png)
+
+[⬇️ Download ZIP](releases/ascii.zip?raw=true)
+
+### Cozy 10 9 Gameboy
+
+A stylish overlay for Cozy 10 9 Gameboy streams.
+
+![Cozy 10 9 Gameboy Overlay](docs/screenshots/cozy-10-9-gameboy.png)
+
+[⬇️ Download ZIP](releases/cozy-10-9-gameboy.zip?raw=true)
+
+### Cozy 4:3 Aspect Ratio
+
+A stylish overlay for Cozy 4:3 Aspect Ratio streams.
+
+![Cozy 4:3 Aspect Ratio Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
+
+[📄 Documentation](sources/sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
 ## Available Backgrounds
 
+
+### Liquid Background
+
+A stylish overlay for Liquid Background streams.
+
+![Liquid Background Overlay](docs/screenshots/liquid-background.png)
+
+[⬇️ Download ZIP](releases/liquid-background.zip?raw=true)
 ### Sakura Background
 
 A stylish background for Sakura-themed streams, adorned with delicate cherry blossoms and soft pastel colors, creating a serene and enchanting atmosphere.

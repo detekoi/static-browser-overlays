@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII Pattern – Full‑Viewport</title>
+
+    <style>
+        /* ---------- Layout reset ---------- */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* never show scroll bars */
+            background: #f0eee6;
+            font-family: "Courier New", "Lucida Console", monospace;
+            cursor: pointer;
+        }
+
+        /* ---------- Full‑screen ASCII canvas ---------- */
+        #ascii-container {
+            position: fixed;
+            inset: 0; /* top:0; right:0; bottom:0; left:0; */
+            width: 100%;
+            height: 100%;
+
+            /* text styling */
+            line-height: 1; /* every line is exactly 1em tall */
+            white-space: pre;
+            user-select: none;
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+            padding-top: 0; /* will be modified in JS for vertical centring */
+        }
+    </style>
+</head>
+<body>
+    <div id="ascii-container"></div>
+
+    <script>
+        /* -------------------------------------------------------------
+           CONTROLLABLE PATTERN FUNCTIONS
+        ------------------------------------------------------------- */
+        const patterns = {
+            balance: (x, y, t) => {
+                const cx = 40;
+                const cy = 22.5;
+                const dx = x - cx;
+                const dy = y - cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                return (
+                    Math.sin(dx * 0.3 + t * 0.5) *
+                        Math.cos(dy * 0.3 + t * 0.3) *
+                        Math.sin(dist * 0.1 - t * 0.4)
+                );
+            },
+
+            duality: (x, y, t) => {
+                const cx = 40;
+                const left = x < cx ? Math.sin(x * 0.2 + t * 0.3) : 0;
+                const right = x >= cx ? Math.cos(x * 0.2 - t * 0.3) : 0;
+
+                return left + right + Math.sin(y * 0.3 + t * 0.2);
+            },
+
+            flow: (x, y, t) => {
+                const angle = Math.atan2(y - 22.5, x - 40);
+                const dist = Math.sqrt((x - 40) ** 2 + (y - 22.5) ** 2);
+
+                return (
+                    Math.sin(angle * 3 + t * 0.4) *
+                    Math.cos(dist * 0.1 - t * 0.3)
+                );
+            },
+
+            chaos: (x, y, t) => {
+                const noise1 = Math.sin(x * 0.5 + t) * Math.cos(y * 0.3 - t);
+                const noise2 =
+                    Math.sin(y * 0.4 + t * 0.5) *
+                    Math.cos(x * 0.2 + t * 0.7);
+                const noise3 = Math.sin((x + y) * 0.2 + t * 0.8);
+
+                return noise1 * 0.3 + noise2 * 0.3 + noise3 * 0.4;
+            },
+        };
+
+        /* -------------------------------------------------------------
+           ANIMATION CLASS – now truly full‑viewport
+        ------------------------------------------------------------- */
+        class ASCIIAnimation {
+            constructor() {
+                /* grid size (characters) – aspect ≈ 16:9 (80×45) */
+                this.cols = 80;
+                this.rows = 45;
+
+                this.frame = 0;
+                this.patternIndex = 0;
+                this.patternKeys = Object.keys(patterns);
+
+                this.container = document.getElementById("ascii-container");
+                this.mousePos = { x: 0, y: 0 };
+                this.mouseDown = false;
+
+                this.slowdownFactor = 12; // lower = faster
+
+                this.bindEvents();
+                this.onResize(); // set initial font size
+                this.animate();
+            }
+
+            /* ---------------------------------- helpers */
+            bindEvents() {
+                window.addEventListener("resize", () => this.onResize());
+
+                document.addEventListener("click", () => {
+                    this.patternIndex = (this.patternIndex + 1) % this.patternKeys.length;
+                });
+
+                document.addEventListener("mousemove", (e) => {
+                    this.mousePos = { x: e.clientX, y: e.clientY };
+                });
+
+                document.addEventListener("mousedown", () => (this.mouseDown = true));
+                document.addEventListener("mouseup", () => (this.mouseDown = false));
+
+                /* Prevent context menu (handy for OBS) */
+                document.addEventListener("contextmenu", (e) => e.preventDefault());
+            }
+
+            /**
+             * Dynamically sizes the font so that exactly `cols × rows`
+             * characters cover the whole viewport without overflowing.
+             */
+            onResize() {
+                /* -----------------------------------------------------------
+                   1.  Choose a font size that makes the grid’s *height*
+                       exactly fill the viewport (rows‑based sizing).
+                   ----------------------------------------------------------- */
+                const size = Math.floor(window.innerHeight / this.rows);
+                this.container.style.fontSize = size + "px";
+
+                /* -----------------------------------------------------------
+                   2.  Measure the real glyph width at this font size so we
+                       know how wide the 80‑column grid is in pixels.
+                   ----------------------------------------------------------- */
+                const probe = document.createElement("span");
+                probe.textContent = "█";
+                probe.style.visibility = "hidden";
+                this.container.appendChild(probe);
+                const charW = probe.getBoundingClientRect().width;
+                this.container.removeChild(probe);
+
+                /* -----------------------------------------------------------
+                   3.  Spread any leftover horizontal space across the gaps
+                       between characters via `letter-spacing` so the last
+                       column lands flush with the right edge.
+                   ----------------------------------------------------------- */
+                const glyphTotal = charW * this.cols;
+                const extra = window.innerWidth - glyphTotal;
+                const spacing = extra / (this.cols - 1);
+                this.container.style.letterSpacing = spacing + "px";
+
+                /* -----------------------------------------------------------
+                   4.  Centre vertically when the viewport is taller than the
+                       grid (e.g. ultrawide aspect ratios).
+                   ----------------------------------------------------------- */
+                const gridHeight = size * this.rows;
+                const padTop = Math.max(0, (window.innerHeight - gridHeight) / 2);
+                this.container.style.paddingTop = padTop + "px";
+            }
+
+            /**
+             * Build one frame of ASCII art based on the active pattern.
+             */
+            frameToAscii() {
+                const t = (this.frame * Math.PI) / (60 * this.slowdownFactor);
+                const fn = patterns[this.patternKeys[this.patternIndex]];
+                let out = "";
+
+                for (let y = 0; y < this.rows; y++) {
+                    for (let x = 0; x < this.cols; x++) {
+                        let v = fn(x, y, t);
+
+                        /* mouse influence (optional) */
+                        if (this.mouseDown) {
+                            const rect = this.container.getBoundingClientRect();
+                            const dx =
+                                x - ((this.mousePos.x - rect.left) / rect.width) * this.cols;
+                            const dy =
+                                y - ((this.mousePos.y - rect.top) / rect.height) * this.rows;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            v += Math.exp(-dist * 0.1) * Math.sin(t * 2) * 0.8;
+                        }
+
+                        /* value ➜ character map */
+                        if (v > 0.8) out += "█";
+                        else if (v > 0.5) out += "▓";
+                        else if (v > 0.2) out += "▒";
+                        else if (v > -0.2) out += "░";
+                        else if (v > -0.5) out += "·";
+                        else out += " ";
+                    }
+                    out += "\n";
+                }
+                return out;
+            }
+
+            animate() {
+                this.container.textContent = this.frameToAscii();
+                this.frame = (this.frame + 1) % (240 * this.slowdownFactor);
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /* start the show */
+        document.addEventListener("DOMContentLoaded", () => new ASCIIAnimation());
+    </script>
+</body>
+</html>

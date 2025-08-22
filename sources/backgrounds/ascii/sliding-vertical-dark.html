@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Ease Vertical Bars - OBS Browser Source</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1A1A1A;
+        }
+
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // Global variables
+        let canvas, ctx;
+        let timeCounter = 0;
+        let animationFrameId;
+        let pattern1, pattern2;
+        let numLines, lineSpacing;
+
+        // Simple noise function
+        function noise(x, y, t) {
+            const n = Math.sin(x * 0.02 + t) * Math.cos(y * 0.02 + t) + 
+                     Math.sin(x * 0.03 - t) * Math.cos(y * 0.01 + t);
+            return (n + 1) / 2;
+        }
+
+        // Generate patterns that avoid extremes
+        function generatePattern(seed) {
+            const pattern = [];
+            for (let i = 0; i < numLines; i++) {
+                const lineBars = [];
+                let currentY = 0;
+                
+                while (currentY < canvas.height) {
+                    const noiseVal = noise(i * lineSpacing, currentY, seed);
+                    
+                    if (noiseVal > 0.5) {
+                        // Create medium-length bars
+                        const barLength = 10 + noiseVal * 30; // 10-40 pixels
+                        const barWidth = 2 + noiseVal * 3;
+                        
+                        lineBars.push({
+                            y: currentY + barLength / 2,
+                            height: barLength,
+                            width: barWidth
+                        });
+                        
+                        currentY += barLength + 15; // Spacing between bars
+                    } else {
+                        currentY += 15; // Skip space when no bar
+                    }
+                }
+                pattern.push(lineBars);
+            }
+            return pattern;
+        }
+
+        // Initialize canvas and patterns
+        function init() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            
+            resizeCanvas();
+            generatePatterns();
+            animate();
+        }
+
+        // Resize canvas to fill container
+        function resizeCanvas() {
+            // Get the actual display size
+            const rect = canvas.getBoundingClientRect();
+            const displayWidth = rect.width;
+            const displayHeight = rect.height;
+            
+            // Set the canvas size to match the display size
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+            
+            // Recalculate line spacing based on new width
+            numLines = Math.floor(canvas.width / 11);
+            lineSpacing = canvas.width / numLines;
+        }
+
+        // Generate both patterns
+        function generatePatterns() {
+            pattern1 = generatePattern(0);
+            pattern2 = generatePattern(5);
+        }
+
+        // Handle window resize
+        function handleResize() {
+            resizeCanvas();
+            generatePatterns();
+        }
+
+        // Main animation loop
+        function animate() {
+            timeCounter += 0.005; // Cut speed in half
+            
+            // Create a cycle with pauses
+            const cycleTime = timeCounter % (Math.PI * 2);
+            let easingFactor;
+            
+            if (cycleTime < Math.PI * 0.1) {
+                // Pause at pattern 1
+                easingFactor = 0;
+            } else if (cycleTime < Math.PI * 0.9) {
+                // Transition to pattern 2
+                const transitionProgress = (cycleTime - Math.PI * 0.1) / (Math.PI * 0.8);
+                easingFactor = transitionProgress;
+            } else if (cycleTime < Math.PI * 1.1) {
+                // Pause at pattern 2
+                easingFactor = 1;
+            } else if (cycleTime < Math.PI * 1.9) {
+                // Transition back to pattern 1
+                const transitionProgress = (cycleTime - Math.PI * 1.1) / (Math.PI * 0.8);
+                easingFactor = 1 - transitionProgress;
+            } else {
+                // Pause at pattern 1 again
+                easingFactor = 0;
+            }
+            
+            // Let go of clinging to any one state
+            const smoothEasing = easingFactor < 0.5 
+                ? 4 * easingFactor * easingFactor * easingFactor 
+                : 1 - Math.pow(-2 * easingFactor + 2, 3) / 2;
+            
+            // Clear canvas
+            ctx.fillStyle = '#1A1A1A';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw lines and interpolated bars
+            for (let i = 0; i < numLines; i++) {
+                const x = i * lineSpacing + lineSpacing / 2;
+                
+                // Draw vertical line
+                ctx.beginPath();
+                ctx.strokeStyle = '#444444';
+                ctx.lineWidth = 1;
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+                
+                // Interpolate between pattern1 and pattern2
+                const bars1 = pattern1[i];
+                const bars2 = pattern2[i];
+                
+                // Match bars between patterns
+                const maxBars = Math.max(bars1.length, bars2.length);
+                
+                for (let j = 0; j < maxBars; j++) {
+                    let bar1 = bars1[j];
+                    let bar2 = bars2[j];
+                    
+                    // If one pattern has fewer bars, create a dummy bar
+                    if (!bar1) bar1 = { y: bar2.y - 100, height: 0, width: 0 };
+                    if (!bar2) bar2 = { y: bar1.y + 100, height: 0, width: 0 };
+                    
+                    // Add some wave motion during transition
+                    const waveOffset = Math.sin(i * 0.3 + j * 0.5 + timeCounter * 2) * 10 * 
+                                     (smoothEasing * (1 - smoothEasing) * 4); // Peak in middle of transition
+                    
+                    // Interpolate properties with wave offset
+                    const y = bar1.y + (bar2.y - bar1.y) * smoothEasing + waveOffset;
+                    const height = bar1.height + (bar2.height - bar1.height) * smoothEasing;
+                    const width = bar1.width + (bar2.width - bar1.width) * smoothEasing;
+                    
+                    // Only draw if bar has size
+                    if (height > 0.1 && width > 0.1) {
+                        ctx.fillStyle = '#6B6B6B';
+                        ctx.fillRect(x - width/2, y - height/2, width, height);
+                    }
+                }
+            }
+            
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        // Cleanup function
+        function cleanup() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            timeCounter = 0;
+        }
+
+        // Event listeners
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('beforeunload', cleanup);
+
+        // Initialize when page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
