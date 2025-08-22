@@ -54,10 +54,10 @@
   (() => {
     // -------- Params --------
     const q = new URLSearchParams(location.search);
-    const FONT_SIZE  = +(q.get('fs')      || 16);    // glyph size (px), increased for more negative space
+    const FONT_SIZE  = +(q.get('fs')      || 20);    // glyph size (px), increased for more negative space
     const TARGET_FPS = +(q.get('fps')     || 24);    // frame cap
     const SPEED      = +(q.get('speed')   || 1.0);
-    const DENSITY    = +(q.get('density') || 0.7);   // 0.7..1.3; lowered for less detail and more negative space
+    const DENSITY    = +(q.get('density') || 0.5);   // 0.5..1.3; lowered for less detail and more negative space
     const CONTRAST   = +(q.get('contrast')|| 1.0);   // 0.7..1.4
     const MODE       = (q.get('mode')     || 'low'); // 'low' | 'high'
     const SPARKLE    = +(q.get('sparkle') || 0);     // 0/1
