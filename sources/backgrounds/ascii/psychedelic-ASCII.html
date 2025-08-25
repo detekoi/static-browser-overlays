@@ -55,14 +55,16 @@
     // -------- Params --------
     const q = new URLSearchParams(location.search);
     const FONT_SIZE  = +(q.get('fs')      || 20);    // glyph size (px), increased for more negative space
-    const TARGET_FPS = +(q.get('fps')     || 24);    // frame cap
-    const SPEED      = +(q.get('speed')   || 1.0);
+    const TARGET_FPS = +(q.get('fps')     || 12);    // frame cap
+    const SPEED      = +(q.get('speed')   || 0.35);
     const DENSITY    = +(q.get('density') || 0.5);   // 0.5..1.3; lowered for less detail and more negative space
     const CONTRAST   = +(q.get('contrast')|| 1.0);   // 0.7..1.4
     const MODE       = (q.get('mode')     || 'low'); // 'low' | 'high'
     const SPARKLE    = +(q.get('sparkle') || 0);     // 0/1
     const DRIFT      = +(q.get('drift')   || 1);     // 0/1 drift of gradient
     const MONO       = +(q.get('mono')    || 0);     // 1 = monochrome glyphs
+
+    const MIN_FRAME_MS = +(q.get('framems') || 80); // do not render more often than this (80ms ~= 12.5fps)
 
     const RAMP = "@#%WM&8B$0X*+=-:.  ";
     const RAMP_LEN = RAMP.length - 1;
@@ -71,7 +73,7 @@
 
     // Visual style toggles (no risk of black screen)
     el.style.fontSize = FONT_SIZE + 'px';
-    if (DRIFT) el.style.animation = 'drift 9s ease-in-out infinite alternate';
+    if (DRIFT) el.style.animation = 'drift 30s linear infinite';
     if (MONO) {
       // override gradient to plain color if requested
       el.style.background = 'none';
@@ -103,6 +105,21 @@
 
     let cols=0, rows=0, cx=0, cy=0, cw=0, ch=0;
 
+    let rArr = [], aArr = [];
+    function rebuildRA() {
+      rArr = new Array(rows * cols);
+      aArr = new Array(rows * cols);
+      for (let y = 0; y < rows; y++) {
+        const ny = (y - cy) / Math.max(rows, 1);
+        for (let x = 0; x < cols; x++) {
+          const nx = (x - cx) / Math.max(cols, 1);
+          const idx = y * cols + x;
+          rArr[idx] = Math.hypot(nx, ny);
+          aArr[idx] = Math.atan2(ny, nx);
+        }
+      }
+    }
+
     function resize(){
       const m = measure();
       cw = m.cw; ch = m.ch;
@@ -111,15 +128,16 @@
       rows = Math.max(8, Math.ceil(window.innerHeight / ch));
       cx = cols * 0.5;
       cy = rows * 0.5;
+      rebuildRA();
     }
     window.addEventListener('resize', resize, {passive:true});
     resize();
 
     // ---------- Field functions ----------
     function fieldLow(x, y, t, nx, ny, r, a) {
-      const k = 0.45 * DENSITY;
+      const k = 0.35 * DENSITY;
       const bands = Math.sin(x * k + Math.sin(y * 0.11 + t * 0.8) * 1.6 + t * 1.1);
-      const swirl = Math.sin(8.0 * r - 1.6 * t + a * 4.0);
+      const swirl = Math.sin(6.0 * r - 1.0 * t + a * 3.0);
       let v = (bands * 0.9 + swirl * 0.6) * 0.6;
       v *= CONTRAST;
       return Math.max(-1, Math.min(1, v));
@@ -143,7 +161,7 @@
     }
 
     // ---------- Animation loop ----------
-    let acc = 0, last = performance.now();
+    let acc = 0, last = performance.now(), lastRender = 0;
     const frameInterval = 1000 / TARGET_FPS;
     const maxSkip = frameInterval * 3;
 
@@ -152,6 +170,10 @@
       if (dt > maxSkip) dt = frameInterval;
       acc += dt; last = now;
 
+      if ((now - lastRender) < Math.max(frameInterval, MIN_FRAME_MS)) {
+        return requestAnimationFrame(frame);
+      }
+
       if (acc >= frameInterval){
         const t = (now / 1000) * SPEED;
         const lines = new Array(rows);
@@ -159,11 +181,11 @@
           const row = new Array(cols);
           const ny = (y - cy) / Math.max(rows, 1);
           for (let x = 0; x < cols; x++){
-            const nx = (x - cx) / Math.max(cols, 1);
-            const r  = Math.hypot(nx, ny);
-            const a  = Math.atan2(ny, nx);
-            const v  = useHigh ? fieldHigh(x, y, t, nx, ny, r, a)
-                               : fieldLow (x, y, t, nx, ny, r, a);
+            const idx = y * cols + x;
+            const r  = rArr[idx];
+            const a  = aArr[idx];
+            const v  = useHigh ? fieldHigh(x, y, t, 0, 0, r, a)
+                               : fieldLow (x, y, t, 0, 0, r, a);
             let ch = RAMP[ ((v + 1) * 0.5 * RAMP_LEN) | 0 ];
             if (sparkle(x, y, t)) ch = ((x + y) & 1) ? '+' : '*';
             row[x] = ch;
@@ -171,6 +193,7 @@
           lines[y] = row.join('');
         }
         el.textContent = lines.join('\n');
+        lastRender = now;
         acc = 0;
       }
       requestAnimationFrame(frame);
