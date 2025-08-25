@@ -24,14 +24,15 @@
     }
     .container {
       position: absolute;
-      inset: 0;
+      inset: -12vh -12vw;
       display: grid;
       place-items: center;
-      animation: flow 90s linear infinite;
+      will-change: transform;
+      animation: parallax-a 140s linear infinite, hue-a 120s linear infinite;
+      overflow: hidden;
     }
     #container2 {
-      animation-direction: reverse;
-      animation-duration: 120s;
+      animation: parallax-b 170s linear infinite, hue-b 140s linear infinite;
     }
     pre{
       margin:0;
@@ -40,29 +41,46 @@
       font-weight:var(--weight);
       letter-spacing:var(--ls);
       line-height:var(--lh);
-      background: linear-gradient(135deg,
-        #2c2c2c, #4b3b47, #7a5c61, #a8896c, #d1c7b7, #a88fa0, #6b5c6e, #2c2c2c);
-      background-size:200% 200%;
+      background-image:
+        linear-gradient(135deg,
+          #2c2c2c, #4b3b47, #7a5c61, #a8896c, #d1c7b7, #a88fa0, #6b5c6e, #2c2c2c),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 2px, rgba(0,0,0,0.018) 2px 4px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0 3px, rgba(255,255,255,0.012) 3px 6px);
+      background-size: 260% 260%, 100% 100%, 100% 100%;
       -webkit-background-clip:text;
       background-clip:text;
-      color:transparent;
+      color: transparent;
       user-select:none;
-      animation:
-        drift-x 29s linear infinite,
-        drift-y 31s linear infinite;
+      animation: none;
     }
     #bg2 {
-        opacity: 0.6;
+      opacity: 0.55;
+      background-image:
+        linear-gradient(315deg,
+          #242424, #3e3340, #6d555b, #9c7d67, #cdbfb0, #9f8597, #5b4e60, #242424),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.016) 0 2px, rgba(0,0,0,0.016) 2px 4px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.010) 0 3px, rgba(255,255,255,0.010) 3px 6px);
+      background-size: 320% 320%, 100% 100%, 100% 100%;
+      background-blend-mode: overlay, soft-light, normal;
     }
     @keyframes drift-x { from { background-position-x: 0%; } to { background-position-x: 200%; } }
     @keyframes drift-y { from { background-position-y: 0%; } to { background-position-y: 200%; } }
-    @keyframes flow {
-        0% { transform: scale(1.1) translate(-10%, -10%); }
-        25% { transform: scale(1.2) translate(10%, -10%); }
-        50% { transform: scale(1.1) translate(10%, 10%); }
-        75% { transform: scale(1.2) translate(-10%, 10%); }
-        100% { transform: scale(1.1) translate(-10%, -10%); }
+    @keyframes parallax-a {
+      0%   { transform: translate(-4%, -3%); }
+      25%  { transform: translate( 4%, -3%); }
+      50%  { transform: translate( 4%,  3%); }
+      75%  { transform: translate(-4%,  3%); }
+      100% { transform: translate(-4%, -3%); }
     }
+    @keyframes parallax-b {
+      0%   { transform: translate( 4%,  3%); }
+      25%  { transform: translate(-4%,  3%); }
+      50%  { transform: translate(-4%, -3%); }
+      75%  { transform: translate( 4%, -3%); }
+      100% { transform: translate( 4%,  3%); }
+    }
+    @keyframes hue-a { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+    @keyframes hue-b { from { filter: hue-rotate(360deg); } to { filter: hue-rotate(0deg); } }
     @media (prefers-reduced-motion: reduce){ .container, pre { animation:none !important; } }
   </style>
 </head>
@@ -80,6 +98,7 @@
     const q = new URLSearchParams(location.search);
     const FONT_SIZE  = +(q.get('fs')      || 20);
     const DENSITY    = +(q.get('density') || 0.7);
+    const LAYERS = +(q.get('layers') || 2);
     const RAMP = "@#%WM&8B$0X*+=-:.  ";
     const RAMP_LEN = RAMP.length - 1;
     const el1 = document.getElementById('bg1');
@@ -130,12 +149,14 @@
     function setup() {
         const m = measure();
         
-        // You can lower this value (e.g., to 1.1) to reduce resource usage,
-        // at the risk of seeing the edges of the text during animation.
-        const OVERFILL_FACTOR = 1.3;
+        // Directional overfill: account for parallax translate (±4% x, ±3% y) + rounding safety
+        const OVERFILL_X = +(q.get('overfillx') || 1.80);
+        const OVERFILL_Y = +(q.get('overfilly') || 1.70);
+        const PAD_COLS = +(q.get('padcols') || 16);
+        const PAD_ROWS = +(q.get('padrows') || 16);
 
-        const cols = Math.ceil(Math.max(16, (window.innerWidth  / m.cw) * OVERFILL_FACTOR));
-        const rows = Math.ceil(Math.max(16, (window.innerHeight / m.ch) * OVERFILL_FACTOR));
+        const cols = Math.ceil(Math.max(16, (window.innerWidth  / m.cw) * OVERFILL_X)) + PAD_COLS;
+        const rows = Math.ceil(Math.max(16, (window.innerHeight / m.ch) * OVERFILL_Y)) + PAD_ROWS;
 
         const art1 = generateArt(cols, rows, 0);
         const art2 = generateArt(cols, rows, 100);
@@ -147,7 +168,7 @@
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(setup, 100);
+        resizeTimeout = setTimeout(setup, 200);
     }, {passive:true});
   })();
   </script>
