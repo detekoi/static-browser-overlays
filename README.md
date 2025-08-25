@@ -105,6 +105,22 @@ A stylish overlay for Cozy 4:3 Aspect Ratio streams.
 ![Cozy 4:3 Aspect Ratio Overlay](docs/screenshots/cozy-4-3-aspect-ratio.png)
 
 [📄 Documentation](sources/sources/overlays/cozy-4-3-aspect-ratio/overlay-readme.md) | [⬇️ Download ZIP](releases/cozy-4-3-aspect-ratio.zip?raw=true)
+
+### Ascii Parallax
+
+A stylish overlay for Ascii Parallax streams.
+
+![Ascii Parallax Overlay](docs/screenshots/ascii-parallax.png)
+
+[⬇️ Download ZIP](releases/ascii-parallax.zip?raw=true)
+
+### Ascii Psychedelic
+
+A stylish overlay for Ascii Psychedelic streams.
+
+![Ascii Psychedelic Overlay](docs/screenshots/ascii-psychedelic.png)
+
+[⬇️ Download ZIP](releases/ascii-psychedelic.zip?raw=true)
 ## Available Backgrounds
 
 
