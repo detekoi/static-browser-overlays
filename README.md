@@ -5,9 +5,9 @@ This repository contains a variety of browser overlays for OBS, Streamlabs, and 
 ## Features
 
 - **Beautiful Overlays**: HTML/CSS overlays with elegant animations and minimal JavaScript.
-- **Animated Elements**: Snowfall, aurora effects, and subtle animations for a dynamic look.
+- **Animated Elements**: Snowfall, aurora effects, and abstract animations for a dynamic look.
 - **Easy to Customize**: Clear documentation on how to modify colors, text, and other elements.
-- **Open Source**: Free to use and modify under the MIT License.
+- **Open Source**: Free to use and modify under the BSD 2-clause license.
 
 ## Available Overlays
 
